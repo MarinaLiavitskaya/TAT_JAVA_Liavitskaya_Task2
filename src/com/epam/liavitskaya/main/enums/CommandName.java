@@ -1,0 +1,7 @@
+package com.epam.liavitskaya.main.enums;
+
+public enum CommandName {
+
+	SIGN_IN, SIGN_OUT, REGISTRATION, ADD_NEW_BOOK, ADD_EDITED_BOOK, ADD_USER, ORDER_BOOK, EDIT, DELETE, SHOW_ALL_BOOKS, SHOW_ALL_USERS, WRONG_REQUEST
+
+}

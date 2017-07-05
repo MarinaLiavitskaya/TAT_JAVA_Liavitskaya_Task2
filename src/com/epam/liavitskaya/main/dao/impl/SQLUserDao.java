@@ -1,6 +1,7 @@
 package com.epam.liavitskaya.main.dao.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,8 +14,15 @@ import com.epam.liavitskaya.main.dao.worker.DBWorker;
 import com.epam.liavitskaya.main.dao.worker.PropertyLoader;
 
 public class SQLUserDao implements UserDAO {
-	Statement stmt = null;
+
+	static final String ADD_USER = "INSERT INTO USERS(name, role, login, password, status) VALUES(?, ?, ?, ?, ?)";
+	static final String SHOW_ALL_USERS = "SELECT * FROM USERS";
+	static final String UPDATE_USER = "UPDATE USERS SET column1 = value1, column2 = value2, ... WHERE ID = ?";
+	static final String DELETE_USER = "DELETE FROM USERS WHERE ID = ?";
+
 	Connection connection = null;
+	PreparedStatement prStmt = null;
+	Statement stmt = null;
 
 	public SQLUserDao() {
 		Properties properties = PropertyLoader.getProperties("libDB.properties");
@@ -24,43 +32,30 @@ public class SQLUserDao implements UserDAO {
 
 	@Override
 	public void singIn(String login, String password) {
-		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void singOut(String login) {
 
 	}
 
 	@Override
 	public void registration(User user) {
 		try {
-			stmt = connection.createStatement();
-			String sqlI = "INSERT INTO USERS(id, name, role, login, password, status, library_card) VALUES(7, 'Pol', 'USER', 'xxx', 111, 1, 666)";
-			stmt.executeUpdate(sqlI);
-
-			String sqlS = "SELECT id, name, role, login, password, status, library_card FROM USERS";
-			ResultSet rs = stmt.executeQuery(sqlS);
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String name = rs.getString("name");
-				String role = rs.getString("role");
-				String login = rs.getString("login");
-				String password = rs.getString("password");
-				int status = rs.getInt("status");
-				String library_card = rs.getString("library_card");
-				// Display values
-				System.out.println("ID: " + id);
-				System.out.println(", name: " + name);
-				System.out.println(", role: " + role);
-				System.out.println(", login: " + login);
-				System.out.println(", Status: " + status);
-				System.out.println(", password: " + password);
-				System.out.println(", library_card: " + library_card);
-			}
-			rs.close();
+			prStmt = connection.prepareStatement(ADD_USER);			
+			prStmt.setString(1, user.getUserName());
+			prStmt.setString(2, user.getUserRole());
+			prStmt.setString(3, user.getLogin());
+			prStmt.setString(4, user.getPassword());
+			prStmt.setString(5, user.getUserStatus());			
+			prStmt.executeUpdate();
 		} catch (SQLException se) {
 		} catch (Exception e) {
 		} finally {
 			try {
-				if (stmt != null)
-					connection.close();
+				if (prStmt != null)
+					prStmt.close();
 			} catch (SQLException se) {
 			}
 			try {
@@ -75,8 +70,7 @@ public class SQLUserDao implements UserDAO {
 	public List<User> showAllUsers() {
 		try {
 			stmt = connection.createStatement();
-			String sqlS = "SELECT id, name, role, login, password, status, library_card FROM USERS";
-			ResultSet rs = stmt.executeQuery(sqlS);
+			ResultSet rs = stmt.executeQuery(SHOW_ALL_USERS);
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
@@ -100,7 +94,7 @@ public class SQLUserDao implements UserDAO {
 		} finally {
 			try {
 				if (stmt != null)
-					connection.close();
+					stmt.close();
 			} catch (SQLException se) {
 			}
 			try {
@@ -113,18 +107,44 @@ public class SQLUserDao implements UserDAO {
 	}
 
 	@Override
-	public void changeUserStatus() {
+	public void changeUserStatus(User id) {
 
 	}
 
 	@Override
-	public void changeUserRole() {
+	public void changeUserRole(User id) {
 
 	}
 
 	@Override
-	public void deleteUser() {
-
+	public void deleteUser(int userId) {
+		try {
+			prStmt = connection.prepareStatement(DELETE_USER);
+			prStmt.setInt(1, userId);
+			prStmt.executeUpdate();
+			// connection.commit();
+		} catch (SQLException se) {
+			if (connection != null) {
+				try {
+					// System.err.print("Transaction is being rolled back");
+					// connection.rollback();
+					connection.close();
+				} catch (SQLException excep) {
+				}
+			}
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (prStmt != null)
+					prStmt.close();
+			} catch (SQLException se) {
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException se) {
+			}
+		}
 	}
 
 }

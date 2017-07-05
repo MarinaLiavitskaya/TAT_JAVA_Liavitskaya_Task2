@@ -1,31 +1,30 @@
 package com.epam.liavitskaya.main.controller.command.impl;
 
-import java.util.List;
-
-import com.epam.liavitskaya.main.bean.User;
 import com.epam.liavitskaya.main.controller.command.Command;
 import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
-public class ShowAllUsers implements Command {
+public class DeleteUser implements Command {
 
 	@Override
 	public String execute(String request) {
 
 		String response = null;
-
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		ClientService clientService = serviceProvider.getClientServiceImpl();
+		
+		// parse request		
+		String substringWithId = request.substring(request.indexOf(" ") + 1, request.length());
+		int id = Integer.parseInt(substringWithId);		
+		ServiceProvider provider = ServiceProvider.getInstance();
+		ClientService clientServiceImpl = provider.getClientServiceImpl();
 		try {
-			List<User> showAllUsers = clientService.showAllUsers();
-			response = "all users : " + showAllUsers;
+			clientServiceImpl.deleteUser(id);
+			response = "User deleted";
 		} catch (ServiceException e) {
 			// log
-			response = "Error during show all users procedure";
+			response = "Error during delete user procedure";
 		}
 
 		return response;
 	}
-
 }

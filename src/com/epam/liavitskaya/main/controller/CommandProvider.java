@@ -7,6 +7,7 @@ import com.epam.liavitskaya.main.controller.command.Command;
 import com.epam.liavitskaya.main.controller.command.impl.AddEditedBook;
 import com.epam.liavitskaya.main.controller.command.impl.AddNewBook;
 import com.epam.liavitskaya.main.controller.command.impl.DeleteBook;
+import com.epam.liavitskaya.main.controller.command.impl.DeleteUser;
 import com.epam.liavitskaya.main.controller.command.impl.Registration;
 import com.epam.liavitskaya.main.controller.command.impl.ShowAllBooks;
 import com.epam.liavitskaya.main.controller.command.impl.ShowAllUsers;
@@ -27,8 +28,8 @@ public class CommandProvider {
 		repository.put(CommandName.SHOW_ALL_BOOKS, new ShowAllBooks());
 		repository.put(CommandName.SHOW_ALL_USERS, new ShowAllUsers());
 
-		repository.put(CommandName.DELETE, new DeleteBook());
-		repository.put(CommandName.DELETE, new DeleteBook());
+		repository.put(CommandName.DELETE_USER, new DeleteUser());
+		repository.put(CommandName.DELETE_BOOK, new DeleteBook());
 	}
 
 	Command getCommand(CommandName commandName) {

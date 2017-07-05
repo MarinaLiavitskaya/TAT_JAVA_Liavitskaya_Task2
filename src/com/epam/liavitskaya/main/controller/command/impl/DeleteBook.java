@@ -12,8 +12,13 @@ public class DeleteBook implements Command {
 		String response = null;
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
+		try{
 		libraryService.deleteBookService(request);
 		response = "deleted";
+		}catch (Exception e) {
+			// log
+			response = "delete book fail";
+		}
 		return response;
 	}
 

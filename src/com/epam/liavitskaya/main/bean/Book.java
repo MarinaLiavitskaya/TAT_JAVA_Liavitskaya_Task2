@@ -8,7 +8,7 @@ public class Book {
 	private String title;
 	private String author;
 	private String description;
-	private BookStatus bookStatus; // 1 - on hand, 0 - available
+	private BookStatus bookStatus;
 	public int getBookId() {
 		return bookId;
 	}

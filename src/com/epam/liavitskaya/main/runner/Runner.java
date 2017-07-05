@@ -15,6 +15,9 @@ public class Runner {
 		//controller.executeTask("ADD_NEW_BOOK book");
 		//controller.executeTask("REGISTRATION user");
 		//controller.executeTask("SHOW_ALL_BOOKS book");
-		controller.executeTask("SHOW_ALL_USERS user");
+		//controller.executeTask("SHOW_ALL_USERS");
+		//controller.executeTask("DELETE_USER 3");
+		//controller.executeTask("DELETE_BOOK 7");
+		controller.executeTask("REGISTRATION Tom USER X 123 ACTIVE");
 	}
 }

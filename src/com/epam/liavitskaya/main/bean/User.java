@@ -13,19 +13,27 @@ public class User {
 	private String login;
 	private String password;
 	private UserStatus userStatus;
-	private Map<Integer, Integer> libraryCard;	
+	private Map<Integer, Book> libraryCard;
 
-	public User() {		
-	}	
-	
-	public User(String userName, String login, String password) {		
+	public User() {
+	}
+
+	public User(String userName, String login, String password) {
 		this.userName = userName;
 		this.login = login;
 		this.password = password;
 	}
+	
+	public User(String userName, UserRoles userRole, String login, String password, UserStatus userStatus) {		
+		this.userName = userName;
+		this.userRole = userRole;
+		this.login = login;
+		this.password = password;
+		this.userStatus = userStatus;
+	}
 
 	public User(int userId, String userName, UserRoles userRole, String login, String password, UserStatus userStatus,
-			Map<Integer, Integer> libraryCard) {		
+			Map<Integer, Book> libraryCard) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userRole = userRole;
@@ -83,12 +91,11 @@ public class User {
 		this.userStatus = UserStatus.valueOf(userStatus);
 	}
 
-	public Map<Integer, Integer> getLibraryCard() {
+	public Map<Integer, Book> getLibraryCard() {
 		return libraryCard;
 	}
 
-	public void setLibraryCard(Map<Integer, Integer> libraryCard) {
+	public void setLibraryCard(Map<Integer, Book> libraryCard) {
 		this.libraryCard = libraryCard;
 	}
-
 }

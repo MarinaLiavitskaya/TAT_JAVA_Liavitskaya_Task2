@@ -2,6 +2,7 @@ package com.epam.liavitskaya.main.controller.command.impl;
 
 import com.epam.liavitskaya.main.controller.command.Command;
 import com.epam.liavitskaya.main.service.ClientService;
+import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
 public class SignIn implements Command {
@@ -15,7 +16,13 @@ public class SignIn implements Command {
 		
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		ClientService clientService = serviceProvider.getClientServiceImpl();
-		clientService.singIn(login, password);
+		try {
+			clientService.singIn(login, password);
+			response = "Hi";
+		} catch (ServiceException e) {
+			// log
+			response = "Error during login procedure";
+		}
 		
 		return response;
 	}

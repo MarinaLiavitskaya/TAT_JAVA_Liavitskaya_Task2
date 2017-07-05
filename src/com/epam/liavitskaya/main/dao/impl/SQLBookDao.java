@@ -29,7 +29,7 @@ public class SQLBookDao implements BookDAO {
 	Statement stmt = null;
 
 	public SQLBookDao() {
-		Properties properties = PropertyLoader.getProperties("libDB.properties");
+		Properties properties = PropertyLoader.getProperties("library_db.properties");
 		DBWorker dbWorker = new DBWorker(properties);
 		connection = dbWorker.getConnection();
 	}

@@ -14,10 +14,10 @@ public class DeleteBook implements Command {
 		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 		try{
 		libraryService.deleteBookService(request);
-		response = "deleted";
+		response = "Book is deleted";
 		}catch (Exception e) {
 			// log
-			response = "delete book fail";
+			response = "Error during delete book procedure";
 		}
 		return response;
 	}

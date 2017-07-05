@@ -17,7 +17,7 @@ public class SignOut implements Command {
 		ClientService clientService = serviceProvider.getClientServiceImpl();
 		try {
 			clientService.singOut(login);
-			response = "GoodBye";
+			response = "Goodbye";
 		} catch (ServiceException e) {		
 			// log
 			response = "Error during logout procedure";

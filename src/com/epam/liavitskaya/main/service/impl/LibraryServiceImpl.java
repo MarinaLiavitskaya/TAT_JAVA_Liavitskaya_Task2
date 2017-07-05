@@ -18,8 +18,7 @@ public class LibraryServiceImpl implements LibraryService {
 			bookDAO.addBook(new Book());// !!!
 		} catch (DAOException e) {
 			throw new ServiceException();
-		} 
-
+		}
 	}
 
 	@Override
@@ -63,11 +62,15 @@ public class LibraryServiceImpl implements LibraryService {
 	}
 
 	@Override
-	public void deleteBookService(String request) {
+	public void deleteBookService(String request) throws ServiceException {
 		int id = Integer.parseInt(request.substring(request.indexOf(" ") + 1, request.length()));
 
 		BookDAO bookDAO = new SQLBookDao();
-		bookDAO.deleteBook(id);
+		try {
+			bookDAO.deleteBook(id);
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}
 
 	}
 

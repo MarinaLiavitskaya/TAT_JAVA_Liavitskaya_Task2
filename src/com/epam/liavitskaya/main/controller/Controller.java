@@ -17,7 +17,7 @@ public class Controller {
 		System.out.println(command);
 		executionCommand = provider.getCommand(command);
 		String response = null;
-		response = executionCommand.execute(request);      // получаем респонс
+		response = executionCommand.execute(request);
 		return response;
 	}
 }

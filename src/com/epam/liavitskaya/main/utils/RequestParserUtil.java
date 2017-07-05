@@ -1,6 +1,6 @@
-package com.epam.liavitskaya.main.util;
+package com.epam.liavitskaya.main.utils;
 
-public class RequestParser {
+public class RequestParserUtil {
 	
 	public static String[] parseRequest(String request) {
 		

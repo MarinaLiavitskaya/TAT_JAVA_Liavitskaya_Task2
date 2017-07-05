@@ -15,10 +15,8 @@ public class PropertyLoader {
 		try {
 			properties.load(input);
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("PropertyLoader - IOException");
-		}
-		System.out.println(properties.getProperty("url"));
+			e.printStackTrace();			
+		}		
 		return properties;
 	}
 }

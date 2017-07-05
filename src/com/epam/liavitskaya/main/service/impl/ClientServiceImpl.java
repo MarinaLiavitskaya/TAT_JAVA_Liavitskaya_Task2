@@ -11,7 +11,7 @@ import com.epam.liavitskaya.main.enums.UserRoles;
 import com.epam.liavitskaya.main.enums.UserStatus;
 import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
-import com.epam.liavitskaya.main.util.RequestParser;
+import com.epam.liavitskaya.main.utils.RequestParserUtil;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -56,7 +56,7 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public void registration(String request) throws ServiceException {
 		UserDAO userDAO = new SQLUserDao();
-		String[] parseRequest = RequestParser.parseRequest(request);
+		String[] parseRequest = RequestParserUtil.parseRequest(request);
 		// if(Validatir.validate()){}
 		User user = new User(parseRequest[1], UserRoles.valueOf(parseRequest[2]), parseRequest[3], parseRequest[4],
 				UserStatus.valueOf(parseRequest[5]));

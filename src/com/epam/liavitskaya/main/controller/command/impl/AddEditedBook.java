@@ -15,10 +15,10 @@ public class AddEditedBook implements Command {
 		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 		try {
 			libraryService.addEditedBookService(request);
-			response = "";
+			response = "Edited book is added";
 		} catch (ServiceException e) {
 			// log
-			response = "";
+			response = "Error during add edited book procedure";
 		}
 		return response;
 	}

@@ -1,10 +1,10 @@
-package com.epam.liavitskaya.main.util;
+package com.epam.liavitskaya.main.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
-public class PasswordEncryption {
+public class PasswordEncryptorUtil {
 	
 	public static String encryptPassword(String password) {	
 		String shal= "";

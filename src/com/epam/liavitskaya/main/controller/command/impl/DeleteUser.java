@@ -19,7 +19,7 @@ public class DeleteUser implements Command {
 		ClientService clientServiceImpl = provider.getClientServiceImpl();
 		try {
 			clientServiceImpl.deleteUser(id);
-			response = "User deleted";
+			response = "User is deleted";
 		} catch (ServiceException e) {
 			// log
 			response = "Error during delete user procedure";

@@ -17,7 +17,7 @@ public class ShowAllBooks implements Command {
 		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 		try {
 			List<Book> bookFondReview = libraryService.bookFondReviewService();
-			response = "watch book fond : " + bookFondReview;
+			response = "Check here books of fund : " + bookFondReview;
 		} catch (ServiceException e) {
 			// log
 			response = "Error during show all books procedure";

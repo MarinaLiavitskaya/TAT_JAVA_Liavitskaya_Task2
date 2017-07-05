@@ -19,7 +19,7 @@ public class ShowAllUsers implements Command {
 		ClientService clientService = serviceProvider.getClientServiceImpl();
 		try {
 			List<User> showAllUsers = clientService.showAllUsers();
-			response = "all users : " + showAllUsers;
+			response = "All users : " + showAllUsers;
 		} catch (ServiceException e) {
 			// log
 			response = "Error during show all users procedure";

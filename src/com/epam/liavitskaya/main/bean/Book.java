@@ -9,6 +9,7 @@ public class Book {
 	private String author;
 	private String description;
 	private BookStatus bookStatus;
+	
 	public int getBookId() {
 		return bookId;
 	}
@@ -38,5 +39,11 @@ public class Book {
 	}
 	public void setBookStatus(String bookStatus) {
 		this.bookStatus = BookStatus.valueOf(bookStatus);
-	}		
+	}
+	
+	@Override
+	public String toString() {
+		return "Book [title=" + title + ", author=" + author + ", description=" + description + ", bookStatus="
+				+ bookStatus + "]";
+	}	
 }

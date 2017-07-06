@@ -12,9 +12,17 @@ public interface ClientService {
 	void singOut(String login) throws ServiceException;
 
 	void registration(String request) throws ServiceException;
-	
+
+	User reviewProfile(int id) throws ServiceException;
+
+	void editProfile(User user) throws ServiceException;
+
 	List<User> showAllUsers() throws ServiceException;
-	
+
+	List<String> fetchAllLogins() throws ServiceException;
+
+	List<String> fetchAllPasswords() throws ServiceException;
+
 	void deleteUser(int userId) throws ServiceException;
 
 }

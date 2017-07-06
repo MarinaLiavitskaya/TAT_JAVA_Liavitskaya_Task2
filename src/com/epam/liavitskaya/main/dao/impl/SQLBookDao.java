@@ -4,16 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import com.epam.liavitskaya.main.bean.Book;
 import com.epam.liavitskaya.main.dao.BookDAO;
-import com.epam.liavitskaya.main.dao.worker.DBWorker;
-import com.epam.liavitskaya.main.dao.worker.PropertyLoader;
+import com.epam.liavitskaya.main.dao.exception.DAOException;
 import com.epam.liavitskaya.main.enums.BookStatus;
+import com.epam.liavitskaya.main.mysql.ConnectionManager;
 
 public class SQLBookDao implements BookDAO {
 
@@ -26,16 +24,14 @@ public class SQLBookDao implements BookDAO {
 
 	Connection connection = null;
 	PreparedStatement prStmt = null;
-	Statement stmt = null;
+	ResultSet rs = null;
 
 	public SQLBookDao() {
-		Properties properties = PropertyLoader.getProperties("library_db.properties");
-		DBWorker dbWorker = new DBWorker(properties);
-		connection = dbWorker.getConnection();
+		connection = ConnectionManager.getManager().getConnection();
 	}
 
 	@Override
-	public void addBook(Book book) {
+	public void addBook(Book book) throws DAOException {
 		try {
 			prStmt = connection.prepareStatement(ADD_BOOK);
 			prStmt.setInt(1, book.getBookId());
@@ -43,67 +39,36 @@ public class SQLBookDao implements BookDAO {
 			prStmt.setString(3, book.getAuthor());
 			prStmt.setString(4, book.getDescription());
 			prStmt.setString(5, book.getBookStatus());
-			// prStmt.setString(4, book.getDescription());
 			prStmt.executeUpdate();
-		} catch (SQLException se) {
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if (prStmt != null)
-					prStmt.close();
-			} catch (SQLException se) {
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
+			ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
-
 	}
 
 	@Override
-	public void editBook(Book book) {
-
+	public void editBook(Book book) throws DAOException {			// додумать
 		try {
 			prStmt = connection.prepareStatement(UPDATE_BOOK);
 			prStmt.setString(1, book.getDescription());
 			prStmt.setInt(2, book.getBookId());
 			prStmt.executeUpdate();
 			// connection.commit();
-		} catch (SQLException se) {
-			if (connection != null) {
-				try {
-					// System.err.print("Transaction is being rolled back");
-					// connection.rollback();
-					connection.close();
-				} catch (SQLException excep) {
-				}
-			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if (prStmt != null)
-					prStmt.close();
-			} catch (SQLException se) {
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException se) {
-			}
+			ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
-
 	}
 
 	@Override
-	public List<Book> bookFondReview() {
+	public List<Book> bookFondReview() throws DAOException {
 		Book book = null;
 		List<Book> bookList = new ArrayList<>();
 		try {
-			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(SHOW_ALL_BOOKS);
+			prStmt = connection.prepareStatement(SHOW_ALL_BOOKS);
+			rs = prStmt.executeQuery();
 			while (rs.next()) {
 				book = new Book();
 				book.setBookId(rs.getInt(1));
@@ -129,91 +94,42 @@ public class SQLBookDao implements BookDAO {
 				System.out.println(", user_id: " + user_id);
 			}
 			rs.close();
-		} catch (SQLException se) {
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException se) {
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
+			ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
 		}
 		return bookList;
 	}
 
 	@Override
-	public void changeBookStatus(BookStatus bookStatus, int id) {
+	public void changeBookStatus(BookStatus bookStatus, int id) throws DAOException {
 		try {
 			prStmt = connection.prepareStatement(CHANGE_BOOK_STATUS);
 			prStmt.setString(1, bookStatus.name());
 			prStmt.setInt(2, id);
 			prStmt.executeUpdate();
 			// connection.commit();
-		} catch (SQLException se) {
-			if (connection != null) {
-				try {
-					// System.err.print("Transaction is being rolled back");
-					// connection.rollback();
-					connection.close();
-				} catch (SQLException excep) {
-				}
-			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+			// System.err.print("Transaction is being rolled back");
+			// connection.rollback();
 		} finally {
-			try {
-				if (prStmt != null)
-					prStmt.close();
-			} catch (SQLException se) {
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException se) {
-			}
+			ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
-
 	}
 
 	@Override
-	public void deleteBook(int id) {
+	public void deleteBook(int id) throws DAOException {
 		try {
 			prStmt = connection.prepareStatement(DELETE_BOOK);
 			prStmt.setInt(1, id);
 			prStmt.executeUpdate();
 			// connection.commit();
-		} catch (SQLException se) {
-			if (connection != null) {
-				try {
-					// System.err.print("Transaction is being rolled back");
-					// connection.rollback();
-					connection.close();
-				} catch (SQLException excep) {
-				}
-			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if (prStmt != null)
-					prStmt.close();
-			} catch (SQLException se) {
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException se) {
-			}
+			ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
-
 	}
-
-	@Override
-	public void delete() {
-	}
-
 }

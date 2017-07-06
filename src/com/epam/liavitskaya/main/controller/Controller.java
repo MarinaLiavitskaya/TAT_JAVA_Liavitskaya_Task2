@@ -8,15 +8,16 @@ public class Controller {
 	private final char paramDelimeter = ' ';
 
 	public String executeTask(String request) {
-
-		String substring = request.substring(0, request.indexOf(paramDelimeter));
-		System.out.println(substring);
+		String commandName = "";
+		if (request.isEmpty() || request != null) {
+			commandName = request.substring(0, request.indexOf(paramDelimeter));
+		}
 		Command executionCommand;
 
-		CommandName command = CommandName.valueOf(substring);
-		System.out.println(command);
+		CommandName command = CommandName.valueOf(commandName);
 		executionCommand = provider.getCommand(command);
-		String response = null;
+
+		String response = "";
 		response = executionCommand.execute(request);
 		return response;
 	}

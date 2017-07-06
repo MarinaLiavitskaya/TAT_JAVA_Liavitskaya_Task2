@@ -1,7 +1,5 @@
 package com.epam.liavitskaya.main.bean;
 
-import java.util.Map;
-
 import com.epam.liavitskaya.main.enums.UserRoles;
 import com.epam.liavitskaya.main.enums.UserStatus;
 
@@ -9,11 +7,13 @@ public class User {
 
 	private int userId;
 	private String userName;
+	private String userPassportNo;
+	private String phone;
+	private String email;
 	private UserRoles userRole;
 	private String login;
 	private String password;
 	private UserStatus userStatus;
-	private Map<Integer, Book> libraryCard;
 
 	public User() {
 	}
@@ -24,7 +24,7 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(String userName, UserRoles userRole, String login, String password, UserStatus userStatus) {		
+	public User(String userName, UserRoles userRole, String login, String password, UserStatus userStatus) {
 		this.userName = userName;
 		this.userRole = userRole;
 		this.login = login;
@@ -32,15 +32,18 @@ public class User {
 		this.userStatus = userStatus;
 	}
 
-	public User(int userId, String userName, UserRoles userRole, String login, String password, UserStatus userStatus,
-			Map<Integer, Book> libraryCard) {
+	
+	public User(int userId, String userName, String userPassportNo, String phone, String email, UserRoles userRole,
+			String login, String password, UserStatus userStatus) {		
 		this.userId = userId;
 		this.userName = userName;
+		this.userPassportNo = userPassportNo;
+		this.phone = phone;
+		this.email = email;
 		this.userRole = userRole;
 		this.login = login;
 		this.password = password;
 		this.userStatus = userStatus;
-		this.libraryCard = libraryCard;
 	}
 
 	public int getUserId() {
@@ -57,6 +60,30 @@ public class User {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}	
+
+	public String getUserPassportNo() {
+		return userPassportNo;
+	}
+
+	public void setUserPassportNo(String userPassportNo) {
+		this.userPassportNo = userPassportNo;
+	}	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUserRole() {
@@ -91,11 +118,10 @@ public class User {
 		this.userStatus = UserStatus.valueOf(userStatus);
 	}
 
-	public Map<Integer, Book> getLibraryCard() {
-		return libraryCard;
-	}
-
-	public void setLibraryCard(Map<Integer, Book> libraryCard) {
-		this.libraryCard = libraryCard;
-	}
+	@Override
+	public String toString() {
+		return "User [userName=" + userName + ", userPassportNo=" + userPassportNo + ", phone=" + phone + ", email="
+				+ email + ", userRole=" + userRole + ", login=" + login + ", userStatus=" + userStatus + "]";
+	}	
+	
 }

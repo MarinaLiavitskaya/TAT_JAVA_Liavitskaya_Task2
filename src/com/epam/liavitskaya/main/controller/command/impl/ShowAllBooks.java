@@ -2,6 +2,8 @@ package com.epam.liavitskaya.main.controller.command.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.epam.liavitskaya.main.bean.Book;
 import com.epam.liavitskaya.main.controller.command.Command;
 import com.epam.liavitskaya.main.service.LibraryService;
@@ -10,6 +12,8 @@ import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
 public class ShowAllBooks implements Command {
 
+	final Logger logger = Logger.getLogger(ShowAllBooks.class);
+	
 	@Override
 	public String execute(String request) {
 		String response = null;
@@ -19,7 +23,7 @@ public class ShowAllBooks implements Command {
 			List<Book> bookFondReview = libraryService.bookFondReviewService();
 			response = "Check here books of fund : " + bookFondReview;
 		} catch (ServiceException e) {
-			// log
+			logger.error("Error during show all books procedure", e);
 			response = "Error during show all books procedure";
 		}
 		return response;

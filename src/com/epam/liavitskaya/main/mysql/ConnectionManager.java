@@ -38,20 +38,7 @@ public class ConnectionManager {
 
 	public static ConnectionManager getManager() {
 		return HolderManager.connectionManager;
-	}
-
-	// private List<Connection> connectionList = new ArrayList<Connection>();
-	//
-	// public Connection getConnection() {
-	// if (connectionList.isEmpty()) {
-	// try {
-	// return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-	// } catch (SQLException e) {
-	// throw new RuntimeException(e);
-	// }
-	// }
-	// return connectionList.remove(0);
-	// }
+	}	
 
 	public Connection getConnection() {
 		if (instance == null) {

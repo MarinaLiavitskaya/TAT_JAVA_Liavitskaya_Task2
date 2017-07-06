@@ -6,6 +6,7 @@ import com.epam.liavitskaya.main.bean.Book;
 import com.epam.liavitskaya.main.dao.BookDAO;
 import com.epam.liavitskaya.main.dao.exception.DAOException;
 import com.epam.liavitskaya.main.dao.impl.SQLBookDao;
+import com.epam.liavitskaya.main.enums.BookStatus;
 import com.epam.liavitskaya.main.service.LibraryService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 
@@ -44,9 +45,17 @@ public class LibraryServiceImpl implements LibraryService {
 	}
 
 	@Override
-	public void orderBookService(String request) {
-		// TODO Auto-generated method stub
-
+	public void orderBookService(String request) throws ServiceException {
+		
+		int bookId = 0;
+		String status = "";
+		BookStatus bookStatus = BookStatus.valueOf(status);		
+		BookDAO bookDAO = new SQLBookDao();
+		try {
+			bookDAO.changeBookStatus(bookStatus, bookId);
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}
 	}
 
 	@Override

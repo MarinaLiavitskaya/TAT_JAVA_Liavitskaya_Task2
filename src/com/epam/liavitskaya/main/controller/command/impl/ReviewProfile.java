@@ -1,7 +1,5 @@
 package com.epam.liavitskaya.main.controller.command.impl;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 
 import com.epam.liavitskaya.main.bean.User;
@@ -10,25 +8,24 @@ import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
-public class ShowAllUsers implements Command {
-	
-	final Logger logger = Logger.getLogger(ShowAllUsers.class);
+public class ReviewProfile implements Command {
+
+	final Logger logger = Logger.getLogger(ReviewProfile.class);
 
 	@Override
 	public String execute(String request) {
-
 		String response = null;
 
+		int id = 0;		// !!!
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		ClientService clientService = serviceProvider.getClientServiceImpl();
 		try {
-			List<User> showAllUsers = clientService.showAllUsers();
-			response = "All users : " + showAllUsers;
+			ClientService clientService = serviceProvider.getClientServiceImpl();
+			User user = clientService.reviewProfile(id);
+			response = "user profile : " + user;
 		} catch (ServiceException e) {
-			logger.error("Error during show all users procedure", e);
-			response = "Error during show all users procedure";
+			logger.error("Error during user profile review procedure", e);
+			response = "Error during user profile review procedure";
 		}
-
 		return response;
 	}
 

@@ -19,8 +19,8 @@ public class Runner {
 		//System.out.println(controller.executeTask("REVIEW_PROFILE 2"));			+
 		//System.out.println(controller.executeTask("EDIT_PROFILE 3 Molly MP2302323 2595959 email333 login passw3"));		+
 		//System.out.println(controller.executeTask("BAN_USER 5"));
-		controller.executeTask("MAKE_USER_ADMIN 2");
-		controller.executeTask("MAKE_ADMIN_USER 3");
+		controller.executeTask("MAKE_USER_ADMIN ADMIN 2");
+		controller.executeTask("MAKE_ADMIN_USER USER 3");
 		//System.out.println(ValidatorUtil.isLoginValid("tom111"));
 		//System.out.println(ValidatorUtil.isPasswordValid("USERr11@"));		
 		

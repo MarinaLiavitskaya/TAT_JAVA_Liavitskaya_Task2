@@ -18,6 +18,8 @@ public interface ClientService {
 	void editProfile(String request) throws ServiceException;
 	
 	void editStatus(String request) throws ServiceException;
+	
+	void editRole(String request) throws ServiceException;
 
 	List<User> showAllUsers() throws ServiceException;
 

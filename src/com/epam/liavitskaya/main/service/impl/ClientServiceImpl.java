@@ -131,6 +131,20 @@ public class ClientServiceImpl implements ClientService {
 			throw new ServiceException();
 		}		
 	}
+	
+	@Override
+	public void editRole(String request) throws ServiceException {
+		UserDAO userDAO = new SQLUserDao();
+		String[] parseRequest = RequestParserUtil.parseRequest(request, 3);
+		String status = parseRequest[1];
+		UserRoles userRole = UserRoles.valueOf(status);
+		int id = Integer.parseInt(parseRequest[2]);
+		try {
+			userDAO.changeUserRole(userRole, id);
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}		
+	}
 
 	@Override
 	public List<User> showAllUsers() throws ServiceException {

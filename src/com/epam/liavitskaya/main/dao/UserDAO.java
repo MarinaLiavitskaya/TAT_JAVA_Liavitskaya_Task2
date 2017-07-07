@@ -13,7 +13,7 @@ public interface UserDAO {
 	void singOut(String login) throws DAOException;
 	void registration(User user) throws DAOException;
 	User getProfile(int id) throws DAOException;
-	void updateProfile(User user) throws DAOException;
+	void updateProfile(User user, int id) throws DAOException;
 	List<User> showAllUsers() throws DAOException;
 	List<String> showAllLogins() throws DAOException;
 	List<String> showAllPasswords() throws DAOException;

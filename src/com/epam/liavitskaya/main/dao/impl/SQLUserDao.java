@@ -20,21 +20,25 @@ public class SQLUserDao implements UserDAO {
 	static final String ADD_USER = "INSERT INTO USERS(name, passport, phone, email, role, login, password, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	static final String ADD_USER_QUICK = "INSERT INTO USERS(name, role, login, password, status) VALUES(?, ?, ?, ?, ?)";
 	static final String SHOW_ALL_USERS = "SELECT * FROM USERS";
-	static final String SHOW_USER = "SELECT * FROM USERS WHERE id = ?";
-	static final String UPDATE_USER_PROFILE = "UPDATE USERS SET name = ?, passport = ?, phone = ?, email = ?, login = ? WHERE ID = ?";
-	static final String CHANGE_USER_ROLE = "UPDATE USERS SET role = ? WHERE ID = ?";
-	static final String CHANGE_USER_STATUS = "UPDATE USERS SET status = ? WHERE ID = ?";
-	static final String DELETE_USER = "DELETE FROM USERS WHERE ID = ?";
+	static final String SHOW_USER = "SELECT * FROM USERS WHERE user_id = ?";
+	static final String UPDATE_USER_PROFILE = "UPDATE USERS SET name = ?, passport = ?, phone = ?, email = ?, login = ?, password = ? WHERE user_ID = ?";
+	static final String CHANGE_USER_ROLE = "UPDATE USERS SET role = ? WHERE user_ID = ?";
+	static final String CHANGE_USER_STATUS = "UPDATE USERS SET status = ? WHERE user_ID = ?";
+	static final String DELETE_USER = "DELETE FROM USERS WHERE user_ID = ?";
 
+	Connection connection = null;
 	PreparedStatement prStmt = null;
 	ResultSet rs = null;
 
+	public SQLUserDao() {
+		connection = ConnectionManager.getManager().getConnection();
+	}
+
 	@Override
 	public void singIn(String login, String password) throws DAOException {
-		Connection connection = null;
+
 		User currentUser = new User(); // подумать куда его положить
 		try {
-			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(SHOW_USER);
 			prStmt.setString(1, login);
 			rs = prStmt.executeQuery();
@@ -59,7 +63,8 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			//ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt, rs);
 		}
 	}
 
@@ -141,13 +146,14 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-		//	ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt, rs);
 		}
 		return user;
 	}
 
 	@Override
-	public void updateProfile(User user) throws DAOException {
+	public void updateProfile(User user, int id) throws DAOException {
 		Connection connection = null;
 		try {
 			connection = ConnectionManager.getManager().getConnection();
@@ -157,12 +163,14 @@ public class SQLUserDao implements UserDAO {
 			prStmt.setString(3, user.getPhone());
 			prStmt.setString(4, user.getEmail());
 			prStmt.setString(5, user.getLogin());
-			prStmt.setInt(6, user.getUserId());
+			prStmt.setString(6, user.getPassword());
+			prStmt.setInt(7, id);
 			prStmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 
@@ -193,14 +201,7 @@ public class SQLUserDao implements UserDAO {
 				String password = rs.getString("password");
 				user.setPassword(password);
 				String status = rs.getString("status");
-				user.setUserStatus(status);
-				// Display values
-				 System.out.println("ID: " + id);
-				 System.out.println(", name: " + name);
-				 System.out.println(", role: " + role);
-				 System.out.println(", login: " + login);
-				 System.out.println(", Status: " + status);
-				 System.out.println(", password: " + password);
+				user.setUserStatus(status);		
 				userList.add(user);
 			}
 		} catch (SQLException e) {
@@ -213,19 +214,17 @@ public class SQLUserDao implements UserDAO {
 	}
 
 	@Override
-	public void changeUserStatus(UserStatus userStatus, int id) throws DAOException {
-		Connection connection = null;
-		try {
-			connection = ConnectionManager.getManager().getConnection();
+	public void changeUserStatus(UserStatus userStatus, int id) throws DAOException {	
+		try {			
 			prStmt = connection.prepareStatement(CHANGE_USER_STATUS);
 			prStmt.setString(1, userStatus.name());
 			prStmt.setInt(2, id);
-			prStmt.executeUpdate();
-			// connection.commit();
+			prStmt.executeUpdate();			
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 
@@ -237,12 +236,12 @@ public class SQLUserDao implements UserDAO {
 			prStmt = connection.prepareStatement(CHANGE_USER_ROLE);
 			prStmt.setString(1, userRoles.name());
 			prStmt.setInt(2, id);
-			prStmt.executeUpdate();
-			// connection.commit();
+			prStmt.executeUpdate();		
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 
@@ -253,12 +252,12 @@ public class SQLUserDao implements UserDAO {
 			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(DELETE_USER);
 			prStmt.setInt(1, userId);
-			prStmt.executeUpdate();
-			// connection.commit();
+			prStmt.executeUpdate();			
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 
@@ -271,8 +270,7 @@ public class SQLUserDao implements UserDAO {
 			prStmt = connection.prepareStatement(SHOW_ALL_USERS);
 			rs = prStmt.executeQuery();
 			while (rs.next()) {
-				String login = rs.getString("login");
-				System.out.println("login login login");
+				String login = rs.getString("login");				
 				loginList.add(login);
 			}
 		} catch (SQLException e) {
@@ -280,8 +278,7 @@ public class SQLUserDao implements UserDAO {
 		} finally {
 			// ConnectionManager.getManager().closeDbResources(connection,
 			// prStmt);
-		}
-		System.out.println("showAllLogins - loginList - " + loginList);
+		}		
 		return loginList;
 	}
 
@@ -303,7 +300,6 @@ public class SQLUserDao implements UserDAO {
 			// ConnectionManager.getManager().closeDbResources(connection,
 			// prStmt);
 		}
-		System.out.println("showAllPasswords - passwordList - " + passwordList);
 		return passwordList;
 	}
 

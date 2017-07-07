@@ -23,17 +23,17 @@ public class User {
 		this.login = login;
 		this.password = password;
 	}
-	
+
 	public User(String userName, UserRoles userRole, String login, String password, UserStatus userStatus) {
 		this.userName = userName;
 		this.userRole = userRole;
 		this.login = login;
 		this.password = password;
 		this.userStatus = userStatus;
-	}	
-	
+	}
+
 	public User(String userName, String passportNo, String phone, String email, UserRoles userRole, String login,
-			String password, UserStatus userStatus) {		
+			String password, UserStatus userStatus) {
 		this.userName = userName;
 		this.passportNo = passportNo;
 		this.phone = phone;
@@ -43,9 +43,20 @@ public class User {
 		this.password = password;
 		this.userStatus = userStatus;
 	}
+	
+	
+
+	public User(String userName, String passportNo, String phone, String email, String login, String password) {		
+		this.userName = userName;
+		this.passportNo = passportNo;
+		this.phone = phone;
+		this.email = email;
+		this.login = login;
+		this.password = password;
+	}
 
 	public User(int userId, String userName, String passportNo, String phone, String email, UserRoles userRole,
-			String login, String password, UserStatus userStatus) {		
+			String login, String password, UserStatus userStatus) {
 		this.userId = userId;
 		this.userName = userName;
 		this.passportNo = passportNo;
@@ -71,7 +82,7 @@ public class User {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}	
+	}
 
 	public String getPassportNo() {
 		return passportNo;
@@ -79,7 +90,7 @@ public class User {
 
 	public void setPassportNo(String passportNo) {
 		this.passportNo = passportNo;
-	}	
+	}
 
 	public String getPhone() {
 		return phone;
@@ -131,8 +142,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", userPassportNo=" + passportNo + ", phone=" + phone + ", email="
-				+ email + ", userRole=" + userRole + ", login=" + login + ", userStatus=" + userStatus + "]";
-	}	
-	
+		return "User [userName = " + userName + ", userPassportNo = " + passportNo + ", phone = " + phone + ", email = "
+				+ email + ", userRole = " + userRole + ", login = " + login + ", userStatus = " + userStatus + "]";
+	}
+
 }

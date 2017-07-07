@@ -16,17 +16,15 @@ public class ReviewProfile implements Command {
 	public String execute(String request) {
 		String response = null;
 
-		int id = 0;		// !!!
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		try {
 			ClientService clientService = serviceProvider.getClientServiceImpl();
-			User user = clientService.reviewProfile(id);
-			response = "user profile : " + user;
+			User user = clientService.reviewProfile(request);
+			response = user.toString();
 		} catch (ServiceException e) {
 			logger.error("Error during user profile review procedure", e);
 			response = "Error during user profile review procedure";
 		}
 		return response;
 	}
-
 }

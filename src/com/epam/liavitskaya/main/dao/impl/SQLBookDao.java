@@ -54,7 +54,7 @@ public class SQLBookDao implements BookDAO {
 			prStmt.setString(1, book.getDescription());
 			prStmt.setInt(2, book.getBookId());
 			prStmt.executeUpdate();
-			// connection.commit();
+			prStmt.close();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
@@ -72,29 +72,15 @@ public class SQLBookDao implements BookDAO {
 			rs = prStmt.executeQuery();
 			while (rs.next()) {
 				book = new Book();
-				book.setBookId(rs.getInt(1));
-				book.setTitle(rs.getString(2));
-				book.setAuthor(rs.getString(3));
-				book.setDescription(rs.getString(4));
-				book.setBookStatus(rs.getString(5));
+				book.setBookId(rs.getInt("book_id"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setDescription(rs.getString("description"));
+				book.setBookStatus(rs.getString("status"));
 				bookList.add(book);
-
-				int id = rs.getInt("book_id");
-				String title = rs.getString("title");
-				String author = rs.getString("author");
-				String description = rs.getString("description");
-				String status = rs.getString("status");
-				int user_id = rs.getInt("user_id");
-
-				// Display values
-				System.out.println("ID: " + id);
-				System.out.println(", title: " + title);
-				System.out.println(", author: " + author);
-				System.out.println(", Status: " + status);
-				System.out.println(", description: " + description);
-				System.out.println(", user_id: " + user_id);
 			}
 			rs.close();
+			prStmt.close();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
@@ -125,7 +111,6 @@ public class SQLBookDao implements BookDAO {
 			prStmt = connection.prepareStatement(DELETE_BOOK);
 			prStmt.setInt(1, id);
 			prStmt.executeUpdate();
-			// connection.commit();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {

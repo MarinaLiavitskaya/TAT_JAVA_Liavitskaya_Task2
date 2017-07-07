@@ -92,8 +92,10 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public User reviewProfile(int id) throws ServiceException {
+	public User reviewProfile(String request) throws ServiceException {
 		UserDAO userDAO = new SQLUserDao();
+		String[] parseRequest = RequestParserUtil.parseRequest(request, 2);
+		int id = Integer.parseInt(parseRequest[1]);
 		User profile = new User();
 		try {
 			profile = userDAO.getProfile(id);
@@ -104,13 +106,30 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void editProfile(User user) throws ServiceException {
+	public void editProfile(String request) throws ServiceException {
 		UserDAO userDAO = new SQLUserDao();
+		String[] parseRequest = RequestParserUtil.parseRequest(request, 8);
+		int id = Integer.parseInt(parseRequest[1]);
+		User user = new User(parseRequest[2], parseRequest[3], parseRequest[4], parseRequest[5], parseRequest[6], parseRequest[7]);
 		try {
-			userDAO.updateProfile(user);
+			userDAO.updateProfile(user, id);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
+	}
+	
+	@Override
+	public void editStatus(String request) throws ServiceException {
+		UserDAO userDAO = new SQLUserDao();
+		String[] parseRequest = RequestParserUtil.parseRequest(request, 2);
+		String status = parseRequest[0];
+		UserStatus userStatus = UserStatus.valueOf(status);
+		int id = Integer.parseInt(parseRequest[1]);		
+		try {
+			userDAO.changeUserStatus(userStatus, id);
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}		
 	}
 
 	@Override
@@ -184,4 +203,5 @@ public class ClientServiceImpl implements ClientService {
 		}		
 		return fetchAllLogins.contains(login);
 	}
+	
 }

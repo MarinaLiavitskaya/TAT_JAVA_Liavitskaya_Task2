@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="TestSuite">
+
+	<test name="example">
+		<classes>
+			<class name="com.epam.liavitskaya.test.controller.command.impl.AddNewBookTest.java" />
+			<class name="com.epam.liavitskaya.test.controller.command.impl.AwayBookTest.java" />
+		</classes>
+	</test>
+
+	<test name="database">
+		<classes>
+			<class name="com.mkyong.testng.examples.suite.TestConfig" />
+			<class name="com.mkyong.testng.examples.suite.TestDatabase" />
+		</classes>
+	</test>
+
+</suite>

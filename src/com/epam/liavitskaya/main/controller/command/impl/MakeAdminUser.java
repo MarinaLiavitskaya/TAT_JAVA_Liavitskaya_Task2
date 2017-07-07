@@ -7,22 +7,22 @@ import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
-public class EditProfile implements Command {
+public class MakeAdminUser implements Command {
 
-	final Logger logger = Logger.getLogger(EditProfile.class);
+	final Logger logger = Logger.getLogger(MakeAdminUser.class);
 
 	@Override
 	public String execute(String request) {
+
 		String response = null;
-					
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		try {
-			ClientService clientServiceImpl = serviceProvider.getClientServiceImpl();
-			clientServiceImpl.editProfile(request);
-			response = "profile is edited";
+		try {			
+			ServiceProvider provider = ServiceProvider.getInstance();
+			ClientService clientServiceImpl = provider.getClientServiceImpl();
+			clientServiceImpl.editStatus(request);
+			response = "Admin became a user";
 		} catch (ServiceException e) {
-			logger.error("Error during edit profile procedure", e);
-			response = "Error during edit profile procedure";
+			logger.error("Error during make admin user procedure", e);
+			response = "Error during make admin user procedure";
 		}
 		return response;
 	}

@@ -13,7 +13,6 @@ import com.epam.liavitskaya.main.dao.exception.DAOException;
 import com.epam.liavitskaya.main.enums.UserRoles;
 import com.epam.liavitskaya.main.enums.UserStatus;
 import com.epam.liavitskaya.main.mysql.ConnectionManager;
-import com.epam.liavitskaya.main.utils.PasswordEncryptorUtil;
 
 public class SQLUserDao implements UserDAO {
 
@@ -27,22 +26,19 @@ public class SQLUserDao implements UserDAO {
 	static final String CHANGE_USER_STATUS = "UPDATE USERS SET status = ? WHERE ID = ?";
 	static final String DELETE_USER = "DELETE FROM USERS WHERE ID = ?";
 
-	Connection connection = null;
 	PreparedStatement prStmt = null;
 	ResultSet rs = null;
 
-	public SQLUserDao() {
-		connection = ConnectionManager.getManager().getConnection();
-	}
-
 	@Override
 	public void singIn(String login, String password) throws DAOException {
-		User currentUser = new User();			// подумать куда его положить
+		Connection connection = null;
+		User currentUser = new User(); // подумать куда его положить
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(SHOW_USER);
 			prStmt.setString(1, login);
 			rs = prStmt.executeQuery();
-			while (rs.next()) {	
+			while (rs.next()) {
 				int id = rs.getInt("id");
 				currentUser.setUserId(id);
 				String name = rs.getString("name");
@@ -54,8 +50,8 @@ public class SQLUserDao implements UserDAO {
 				String email = rs.getString("email");
 				currentUser.setEmail(email);
 				String role = rs.getString("role");
-				currentUser.setUserRole(role);				
-				currentUser.setLogin(login);				
+				currentUser.setUserRole(role);
+				currentUser.setLogin(login);
 				currentUser.setPassword(password);
 				String status = rs.getString("status");
 				currentUser.setUserStatus(status);
@@ -63,21 +59,23 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
+			//ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
 		}
 	}
 
 	@Override
 	public void singOut(String login) {
-		//	что-то хранящее юзера обнулить
+		// что-то хранящее юзера обнулить
 	}
 
 	@Override
 	public void registration(User user) throws DAOException {
+		Connection connection = null;
+		connection = ConnectionManager.getManager().getConnection();
 		try {
 			prStmt = connection.prepareStatement(ADD_USER);
 			prStmt.setString(1, user.getUserName());
-			prStmt.setString(2, PasswordEncryptorUtil.encryptPassword(user.getUserPassportNo()));   //  !!!! перенести в сервис !
+			prStmt.setString(2, user.getPassportNo());
 			prStmt.setString(3, user.getPhone());
 			prStmt.setString(4, user.getEmail());
 			prStmt.setString(5, user.getUserRole());
@@ -88,14 +86,17 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
-	
+
 	public void registrationQuick(User user) throws DAOException {
+		Connection connection = null;
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(ADD_USER_QUICK);
-			prStmt.setString(1, user.getUserName());						
+			prStmt.setString(1, user.getUserName());
 			prStmt.setString(3, user.getUserRole());
 			prStmt.setString(4, user.getLogin());
 			prStmt.setString(5, user.getPassword());
@@ -104,18 +105,21 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
-	}	
+	}
 
 	@Override
 	public User getProfile(int id) throws DAOException {
-		User user = new User();		
+		Connection connection = null;
+		User user = new User();
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(SHOW_USER);
 			prStmt.setInt(1, id);
 			rs = prStmt.executeQuery();
-			while (rs.next()) {	
+			while (rs.next()) {
 				user.setUserId(id);
 				String name = rs.getString("name");
 				user.setUserName(name);
@@ -137,38 +141,42 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
+		//	ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
 		}
 		return user;
 	}
-	
+
 	@Override
 	public void updateProfile(User user) throws DAOException {
+		Connection connection = null;
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(UPDATE_USER_PROFILE);
 			prStmt.setString(1, user.getUserName());
-			prStmt.setString(2, user.getUserPassportNo());
+			prStmt.setString(2, user.getPassportNo());
 			prStmt.setString(3, user.getPhone());
-			prStmt.setString(4, user.getEmail());			
-			prStmt.setString(5, user.getLogin());			
+			prStmt.setString(4, user.getEmail());
+			prStmt.setString(5, user.getLogin());
 			prStmt.setInt(6, user.getUserId());
 			prStmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
 	}
 
 	@Override
 	public List<User> showAllUsers() throws DAOException {
+		Connection connection = null;
 		User user = new User();
-		List<User> userList = new ArrayList<>();		
+		List<User> userList = new ArrayList<>();
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(SHOW_ALL_USERS);
 			rs = prStmt.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt("id");
+				int id = rs.getInt("user_id");
 				user.setUserId(id);
 				String name = rs.getString("name");
 				user.setUserName(name);
@@ -187,25 +195,28 @@ public class SQLUserDao implements UserDAO {
 				String status = rs.getString("status");
 				user.setUserStatus(status);
 				// Display values
-//				System.out.println("ID: " + id);
-//				System.out.println(", name: " + name);
-//				System.out.println(", role: " + role);
-//				System.out.println(", login: " + login);
-//				System.out.println(", Status: " + status);
-//				System.out.println(", password: " + password);
+				 System.out.println("ID: " + id);
+				 System.out.println(", name: " + name);
+				 System.out.println(", role: " + role);
+				 System.out.println(", login: " + login);
+				 System.out.println(", Status: " + status);
+				 System.out.println(", password: " + password);
 				userList.add(user);
 			}
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt, rs);
 		}
 		return userList;
 	}
 
 	@Override
 	public void changeUserStatus(UserStatus userStatus, int id) throws DAOException {
+		Connection connection = null;
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(CHANGE_USER_STATUS);
 			prStmt.setString(1, userStatus.name());
 			prStmt.setInt(2, id);
@@ -214,28 +225,32 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
 	}
 
 	@Override
 	public void changeUserRole(UserRoles userRoles, int id) throws DAOException {
+		Connection connection = null;
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(CHANGE_USER_ROLE);
 			prStmt.setString(1, userRoles.name());
-			prStmt.setInt(2, id);			
+			prStmt.setInt(2, id);
 			prStmt.executeUpdate();
 			// connection.commit();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
 	}
 
 	@Override
 	public void deleteUser(int userId) throws DAOException {
+		Connection connection = null;
 		try {
+			connection = ConnectionManager.getManager().getConnection();
 			prStmt = connection.prepareStatement(DELETE_USER);
 			prStmt.setInt(1, userId);
 			prStmt.executeUpdate();
@@ -243,31 +258,38 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			//ConnectionManager.getManager().closeDbResources(connection, prStmt);
 		}
 	}
 
 	@Override
 	public List<String> showAllLogins() throws DAOException {
-		List<String> loginList = new ArrayList<>();		
+		Connection connection = null;
+		connection = ConnectionManager.getManager().getConnection();
+		List<String> loginList = new ArrayList<>();
 		try {
 			prStmt = connection.prepareStatement(SHOW_ALL_USERS);
 			rs = prStmt.executeQuery();
 			while (rs.next()) {
 				String login = rs.getString("login");
+				System.out.println("login login login");
 				loginList.add(login);
 			}
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
+		System.out.println("showAllLogins - loginList - " + loginList);
 		return loginList;
 	}
 
 	@Override
 	public List<String> showAllPasswords() throws DAOException {
-		List<String> passwordList = new ArrayList<>();		
+		Connection connection = null;
+		connection = ConnectionManager.getManager().getConnection();
+		List<String> passwordList = new ArrayList<>();
 		try {
 			prStmt = connection.prepareStatement(SHOW_ALL_USERS);
 			rs = prStmt.executeQuery();
@@ -278,8 +300,10 @@ public class SQLUserDao implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
+		System.out.println("showAllPasswords - passwordList - " + passwordList);
 		return passwordList;
 	}
 

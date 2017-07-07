@@ -7,18 +7,18 @@ import com.epam.liavitskaya.main.service.exception.ServiceException;
 
 public interface LibraryService {
 
-	void addNewBookService(String request) throws ServiceException; // add
+	void addNewBookService(String request) throws ServiceException;
 
-	void addEditedBookService(String request) throws ServiceException; // edit
+	void addEditedBookService(String request) throws ServiceException;
 
-	List<Book> bookFondReviewService() throws ServiceException; // select
+	List<Book> bookFondReviewService() throws ServiceException;
 
 	void orderBookService(String request) throws ServiceException;
 
 	void editBookDescriptionService(String request) throws ServiceException;
 
-	void changeBookStatuServices(String request) throws ServiceException; // update
+	void changeBookStatusServices(String request) throws ServiceException;
 
-	void deleteBookService(String request) throws ServiceException; // delete
+	void deleteBookService(String request) throws ServiceException;
 
 }

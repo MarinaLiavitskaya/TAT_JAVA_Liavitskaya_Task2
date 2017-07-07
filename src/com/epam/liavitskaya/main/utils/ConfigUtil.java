@@ -14,8 +14,10 @@ public class ConfigUtil {
 
 	private ConfigUtil() throws IOException {
 		properties = new Properties();
+		System.out.println("**** 1");
 		InputStream input = getClass().getClassLoader()
 				.getResourceAsStream("library_db.properties");
+		System.out.println("**** 2");
 		try {
 			properties.load(input);
 		} catch (IOException e) {

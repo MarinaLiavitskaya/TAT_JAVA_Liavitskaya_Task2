@@ -7,7 +7,7 @@ public class User {
 
 	private int userId;
 	private String userName;
-	private String userPassportNo;
+	private String passportNo;
 	private String phone;
 	private String email;
 	private UserRoles userRole;
@@ -30,14 +30,25 @@ public class User {
 		this.login = login;
 		this.password = password;
 		this.userStatus = userStatus;
+	}	
+	
+	public User(String userName, String passportNo, String phone, String email, UserRoles userRole, String login,
+			String password, UserStatus userStatus) {		
+		this.userName = userName;
+		this.passportNo = passportNo;
+		this.phone = phone;
+		this.email = email;
+		this.userRole = userRole;
+		this.login = login;
+		this.password = password;
+		this.userStatus = userStatus;
 	}
 
-	
-	public User(int userId, String userName, String userPassportNo, String phone, String email, UserRoles userRole,
+	public User(int userId, String userName, String passportNo, String phone, String email, UserRoles userRole,
 			String login, String password, UserStatus userStatus) {		
 		this.userId = userId;
 		this.userName = userName;
-		this.userPassportNo = userPassportNo;
+		this.passportNo = passportNo;
 		this.phone = phone;
 		this.email = email;
 		this.userRole = userRole;
@@ -62,12 +73,12 @@ public class User {
 		this.userName = userName;
 	}	
 
-	public String getUserPassportNo() {
-		return userPassportNo;
+	public String getPassportNo() {
+		return passportNo;
 	}
 
-	public void setUserPassportNo(String userPassportNo) {
-		this.userPassportNo = userPassportNo;
+	public void setPassportNo(String passportNo) {
+		this.passportNo = passportNo;
 	}	
 
 	public String getPhone() {
@@ -120,7 +131,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", userPassportNo=" + userPassportNo + ", phone=" + phone + ", email="
+		return "User [userName=" + userName + ", userPassportNo=" + passportNo + ", phone=" + phone + ", email="
 				+ email + ", userRole=" + userRole + ", login=" + login + ", userStatus=" + userStatus + "]";
 	}	
 	

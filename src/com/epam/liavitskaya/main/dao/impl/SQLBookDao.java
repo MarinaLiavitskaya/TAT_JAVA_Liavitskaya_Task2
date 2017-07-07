@@ -15,12 +15,12 @@ import com.epam.liavitskaya.main.mysql.ConnectionManager;
 
 public class SQLBookDao implements BookDAO {
 
-	static final String ADD_BOOK = "INSERT INTO BOOKS(id, title, author, description, status, user_id) VALUES(?, ?, ?, ?, ?, ?)";
+	static final String ADD_BOOK = "INSERT INTO BOOKS(title, author, description, status) VALUES(?, ?, ?, ?)";
 	static final String SHOW_ALL_BOOKS = "SELECT * FROM BOOKS";
-	static final String UPDATE_BOOK = "UPDATE BOOKS SET column1 = value1, column2 = value2, ... WHERE ID = ?";
-	static final String UPDATE_BOOK_DESCRIPTION = "UPDATE BOOKS SET description = ? WHERE ID = ?";
-	static final String CHANGE_BOOK_STATUS = "UPDATE BOOKS SET status = ? WHERE ID = ?";
-	static final String DELETE_BOOK = "DELETE FROM BOOKS WHERE ID = ?";
+	static final String UPDATE_BOOK = "UPDATE BOOKS SET column1 = value1, column2 = value2, ... WHERE BOOK_ID = ?";
+	static final String UPDATE_BOOK_DESCRIPTION = "UPDATE BOOKS SET description = ? WHERE BOOK_ID = ?";
+	static final String CHANGE_BOOK_STATUS = "UPDATE BOOKS SET status = ? WHERE BOOK_ID = ?";
+	static final String DELETE_BOOK = "DELETE FROM BOOKS WHERE BOOK_ID = ?";
 
 	Connection connection = null;
 	PreparedStatement prStmt = null;
@@ -34,21 +34,21 @@ public class SQLBookDao implements BookDAO {
 	public void addBook(Book book) throws DAOException {
 		try {
 			prStmt = connection.prepareStatement(ADD_BOOK);
-			prStmt.setInt(1, book.getBookId());
-			prStmt.setString(2, book.getTitle());
-			prStmt.setString(3, book.getAuthor());
-			prStmt.setString(4, book.getDescription());
-			prStmt.setString(5, book.getBookStatus());
+			prStmt.setString(1, book.getTitle());
+			prStmt.setString(2, book.getAuthor());
+			prStmt.setString(3, book.getDescription());
+			prStmt.setString(4, book.getBookStatus());
 			prStmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 
 	@Override
-	public void editBook(Book book) throws DAOException {			// додумать
+	public void editBook(Book book) throws DAOException {
 		try {
 			prStmt = connection.prepareStatement(UPDATE_BOOK);
 			prStmt.setString(1, book.getDescription());
@@ -58,7 +58,8 @@ public class SQLBookDao implements BookDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 
@@ -78,11 +79,11 @@ public class SQLBookDao implements BookDAO {
 				book.setBookStatus(rs.getString(5));
 				bookList.add(book);
 
-				int id = rs.getInt("id");
+				int id = rs.getInt("book_id");
 				String title = rs.getString("title");
 				String author = rs.getString("author");
 				String description = rs.getString("description");
-				int status = rs.getInt("status");
+				String status = rs.getString("status");
 				int user_id = rs.getInt("user_id");
 
 				// Display values
@@ -97,7 +98,8 @@ public class SQLBookDao implements BookDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt, rs);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt, rs);
 		}
 		return bookList;
 	}
@@ -109,13 +111,11 @@ public class SQLBookDao implements BookDAO {
 			prStmt.setString(1, bookStatus.name());
 			prStmt.setInt(2, id);
 			prStmt.executeUpdate();
-			// connection.commit();
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
-			// System.err.print("Transaction is being rolled back");
-			// connection.rollback();
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 
@@ -129,7 +129,8 @@ public class SQLBookDao implements BookDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionManager.getManager().closeDbResources(connection, prStmt);
+			// ConnectionManager.getManager().closeDbResources(connection,
+			// prStmt);
 		}
 	}
 }

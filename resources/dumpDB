@@ -5,24 +5,26 @@ use `library`;
 drop table if exists `users`;
 
 create table `users` (
-				id int(5), 
-				name varchar(255), 
-				role int(1), 
+				id int(5) not null auto_increment primary key, 
+				name varchar(255),
+				passport(255),
+				phone varchar(255),
+				email varchar(255), 
+				role varchar(255), 
 				login varchar(255), 
 				password varchar(255), 
-				status int(1), 
-				library_card int(5));
+				status varchar(255));
                 
                 
                 
 drop table if exists `books`;
 
 create table `books` (
-				id int(5), 
+				id int(5) not null auto_increment primary key, 
 				title varchar(255), 				
 				author varchar(255), 
 				description varchar(255), 
-				status int(1), 
+				status varchar(255), 
 				user_id int(5));
                 
                 

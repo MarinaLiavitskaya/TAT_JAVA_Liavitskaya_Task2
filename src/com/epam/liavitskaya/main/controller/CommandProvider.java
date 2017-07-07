@@ -6,6 +6,7 @@ import java.util.Map;
 import com.epam.liavitskaya.main.controller.command.Command;
 import com.epam.liavitskaya.main.controller.command.impl.AddEditedBook;
 import com.epam.liavitskaya.main.controller.command.impl.AddNewBook;
+import com.epam.liavitskaya.main.controller.command.impl.AwayBook;
 import com.epam.liavitskaya.main.controller.command.impl.DeleteBook;
 import com.epam.liavitskaya.main.controller.command.impl.DeleteUser;
 import com.epam.liavitskaya.main.controller.command.impl.EditBook;
@@ -32,6 +33,7 @@ public class CommandProvider {
 		repository.put(CommandName.ADD_NEW_BOOK, new AddNewBook());
 		repository.put(CommandName.ADD_EDITED_BOOK, new AddEditedBook());
 		repository.put(CommandName.EDIT_BOOK, new EditBook());
+		repository.put(CommandName.AWAY_BOOK, new AwayBook());
 		repository.put(CommandName.SHOW_ALL_BOOKS, new ShowAllBooks());
 		repository.put(CommandName.SHOW_ALL_USERS, new ShowAllUsers());
 		repository.put(CommandName.ORDER_BOOK, new OrderBook());

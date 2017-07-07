@@ -1,6 +1,9 @@
 package com.epam.liavitskaya.main.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import com.epam.liavitskaya.main.bean.User;
 import com.epam.liavitskaya.main.dao.UserDAO;
@@ -11,10 +14,14 @@ import com.epam.liavitskaya.main.enums.UserRoles;
 import com.epam.liavitskaya.main.enums.UserStatus;
 import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
+import com.epam.liavitskaya.main.service.provider.ServiceProvider;
+import com.epam.liavitskaya.main.utils.PasswordEncryptorUtil;
 import com.epam.liavitskaya.main.utils.RequestParserUtil;
 import com.epam.liavitskaya.main.utils.ValidatorUtil;
 
 public class ClientServiceImpl implements ClientService {
+
+	final static Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
 	@Override
 	public void singIn(String login, String password) throws ServiceException {
@@ -57,9 +64,9 @@ public class ClientServiceImpl implements ClientService {
 	public void registration(String request) throws ServiceException {
 		UserDAO userDAO = new SQLUserDao();
 
-		String[] parseRequest = RequestParserUtil.parseRequest(request);
-		String login = parseRequest[3];
-		String password = parseRequest[4];
+		String[] parseRequest = RequestParserUtil.parseRequest(request, 9);
+		String login = parseRequest[6];
+		String password = parseRequest[7];
 
 		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
 			throw new ServiceException();
@@ -68,9 +75,15 @@ public class ClientServiceImpl implements ClientService {
 		if (password == null || password.isEmpty() || !ValidatorUtil.isPasswordValid(password)) {
 			throw new ServiceException();
 		}
-		// if(Validatir.validate()){}
-		User user = new User(parseRequest[1], UserRoles.valueOf(parseRequest[2]), parseRequest[3], parseRequest[4],
-				UserStatus.valueOf(parseRequest[5]));
+
+		String encryptPassword = PasswordEncryptorUtil.encryptPassword(parseRequest[7]);
+
+		if (isPasswordExist(encryptPassword) || isLoginExist(login)) {
+			throw new ServiceException("incorrect registration input");
+		}
+		User user = new User(parseRequest[1], parseRequest[2], parseRequest[3], parseRequest[4],
+				UserRoles.valueOf(parseRequest[5]), parseRequest[6], encryptPassword,
+				UserStatus.valueOf(parseRequest[8]));
 		try {
 			userDAO.registration(user);
 		} catch (DAOException e) {
@@ -123,10 +136,10 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	public List<String> fetchAllLogins() throws ServiceException {
-		List<String> fetchAllLogins = null;
+		List<String> fetchAllLogins = new ArrayList<>();
 		UserDAO userDAO = new SQLUserDao();
 		try {
-			userDAO.showAllLogins();
+			fetchAllLogins = userDAO.showAllLogins();
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
@@ -134,13 +147,41 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	public List<String> fetchAllPasswords() throws ServiceException {
-		List<String> fetchAllPasswords = null;
+		List<String> fetchAllPasswords = new ArrayList<>();
 		UserDAO userDAO = new SQLUserDao();
 		try {
-			userDAO.showAllPasswords();
+			fetchAllPasswords = userDAO.showAllPasswords();
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
 		return fetchAllPasswords;
+	}
+
+	private static boolean isPasswordExist(String password) {
+
+		ServiceProvider serviceProvider = ServiceProvider.getInstance();
+		ClientService clientService = serviceProvider.getClientServiceImpl();
+		List<String> fetchAllPasswords = new ArrayList<>();
+		try {
+			fetchAllPasswords = clientService.fetchAllPasswords();
+		} catch (ServiceException e) {
+			logger.debug("Error during is Password Original check", e);
+			e.printStackTrace();
+		}
+		return fetchAllPasswords.contains(password);
+	}
+
+	private static boolean isLoginExist(String login) {
+
+		ServiceProvider serviceProvider = ServiceProvider.getInstance();
+		ClientService clientService = serviceProvider.getClientServiceImpl();
+		List<String> fetchAllLogins = new ArrayList<>();
+		try {
+			fetchAllLogins = clientService.fetchAllLogins();
+		} catch (ServiceException e) {
+			logger.debug("Error during is Login Original check", e);
+			e.printStackTrace();
+		}		
+		return fetchAllLogins.contains(login);
 	}
 }

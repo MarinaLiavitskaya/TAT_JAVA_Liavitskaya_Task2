@@ -9,7 +9,7 @@ public class ValidatorUtil {
 //	^                    # Start of the line
 //	  (?=\S+$) 		     # No whitespace allowed in the entire string
 //	     [a-z0-9_-]	     # Match characters and symbols in the list, a-z, 0-9, underscore, hyphen
-//	             {3,15}  # Length at least 3 characters and maximum length of 15
+//	             {5,15}  # Length at least 5 characters and maximum length of 15
 //	$                    # End of the line
 	private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 	// ^ # start-of-string

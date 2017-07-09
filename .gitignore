@@ -4,4 +4,4 @@
 .classpath
 test-output/
 log4j-application.log
-.settings
+/.settings

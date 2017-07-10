@@ -19,7 +19,7 @@ public class WriteOffBook implements Command {
 		try {
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
-			libraryService.changeBookStatusService(request);
+			libraryService.writeOffBookService(request);
 			response = "book is written off";
 
 		} catch (ServiceException e) {

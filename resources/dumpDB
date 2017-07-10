@@ -25,12 +25,4 @@ create table `books` (
 				author varchar(255), 
 				description varchar(255), 
 				status varchar(255), 
-				user_id int(5));
-                
-                
-                
-drop table if exists `library_cards`;
-
-create table `library_cards` (
-				user_id int(5), 
-				book_id int(5));
+				user_id int(5));                

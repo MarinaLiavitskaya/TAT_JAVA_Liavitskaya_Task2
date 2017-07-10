@@ -47,9 +47,11 @@ public class User implements Serializable {
 		this.login = login;
 		this.password = password;
 		this.userStatus = userStatus;
-	}
+	}	
 
-	public User(String userName, String passportNo, String phone, String email, String login, String password) {
+	public User(int userId, String userName, String passportNo, String phone, String email, String login,
+			String password) {	
+		this.userId = userId;
 		this.userName = userName;
 		this.passportNo = passportNo;
 		this.phone = phone;
@@ -209,7 +211,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [userName = " + userName + ", userPassportNo = " + passportNo + ", phone = " + phone + ", email = "
+		return "\nUser [userName = " + userName + ", userPassportNo = " + passportNo + ", phone = " + phone + ", email = "
 				+ email + ", userRole = " + userRole + ", login = " + login + ", userStatus = " + userStatus + "]";
 	}
 

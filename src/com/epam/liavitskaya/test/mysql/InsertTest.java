@@ -119,7 +119,7 @@ public class InsertTest {
 
 			for (String insert : insertList) {
 
-				preparedStatement = connection.prepareStatement(insert);
+				preparedStatement = connection.prepareStatement(insert);				
 				preparedStatement.execute();
 				preparedStatement.close();
 

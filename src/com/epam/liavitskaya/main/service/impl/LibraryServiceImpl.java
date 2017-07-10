@@ -19,24 +19,48 @@ public class LibraryServiceImpl implements LibraryService {
 
 		BookDAO bookDAO = new SQLBookDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 4);
-
+		Book book = new Book(splitRequest[1], splitRequest[2], splitRequest[3], BookStatus.AVAILABLE);
+		
 		try {
-			bookDAO.addBook(new Book(splitRequest[1], splitRequest[2], splitRequest[3], BookStatus.AVAILABLE));
+			bookDAO.addBook(book);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
 	}
 
 	@Override
-	public void addEditedBookService(String request) throws ServiceException {
+	public void editBookService(String request) throws ServiceException {
 
 		BookDAO bookDAO = new SQLBookDao();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 5);
+		int id = Integer.parseInt(splitRequest[4]);
+		Book book = new Book(id, splitRequest[1], splitRequest[2], splitRequest[3]);
+		
 		try {
-			// int bookCount = bookDAO.rowCount();
-			// if (id < 1 || bookCount < id) {
-			// throw new ServiceException("incorrect id");
-			// }
-			bookDAO.editBook(new Book());
+			int bookCount = bookDAO.rowCount();
+			if (id < 1 || bookCount < id) {
+				throw new ServiceException("incorrect id");
+			}
+			bookDAO.editBook(book);
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}
+	}
+
+	@Override
+	public void editBookDescriptionService(String request) throws ServiceException {
+
+		BookDAO bookDAO = new SQLBookDao();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
+		String description = splitRequest[1];
+
+		try {
+			int id = Integer.parseInt(splitRequest[2]);
+			int bookCount = bookDAO.rowCount();
+			if (id < 1 || bookCount < id) {
+				throw new ServiceException("incorrect id");
+			}
+			bookDAO.editBookDescription(description, id);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
@@ -75,26 +99,7 @@ public class LibraryServiceImpl implements LibraryService {
 	}
 
 	@Override
-	public void editBookDescriptionService(String request) throws ServiceException {
-
-		BookDAO bookDAO = new SQLBookDao();
-		String idStr = request.substring(request.indexOf(" ") + 1, request.length());
-		int id = Integer.parseInt(idStr);
-		if (id < 1) {
-			throw new ServiceException("incorrect id");
-		}
-		Book book = new Book();
-
-		try {
-			bookDAO.editBook(book);
-		} catch (DAOException e) {
-			throw new ServiceException();
-		}
-
-	}
-
-	@Override
-	public void changeBookStatusService(String request) throws ServiceException {
+	public void writeOffBookService(String request) throws ServiceException {
 
 		BookDAO bookDAO = new SQLBookDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
@@ -113,10 +118,31 @@ public class LibraryServiceImpl implements LibraryService {
 	}
 
 	@Override
+	public void changeBookStatusService(String request) throws ServiceException {
+
+		BookDAO bookDAO = new SQLBookDao();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
+
+		try {
+			int id = Integer.parseInt(splitRequest[1]);
+			BookStatus bookStatus = BookStatus.valueOf(splitRequest[2]);
+			int bookCount = bookDAO.rowCount();
+			if (id < 1 || bookCount < id) {
+				throw new ServiceException("incorrect id");
+			}
+			bookDAO.changeBookStatus(bookStatus, id);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
+	@Override
 	public void deleteBookService(String request) throws ServiceException {
 
 		BookDAO bookDAO = new SQLBookDao();
-		int id = Integer.parseInt(request.substring(request.indexOf(" ") + 1, request.length()));
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
+		int id = Integer.parseInt(splitRequest[1]);
 
 		try {
 			int bookCount = bookDAO.rowCount();

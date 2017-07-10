@@ -17,9 +17,8 @@ public class SQLBookDao implements BookDAO {
 
 	static final String ADD_BOOK = "INSERT INTO BOOKS(title, author, description, status) VALUES(?, ?, ?, ?)";
 	static final String SHOW_ALL_BOOKS = "SELECT * FROM BOOKS";
-	// static final String UPDATE_BOOK = "UPDATE BOOKS SET column1 = value1,
-	// column2 = value2, ... WHERE BOOK_ID = ?";
-	static final String UPDATE_BOOK_DESCRIPTION = "UPDATE BOOKS SET description = ? WHERE BOOK_ID = ?";
+	static final String EDIT_BOOK = "UPDATE BOOKS SET title = ?, author = ?, description = ? WHERE BOOK_ID = ?";
+	static final String EDIT_BOOK_DESCRIPTION = "UPDATE BOOKS SET description = ? WHERE BOOK_ID = ?";
 	static final String CHANGE_BOOK_STATUS = "UPDATE BOOKS SET status = ? WHERE BOOK_ID = ?";
 	static final String ROW_COUNT = "SELECT COUNT(*) FROM BOOKS";
 	static final String DELETE_BOOK = "DELETE FROM BOOKS WHERE BOOK_ID = ?";
@@ -56,9 +55,30 @@ public class SQLBookDao implements BookDAO {
 		PreparedStatement prStmt = null;
 
 		try {
-			prStmt = connection.prepareStatement(UPDATE_BOOK_DESCRIPTION);
-			prStmt.setString(1, book.getDescription());
-			prStmt.setInt(2, book.getBookId());
+			prStmt = connection.prepareStatement(EDIT_BOOK);
+			prStmt.setString(1, book.getTitle());
+			prStmt.setString(2, book.getAuthor());
+			prStmt.setString(3, book.getDescription());
+			prStmt.setInt(4, book.getBookId());
+			prStmt.executeUpdate();
+			prStmt.close();
+
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionManager.getManager().closeDbResources(prStmt);
+		}
+	}
+
+	@Override
+	public void editBookDescription(String description, int id) throws DAOException {
+
+		PreparedStatement prStmt = null;
+
+		try {
+			prStmt = connection.prepareStatement(EDIT_BOOK_DESCRIPTION);
+			prStmt.setString(1, description);
+			prStmt.setInt(2, id);
 			prStmt.executeUpdate();
 			prStmt.close();
 

@@ -26,6 +26,13 @@ public class Book implements Serializable {
 		this.bookStatus = bookStatus;
 	}
 
+	public Book(int bookId, String title, String author, String description) {
+		this.bookId = bookId;
+		this.title = title;
+		this.author = author;
+		this.description = description;
+	}
+
 	public Book(int bookId, String title, String author, String description, BookStatus bookStatus, int userId) {
 		this.bookId = bookId;
 		this.title = title;
@@ -131,7 +138,7 @@ public class Book implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Book [title = " + title + ", author = " + author + ", description = " + description + ", bookStatus = "
+		return "\nBook [title = " + title + ", author = " + author + ", description = " + description + ", bookStatus = "
 				+ bookStatus + "]";
 	}
 }

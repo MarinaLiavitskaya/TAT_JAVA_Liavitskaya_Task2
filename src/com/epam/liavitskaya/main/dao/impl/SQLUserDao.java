@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.epam.liavitskaya.main.bean.User;
+import com.epam.liavitskaya.main.controller.CurrentUser;
 import com.epam.liavitskaya.main.dao.UserDAO;
 import com.epam.liavitskaya.main.dao.exception.DAOException;
 import com.epam.liavitskaya.main.enums.UserRoles;
@@ -17,10 +18,10 @@ import com.epam.liavitskaya.main.mysql.ConnectionManager;
 public class SQLUserDao implements UserDAO {
 
 	static final String ADD_USER = "INSERT INTO USERS(name, passport, phone, email, role, login, password, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-	// static final String ADD_USER_QUICK = "INSERT INTO USERS(name, role,
+	// static final String ADD_USER_2 = "INSERT INTO USERS(name, role,
 	// login, password, status) VALUES(?, ?, ?, ?, ?)";
 	static final String SHOW_ALL_USERS = "SELECT * FROM USERS";
-	static final String SHOW_USER = "SELECT * FROM USERS WHERE user_id = ?";
+	static final String SHOW_USER = "SELECT * FROM USERS WHERE login = ?";
 	static final String UPDATE_USER_PROFILE = "UPDATE USERS SET name = ?, passport = ?, phone = ?, email = ?, login = ?, password = ? WHERE user_ID = ?";
 	static final String CHANGE_USER_ROLE = "UPDATE USERS SET role = ? WHERE user_ID = ?";
 	static final String CHANGE_USER_STATUS = "UPDATE USERS SET status = ? WHERE user_ID = ?";
@@ -38,7 +39,7 @@ public class SQLUserDao implements UserDAO {
 
 		PreparedStatement prStmt = null;
 		ResultSet rs = null;
-		User currentUser = new User(); // подумать куда его положить
+		User currentUser = new User();
 
 		try {
 			prStmt = connection.prepareStatement(SHOW_USER);
@@ -46,7 +47,7 @@ public class SQLUserDao implements UserDAO {
 			rs = prStmt.executeQuery();
 
 			while (rs.next()) {
-				int id = rs.getInt("id");
+				int id = rs.getInt("user_id");
 				currentUser.setUserId(id);
 				String name = rs.getString("name");
 				currentUser.setUserName(name);
@@ -62,6 +63,7 @@ public class SQLUserDao implements UserDAO {
 				currentUser.setPassword(password);
 				String status = rs.getString("status");
 				currentUser.setUserStatus(status);
+				CurrentUser.setCurrentUser(currentUser);
 			}
 
 		} catch (SQLException e) {
@@ -73,7 +75,7 @@ public class SQLUserDao implements UserDAO {
 
 	@Override
 	public void singOut(String login) {
-		// что-то хранящее юзера обнулить
+		CurrentUser.setCurrentUser(new User());
 	}
 
 	@Override

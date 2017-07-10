@@ -21,9 +21,8 @@ import com.epam.liavitskaya.main.util.ValidatorUtil;
 
 public class ClientServiceImpl implements ClientService {
 
-	final static String SIGN_IN_ERROR_MESSAGE = "incorrect input";
-	final static String SIGN_OUT_ERROR_MESSAGE = "";
-	final static String REGISTRATION_ERROR_MESSAGE = "incorrect registration input";
+	final static String INCORRECT_SIGNIN_INPUT_MESSAGE = "incorrect sign in input";
+	final static String INCORRECT_ID_MESSAGE = "incorrect id";
 
 	final static Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
@@ -31,11 +30,11 @@ public class ClientServiceImpl implements ClientService {
 	public void singIn(String login, String password) throws ServiceException {
 
 		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
-			throw new ServiceException(SIGN_IN_ERROR_MESSAGE);
+			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE);
 		}
 
 		if (password == null || password.isEmpty() || !ValidatorUtil.isPasswordValid(password)) {
-			throw new ServiceException(SIGN_IN_ERROR_MESSAGE);
+			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE);
 		}
 
 		try {
@@ -44,7 +43,7 @@ public class ClientServiceImpl implements ClientService {
 			userDAO.singIn(login, password);
 
 		} catch (DAOException e) {
-			throw new ServiceException(SIGN_IN_ERROR_MESSAGE);
+			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE);
 		}
 	}
 
@@ -73,17 +72,17 @@ public class ClientServiceImpl implements ClientService {
 		String password = splitRequest[7];
 
 		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
-			throw new ServiceException();
+			throw new ServiceException("invalid login");
 		}
 
 		if (password == null || password.isEmpty() || !ValidatorUtil.isPasswordValid(password)) {
-			throw new ServiceException();
+			throw new ServiceException("invalid password");
 		}
 
 		String encryptPassword = PasswordEncryptorUtil.encryptPassword(splitRequest[7]);
 
 		if (isPasswordExist(encryptPassword) || isLoginExist(login)) {
-			throw new ServiceException(REGISTRATION_ERROR_MESSAGE);
+			throw new ServiceException("registration data already exists");
 		}
 		User user = new User(splitRequest[1], splitRequest[2], splitRequest[3], splitRequest[4],
 				UserRoles.valueOf(splitRequest[5]), splitRequest[6], encryptPassword,
@@ -101,13 +100,13 @@ public class ClientServiceImpl implements ClientService {
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
 		User userProfile = new User();
-		
+
 		try {
 			int id = Integer.parseInt(splitRequest[1]);
 
 			int userCount = userDAO.rowCount();
 			if (id < 1 || userCount < id) {
-				throw new ServiceException("incorrect id");
+				throw new ServiceException(INCORRECT_ID_MESSAGE);
 			}
 
 			userProfile = userDAO.getProfile(id);
@@ -121,18 +120,9 @@ public class ClientServiceImpl implements ClientService {
 	public void editProfile(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
-		String[] splitRequest = RequestParserUtil.parseRequest(request, 8);
-
 		try {
-			int id = Integer.parseInt(splitRequest[1]);
-			int userCount = userDAO.rowCount();
-			if (id < 1 || userCount < id) {
-				throw new ServiceException("incorrect id");
-			}
-			User user = new User(splitRequest[2], splitRequest[3], splitRequest[4], splitRequest[5], splitRequest[6],
-					splitRequest[7]);
-
-			userDAO.updateProfile(user, id);
+			User user = buildEditedUser(request, userDAO);
+			userDAO.updateProfile(user, user.getUserId());
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
@@ -149,7 +139,7 @@ public class ClientServiceImpl implements ClientService {
 			int id = Integer.parseInt(splitRequest[2]);
 			int userCount = userDAO.rowCount();
 			if (id < 1 || userCount < id) {
-				throw new ServiceException("incorrect id");
+				throw new ServiceException(INCORRECT_ID_MESSAGE);
 			}
 			userDAO.changeUserStatus(userStatus, id);
 		} catch (DAOException e) {
@@ -164,12 +154,12 @@ public class ClientServiceImpl implements ClientService {
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
 		String role = splitRequest[1];
 		UserRoles userRole = UserRoles.valueOf(role);
-		
+
 		try {
 			int id = Integer.parseInt(splitRequest[2]);
 			int userCount = userDAO.rowCount();
 			if (id < 1 || userCount < id) {
-				throw new ServiceException("incorrect id");
+				throw new ServiceException(INCORRECT_ID_MESSAGE);
 			}
 
 			userDAO.changeUserRole(userRole, id);
@@ -200,7 +190,7 @@ public class ClientServiceImpl implements ClientService {
 			int id = Integer.parseInt(splitRequest[1]);
 			int userCount = userDAO.rowCount();
 			if (id < 1 || userCount < id) {
-				throw new ServiceException("incorrect id");
+				throw new ServiceException(INCORRECT_ID_MESSAGE);
 			}
 			userDAO.deleteUser(id);
 		} catch (DAOException e) {
@@ -232,6 +222,36 @@ public class ClientServiceImpl implements ClientService {
 			throw new ServiceException();
 		}
 		return fetchAllPasswords;
+	}
+
+	private User buildEditedUser(String request, UserDAO userDAO) throws ServiceException, DAOException {
+
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 8);
+
+		int id = Integer.parseInt(splitRequest[1]);
+		int userCount = userDAO.rowCount();
+		String login = splitRequest[6];
+		String password = splitRequest[7];
+
+		if (id < 1 || userCount < id) {
+			throw new ServiceException(INCORRECT_ID_MESSAGE);
+		}
+		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
+			throw new ServiceException("invalid login");
+		}
+
+		if (password == null || password.isEmpty() || !ValidatorUtil.isPasswordValid(password)) {
+			throw new ServiceException("invalid password");
+		}
+
+		String encryptPassword = PasswordEncryptorUtil.encryptPassword(splitRequest[7]);
+
+		if (isPasswordExist(encryptPassword) || isLoginExist(login)) {
+			throw new ServiceException("registration data already exists");
+		}
+		User user = new User(id, splitRequest[2], splitRequest[3], splitRequest[4], splitRequest[5], login,
+				encryptPassword);
+		return user;
 	}
 
 	private static boolean isPasswordExist(String password) {

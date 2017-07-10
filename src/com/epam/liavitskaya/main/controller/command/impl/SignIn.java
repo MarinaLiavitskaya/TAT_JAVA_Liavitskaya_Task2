@@ -8,6 +8,7 @@ import com.epam.liavitskaya.main.controller.command.Command;
 import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
+import com.epam.liavitskaya.main.util.RequestParserUtil;
 
 public class SignIn implements Command {
 	
@@ -22,7 +23,11 @@ public class SignIn implements Command {
 
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		ClientService clientService = serviceProvider.getClientServiceImpl();
+		
 		try {
+			String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
+			login = splitRequest[1];
+			password = splitRequest[2];
 			if (isLoginExist(login, clientService) && isPasswordExist(password, clientService)) {
 				clientService.singIn(login, password);
 				response = "Hi";

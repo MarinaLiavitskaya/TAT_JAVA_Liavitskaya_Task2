@@ -19,12 +19,11 @@ public class SignIn implements Command {
 
 		String login = null;
 		String password = null;
-		String response = null;
-
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		ClientService clientService = serviceProvider.getClientServiceImpl();
+		String response = null;		
 		
 		try {
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
+			ClientService clientService = serviceProvider.getClientServiceImpl();
 			String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
 			login = splitRequest[1];
 			password = splitRequest[2];

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.epam.liavitskaya.main.bean.Book;
+import com.epam.liavitskaya.main.controller.CurrentUser;
 import com.epam.liavitskaya.main.dao.BookDAO;
 import com.epam.liavitskaya.main.dao.exception.DAOException;
 import com.epam.liavitskaya.main.dao.impl.SQLBookDao;
@@ -20,7 +21,7 @@ public class LibraryServiceImpl implements LibraryService {
 		BookDAO bookDAO = new SQLBookDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 4);
 		Book book = new Book(splitRequest[1], splitRequest[2], splitRequest[3], BookStatus.AVAILABLE);
-		
+
 		try {
 			bookDAO.addBook(book);
 		} catch (DAOException e) {
@@ -35,7 +36,7 @@ public class LibraryServiceImpl implements LibraryService {
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 5);
 		int id = Integer.parseInt(splitRequest[4]);
 		Book book = new Book(id, splitRequest[1], splitRequest[2], splitRequest[3]);
-		
+
 		try {
 			int bookCount = bookDAO.rowCount();
 			if (id < 1 || bookCount < id) {
@@ -84,18 +85,43 @@ public class LibraryServiceImpl implements LibraryService {
 	public void orderBookService(String request) throws ServiceException {
 
 		BookDAO bookDAO = new SQLBookDao();
-		String idStr = request.substring(request.indexOf(" ") + 1, request.length());
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
 
 		try {
-			int id = Integer.parseInt(idStr);
+			int bookId = Integer.parseInt(splitRequest[1]);
+			int bookCount = bookDAO.rowCount();
+			if (bookId < 1 || bookCount < bookId) {
+				throw new ServiceException("incorrect id");
+			}
+			bookDAO.changeBookStatus(BookStatus.ORDERED, bookId);
+			bookDAO.appoint(CurrentUser.getCurrentUser().getUserId(), bookId);
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}
+	}
+
+	@Override
+	public void cancelOrderService(String request) throws ServiceException {
+
+		BookDAO bookDAO = new SQLBookDao();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
+
+		try {
+			int id = Integer.parseInt(splitRequest[1]);
 			int bookCount = bookDAO.rowCount();
 			if (id < 1 || bookCount < id) {
 				throw new ServiceException("incorrect id");
 			}
-			bookDAO.changeBookStatus(BookStatus.ORDERED, id);
+			String checkBookStatus = bookDAO.checkBookStatus(id);
+			if (checkBookStatus.equals("ON_HAND " + CurrentUser.getCurrentUser().getUserId())) {
+				throw new ServiceException("the book is yours");
+			}
+			bookDAO.changeBookStatus(BookStatus.AVAILABLE, id);
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException();
 		}
+
 	}
 
 	@Override

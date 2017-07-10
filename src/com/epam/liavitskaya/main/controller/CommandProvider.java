@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.epam.liavitskaya.main.controller.command.Command;
 import com.epam.liavitskaya.main.controller.command.impl.AddNewBook;
+import com.epam.liavitskaya.main.controller.command.impl.CancelOrder;
 import com.epam.liavitskaya.main.controller.command.impl.ChangeRole;
 import com.epam.liavitskaya.main.controller.command.impl.ChangeStatus;
 import com.epam.liavitskaya.main.controller.command.impl.DeleteBook;
@@ -28,7 +29,7 @@ public class CommandProvider {
 	private final Map<CommandName, Command> repository = new HashMap<>();
 
 	public CommandProvider() {
-		
+
 		repository.put(CommandName.REGISTRATION, new Registration());
 		repository.put(CommandName.SIGN_IN, new SignIn());
 		repository.put(CommandName.SIGN_OUT, new SignOut());
@@ -37,15 +38,16 @@ public class CommandProvider {
 		repository.put(CommandName.CHANGE_STATUS, new ChangeStatus());
 		repository.put(CommandName.CHANGE_ROLE, new ChangeRole());
 		repository.put(CommandName.MAKE_ADMIN_USER, new MakeAdminUser());
-		repository.put(CommandName.ADD_NEW_BOOK, new AddNewBook());		
+		repository.put(CommandName.ADD_NEW_BOOK, new AddNewBook());
 		repository.put(CommandName.EDIT_BOOK, new EditBook());
 		repository.put(CommandName.EDIT_BOOK_DESCRIPTION, new EditBookDescription());
 		repository.put(CommandName.WRITE_OFF_BOOK, new WriteOffBook());
 		repository.put(CommandName.SHOW_ALL_BOOKS, new ShowAllBooks());
 		repository.put(CommandName.SHOW_ALL_USERS, new ShowAllUsers());
-		repository.put(CommandName.ORDER_BOOK, new OrderBook());		
+		repository.put(CommandName.ORDER_BOOK, new OrderBook());
+		repository.put(CommandName.CANCEL_ORDER, new CancelOrder());
 		repository.put(CommandName.DELETE_USER, new DeleteUser());
-		repository.put(CommandName.DELETE_BOOK, new DeleteBook());		
+		repository.put(CommandName.DELETE_BOOK, new DeleteBook());
 	}
 
 	Command getCommand(CommandName commandName) {

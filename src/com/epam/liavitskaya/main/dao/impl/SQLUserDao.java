@@ -75,7 +75,15 @@ public class SQLUserDao implements UserDAO {
 
 	@Override
 	public void singOut(String login) {
-		CurrentUser.setCurrentUser(new User());
+		CurrentUser.getCurrentUser().setUserId(0);
+		CurrentUser.getCurrentUser().setUserName("");
+		CurrentUser.getCurrentUser().setPassportNo("");
+		CurrentUser.getCurrentUser().setPhone("");
+		CurrentUser.getCurrentUser().setUserRole("USER");
+		CurrentUser.getCurrentUser().setEmail("");
+		CurrentUser.getCurrentUser().setLogin("");
+		CurrentUser.getCurrentUser().setPassword("");
+		CurrentUser.getCurrentUser().setUserStatus("INACTIVE");
 	}
 
 	@Override

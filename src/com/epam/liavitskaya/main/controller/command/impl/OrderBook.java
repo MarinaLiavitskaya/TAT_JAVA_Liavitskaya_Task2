@@ -8,16 +8,17 @@ import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
 public class OrderBook implements Command {
-	
+
 	final Logger logger = Logger.getLogger(OrderBook.class);
 
 	@Override
 	public String execute(String request) {
+
 		String response = null;
 
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
-		try {
+		try {			
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
+			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			libraryService.orderBookService(request);
 			response = "Book is ordered";
 		} catch (ServiceException e) {

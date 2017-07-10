@@ -8,16 +8,21 @@ public class Runner {
 	public static void main(String[] args) {
 
 		Controller controller = new Controller();
-		
-		controller.executeTask("SIGN_IN marina1991 encryptT@1991");
-		System.out.println(CurrentUser.getCurrentUser());
-		
-		controller.executeTask("MAKE_ADMIN_USER USER 2");
-		
+		/*
+		controller.executeTask("SIGN_IN marina1991 encryptT@1991");			++
+		System.out.println(CurrentUser.getCurrentUser());		
+		controller.executeTask("MAKE_ADMIN_USER USER 2");		
 		controller.executeTask("SIGN_OUT marina1991");
 		System.out.println(CurrentUser.getCurrentUser());
+		controller.executeTask("SIGN_IN marina1991 encryptT@1991");		
+		controller.executeTask("MAKE_ADMIN_USER USER 1");
+		*/
 		
-		controller.executeTask("MAKE_ADMIN_USER USER 2");
+		controller.executeTask("SIGN_IN marina1991 encryptT@1991");
+		//controller.executeTask("ORDER_BOOK 7");
+		
+		controller.executeTask("CANCEL_ORDER 1");
+		controller.executeTask("CANCEL_ORDER 2");
 
 		// controller.executeTask("ADD_NEW_BOOK Harry_Potter J.K.Rowling England");``++
 		// controller.executeTask("REGISTRATION Dany MP9990099 phone999 email999 USER xx909 enPcrypt9@ ACTIVE"); ++

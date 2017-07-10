@@ -20,7 +20,7 @@ public class ChangeRole implements Command {
 			ServiceProvider provider = ServiceProvider.getInstance();
 			ClientService clientServiceImpl = provider.getClientServiceImpl();
 			clientServiceImpl.editRole(request);
-			response = "the role of the account is changed";
+			response = "The role of the account is changed";
 			
 		} catch (ServiceException e) {
 			logger.error("Error during procedure of change of the account role", e);

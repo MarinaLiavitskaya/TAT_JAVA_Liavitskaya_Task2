@@ -9,7 +9,7 @@ import com.epam.liavitskaya.main.enums.BookStatus;
 public interface BookDAO {
 
 	void addBook(Book book) throws DAOException;
-	
+
 	void editBook(Book book) throws DAOException;
 
 	void editBookDescription(String description, int id) throws DAOException;
@@ -17,6 +17,10 @@ public interface BookDAO {
 	List<Book> bookFondReview() throws DAOException;
 
 	void changeBookStatus(BookStatus bookStatus, int bookId) throws DAOException;
+
+	void appoint(int userId, int bookId) throws DAOException;
+
+	String checkBookStatus(int id) throws DAOException;
 
 	int rowCount() throws DAOException;
 

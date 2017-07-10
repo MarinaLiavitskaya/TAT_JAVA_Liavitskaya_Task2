@@ -20,6 +20,9 @@ public class SQLBookDao implements BookDAO {
 	static final String EDIT_BOOK = "UPDATE BOOKS SET title = ?, author = ?, description = ? WHERE BOOK_ID = ?";
 	static final String EDIT_BOOK_DESCRIPTION = "UPDATE BOOKS SET description = ? WHERE BOOK_ID = ?";
 	static final String CHANGE_BOOK_STATUS = "UPDATE BOOKS SET status = ? WHERE BOOK_ID = ?";
+	static final String CHANGE_BOOK_APPOINTMENT = "UPDATE BOOKS SET user_id = ? WHERE BOOK_ID = ?";
+	static final String SHOW_BOOK_STATUS = "SELECT STATUS, USER_ID FROM BOOKS WHERE BOOK_ID = ?";
+	//static final String SHOW_BOOK_USER_ID = "SELECT (USER_ID) FROM BOOKS WHERE BOOK_ID = ?";
 	static final String ROW_COUNT = "SELECT COUNT(*) FROM BOOKS";
 	static final String DELETE_BOOK = "DELETE FROM BOOKS WHERE BOOK_ID = ?";
 
@@ -139,6 +142,25 @@ public class SQLBookDao implements BookDAO {
 	}
 
 	@Override
+	public void appoint(int userId, int bookId) throws DAOException {
+
+		PreparedStatement prStmt = null;
+
+		try {
+			prStmt = connection.prepareStatement(CHANGE_BOOK_APPOINTMENT);
+			prStmt.setInt(1, userId);
+			prStmt.setInt(2, bookId);
+			prStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionManager.getManager().closeDbResources(prStmt);
+		}
+
+	}
+
+	@Override
 	public void deleteBook(int id) throws DAOException {
 
 		PreparedStatement prStmt = null;
@@ -175,4 +197,29 @@ public class SQLBookDao implements BookDAO {
 
 		return count;
 	}
+
+	@Override
+	public String checkBookStatus(int id) throws DAOException {
+
+		PreparedStatement prStmt = null;
+		ResultSet rs = null;
+		BookStatus status;
+		int userId;
+
+		try {
+			prStmt = connection.prepareStatement(SHOW_BOOK_STATUS);
+			prStmt.setInt(1, id);
+			rs = prStmt.executeQuery();
+			rs.next();
+			status = BookStatus.valueOf(rs.getString("status"));
+			userId = rs.getInt("user_id");
+			System.out.println("______________________  " + status.name() + "  user		" + userId);
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionManager.getManager().closeDbResources(prStmt, rs);
+		}
+		return status.name() + " " + userId;
+	}
+
 }

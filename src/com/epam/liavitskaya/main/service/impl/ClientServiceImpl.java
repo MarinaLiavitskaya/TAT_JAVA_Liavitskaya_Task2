@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.epam.liavitskaya.main.bean.User;
+import com.epam.liavitskaya.main.controller.CurrentUser;
 import com.epam.liavitskaya.main.dao.UserDAO;
 import com.epam.liavitskaya.main.dao.exception.DAOException;
 import com.epam.liavitskaya.main.dao.factory.DAOFactory;
@@ -41,9 +42,11 @@ public class ClientServiceImpl implements ClientService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
 			userDAO.singIn(login, password);
-
+			if (UserStatus.INACTIVE.name().equals(CurrentUser.getCurrentUser().getUserStatus())) {
+				throw new ServiceException("you are banned");
+			}
 		} catch (DAOException e) {
-			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE);
+			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE, e);
 		}
 	}
 

@@ -157,7 +157,24 @@ public class SQLBookDao implements BookDAO {
 		} finally {
 			ConnectionManager.getManager().closeDbResources(prStmt);
 		}
+	}
+	
+	@Override
+	public void removeAppoint(int bookId) throws DAOException {
+		
+		PreparedStatement prStmt = null;
 
+		try {
+			prStmt = connection.prepareStatement(CHANGE_BOOK_APPOINTMENT);
+			prStmt.setInt(1, 0);
+			prStmt.setInt(2, bookId);
+			prStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionManager.getManager().closeDbResources(prStmt);
+		}
 	}
 
 	@Override
@@ -220,6 +237,6 @@ public class SQLBookDao implements BookDAO {
 			ConnectionManager.getManager().closeDbResources(prStmt, rs);
 		}
 		return status.name() + " " + userId;
-	}
+	}	
 
 }

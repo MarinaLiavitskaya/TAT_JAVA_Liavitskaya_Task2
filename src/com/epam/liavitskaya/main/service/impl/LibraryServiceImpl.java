@@ -107,16 +107,17 @@ public class LibraryServiceImpl implements LibraryService {
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
 
 		try {
-			int id = Integer.parseInt(splitRequest[1]);
+			int bookId = Integer.parseInt(splitRequest[1]);
 			int bookCount = bookDAO.rowCount();
-			if (id < 1 || bookCount < id) {
+			if (bookId < 1 || bookCount < bookId) {
 				throw new ServiceException("incorrect id");
 			}
-			String checkBookStatus = bookDAO.checkBookStatus(id);
+			String checkBookStatus = bookDAO.checkBookStatus(bookId);
 			if (checkBookStatus.equals("ON_HAND " + CurrentUser.getCurrentUser().getUserId())) {
 				throw new ServiceException("the book is yours");
 			}
-			bookDAO.changeBookStatus(BookStatus.AVAILABLE, id);
+			bookDAO.changeBookStatus(BookStatus.AVAILABLE, bookId);
+			bookDAO.removeAppoint(bookId);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException();

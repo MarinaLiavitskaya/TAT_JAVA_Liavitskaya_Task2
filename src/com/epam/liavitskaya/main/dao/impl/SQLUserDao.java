@@ -61,7 +61,7 @@ public class SQLUserDao implements UserDAO {
 				currentUser.setUserRole(role);
 				currentUser.setLogin(login);
 				currentUser.setPassword(password);
-				String status = rs.getString("status");
+				String status = rs.getString("status");				
 				currentUser.setUserStatus(status);
 				CurrentUser.setCurrentUser(currentUser);
 			}

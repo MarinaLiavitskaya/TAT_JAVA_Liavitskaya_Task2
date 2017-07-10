@@ -1,4 +1,4 @@
-package com.epam.liavitskaya.main.utils;
+package com.epam.liavitskaya.main.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

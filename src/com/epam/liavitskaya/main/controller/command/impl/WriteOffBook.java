@@ -7,23 +7,24 @@ import com.epam.liavitskaya.main.service.LibraryService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
-public class AwayBook implements Command {
+public class WriteOffBook implements Command {
 
-final Logger logger = Logger.getLogger(AwayBook.class);
-	
+	final Logger logger = Logger.getLogger(WriteOffBook.class);
+
 	@Override
 	public String execute(String request) {
 
 		String response = null;
 
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		try {
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
-			libraryService.changeBookStatusServices(request);
+			libraryService.changeBookStatusService(request);
 			response = "book is written off";
+
 		} catch (ServiceException e) {
-			logger.error("Error during away book procedure", e);
-			response = "Error during away book procedure";
+			logger.error("Error during the procedure of write-off of the book", e);
+			response = "Error during the procedure of write-off of the book";
 		}
 		return response;
 	}

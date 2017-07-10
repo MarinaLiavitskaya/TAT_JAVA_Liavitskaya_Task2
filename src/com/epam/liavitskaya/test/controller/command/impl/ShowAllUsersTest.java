@@ -14,12 +14,12 @@ public class ShowAllUsersTest {
 
 	@Test
 	public void test_controller_showAllUsers() {
-		Assert.assertNotNull(contr.executeTask("SHOW_ALL_USERS "));
+		Assert.assertNotNull(contr.executeTask("SHOW_ALL_USERS"));
 	}
 	
 	@Test
 	public void test_showAllUsers() {
-		Assert.assertNotNull(showAll.execute("SHOW_ALL_USERS "));
+		Assert.assertNotNull(showAll.execute("SHOW_ALL_USERS"));
 	}
 
 	@BeforeMethod

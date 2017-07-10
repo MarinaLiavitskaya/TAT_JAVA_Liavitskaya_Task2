@@ -15,11 +15,15 @@ import com.epam.liavitskaya.main.enums.UserStatus;
 import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
-import com.epam.liavitskaya.main.utils.PasswordEncryptorUtil;
-import com.epam.liavitskaya.main.utils.RequestParserUtil;
-import com.epam.liavitskaya.main.utils.ValidatorUtil;
+import com.epam.liavitskaya.main.util.PasswordEncryptorUtil;
+import com.epam.liavitskaya.main.util.RequestParserUtil;
+import com.epam.liavitskaya.main.util.ValidatorUtil;
 
 public class ClientServiceImpl implements ClientService {
+
+	final static String SIGN_IN_ERROR_MESSAGE = "incorrect input";
+	final static String SIGN_OUT_ERROR_MESSAGE = "";
+	final static String REGISTRATION_ERROR_MESSAGE = "incorrect registration input";
 
 	final static Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
@@ -27,19 +31,20 @@ public class ClientServiceImpl implements ClientService {
 	public void singIn(String login, String password) throws ServiceException {
 
 		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
-			throw new ServiceException("incorrect input");
+			throw new ServiceException(SIGN_IN_ERROR_MESSAGE);
 		}
 
 		if (password == null || password.isEmpty() || !ValidatorUtil.isPasswordValid(password)) {
-			throw new ServiceException("incorrect input");
+			throw new ServiceException(SIGN_IN_ERROR_MESSAGE);
 		}
 
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
 			userDAO.singIn(login, password);
+
 		} catch (DAOException e) {
-			throw new ServiceException();
+			throw new ServiceException(SIGN_IN_ERROR_MESSAGE);
 		}
 	}
 
@@ -57,16 +62,15 @@ public class ClientServiceImpl implements ClientService {
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
-
 	}
 
 	@Override
 	public void registration(String request) throws ServiceException {
-		UserDAO userDAO = new SQLUserDao();
 
-		String[] parseRequest = RequestParserUtil.parseRequest(request, 9);
-		String login = parseRequest[6];
-		String password = parseRequest[7];
+		UserDAO userDAO = new SQLUserDao();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 9);
+		String login = splitRequest[6];
+		String password = splitRequest[7];
 
 		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
 			throw new ServiceException();
@@ -76,16 +80,16 @@ public class ClientServiceImpl implements ClientService {
 			throw new ServiceException();
 		}
 
-		String encryptPassword = PasswordEncryptorUtil.encryptPassword(parseRequest[7]);
+		String encryptPassword = PasswordEncryptorUtil.encryptPassword(splitRequest[7]);
 
 		if (isPasswordExist(encryptPassword) || isLoginExist(login)) {
-			throw new ServiceException("incorrect registration input");
+			throw new ServiceException(REGISTRATION_ERROR_MESSAGE);
 		}
-		User user = new User(parseRequest[1], parseRequest[2], parseRequest[3], parseRequest[4],
-				UserRoles.valueOf(parseRequest[5]), parseRequest[6], encryptPassword,
-				UserStatus.valueOf(parseRequest[8]));
+		User user = new User(splitRequest[1], splitRequest[2], splitRequest[3], splitRequest[4],
+				UserRoles.valueOf(splitRequest[5]), splitRequest[6], encryptPassword,
+				UserStatus.valueOf(splitRequest[8]));
 		try {
-			userDAO.registration(user);
+			userDAO.register(user);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
@@ -93,61 +97,90 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public User reviewProfile(String request) throws ServiceException {
+
 		UserDAO userDAO = new SQLUserDao();
-		String[] parseRequest = RequestParserUtil.parseRequest(request, 2);
-		int id = Integer.parseInt(parseRequest[1]);
-		User profile = new User();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
+		User userProfile = new User();
+		
 		try {
-			profile = userDAO.getProfile(id);
+			int id = Integer.parseInt(splitRequest[1]);
+
+			int userCount = userDAO.rowCount();
+			if (id < 1 || userCount < id) {
+				throw new ServiceException("incorrect id");
+			}
+
+			userProfile = userDAO.getProfile(id);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
-		return profile;
+		return userProfile;
 	}
 
 	@Override
 	public void editProfile(String request) throws ServiceException {
+
 		UserDAO userDAO = new SQLUserDao();
-		String[] parseRequest = RequestParserUtil.parseRequest(request, 8);
-		int id = Integer.parseInt(parseRequest[1]);
-		User user = new User(parseRequest[2], parseRequest[3], parseRequest[4], parseRequest[5], parseRequest[6], parseRequest[7]);
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 8);
+
 		try {
+			int id = Integer.parseInt(splitRequest[1]);
+			int userCount = userDAO.rowCount();
+			if (id < 1 || userCount < id) {
+				throw new ServiceException("incorrect id");
+			}
+			User user = new User(splitRequest[2], splitRequest[3], splitRequest[4], splitRequest[5], splitRequest[6],
+					splitRequest[7]);
+
 			userDAO.updateProfile(user, id);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
 	}
-	
+
 	@Override
 	public void editStatus(String request) throws ServiceException {
+
 		UserDAO userDAO = new SQLUserDao();
-		String[] parseRequest = RequestParserUtil.parseRequest(request, 2);
-		String status = parseRequest[0];
-		UserStatus userStatus = UserStatus.valueOf(status);
-		int id = Integer.parseInt(parseRequest[1]);		
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
+		UserStatus userStatus = UserStatus.valueOf(splitRequest[1]);
+
 		try {
+			int id = Integer.parseInt(splitRequest[2]);
+			int userCount = userDAO.rowCount();
+			if (id < 1 || userCount < id) {
+				throw new ServiceException("incorrect id");
+			}
 			userDAO.changeUserStatus(userStatus, id);
 		} catch (DAOException e) {
 			throw new ServiceException();
-		}		
+		}
 	}
-	
+
 	@Override
 	public void editRole(String request) throws ServiceException {
+
 		UserDAO userDAO = new SQLUserDao();
-		String[] parseRequest = RequestParserUtil.parseRequest(request, 3);
-		String status = parseRequest[1];
-		UserRoles userRole = UserRoles.valueOf(status);
-		int id = Integer.parseInt(parseRequest[2]);
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
+		String role = splitRequest[1];
+		UserRoles userRole = UserRoles.valueOf(role);
+		
 		try {
+			int id = Integer.parseInt(splitRequest[2]);
+			int userCount = userDAO.rowCount();
+			if (id < 1 || userCount < id) {
+				throw new ServiceException("incorrect id");
+			}
+
 			userDAO.changeUserRole(userRole, id);
 		} catch (DAOException e) {
 			throw new ServiceException();
-		}		
+		}
 	}
 
 	@Override
 	public List<User> showAllUsers() throws ServiceException {
+
 		UserDAO userDAO = new SQLUserDao();
 		List<User> allUsers;
 		try {
@@ -159,18 +192,27 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void deleteUser(int userId) throws ServiceException {
+	public void deleteUser(String request) throws ServiceException {
+
 		UserDAO userDAO = new SQLUserDao();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
 		try {
-			userDAO.deleteUser(userId);
+			int id = Integer.parseInt(splitRequest[1]);
+			int userCount = userDAO.rowCount();
+			if (id < 1 || userCount < id) {
+				throw new ServiceException("incorrect id");
+			}
+			userDAO.deleteUser(id);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
 	}
 
 	public List<String> fetchAllLogins() throws ServiceException {
-		List<String> fetchAllLogins = new ArrayList<>();
+
 		UserDAO userDAO = new SQLUserDao();
+		List<String> fetchAllLogins = new ArrayList<>();
+
 		try {
 			fetchAllLogins = userDAO.showAllLogins();
 		} catch (DAOException e) {
@@ -180,8 +222,10 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	public List<String> fetchAllPasswords() throws ServiceException {
-		List<String> fetchAllPasswords = new ArrayList<>();
+
 		UserDAO userDAO = new SQLUserDao();
+		List<String> fetchAllPasswords = new ArrayList<>();
+
 		try {
 			fetchAllPasswords = userDAO.showAllPasswords();
 		} catch (DAOException e) {
@@ -195,6 +239,7 @@ public class ClientServiceImpl implements ClientService {
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		ClientService clientService = serviceProvider.getClientServiceImpl();
 		List<String> fetchAllPasswords = new ArrayList<>();
+
 		try {
 			fetchAllPasswords = clientService.fetchAllPasswords();
 		} catch (ServiceException e) {
@@ -209,13 +254,14 @@ public class ClientServiceImpl implements ClientService {
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		ClientService clientService = serviceProvider.getClientServiceImpl();
 		List<String> fetchAllLogins = new ArrayList<>();
+
 		try {
 			fetchAllLogins = clientService.fetchAllLogins();
 		} catch (ServiceException e) {
 			logger.debug("Error during is Login Original check", e);
 			e.printStackTrace();
-		}		
+		}
 		return fetchAllLogins.contains(login);
 	}
-	
+
 }

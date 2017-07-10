@@ -17,7 +17,7 @@ public interface LibraryService {
 
 	void editBookDescriptionService(String request) throws ServiceException;
 
-	void changeBookStatusServices(String request) throws ServiceException;
+	void changeBookStatusService(String request) throws ServiceException;
 
 	void deleteBookService(String request) throws ServiceException;
 

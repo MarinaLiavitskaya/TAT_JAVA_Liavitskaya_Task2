@@ -1,13 +1,18 @@
-INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Tom', 'BITTER', 'phone111', 'email111', 'USER', 'xx111', 'encrypt', 'ACTIVE');
-INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Nick', 'BITTER', 'phone222', 'email222', 'USER', 'xx222', 'encrypt', 'ACTIVE');
-INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Molly', 'BITTER', 'phone333', 'email333', 'USER', 'xx333', 'encrypt', 'ACTIVE');
-INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Kate', 'BITTER', 'phone444', 'email444', 'USER', 'xx444', 'encrypt', 'ACTIVE');
-INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Paul', 'BITTER', 'phone555', 'email555', 'USER', 'xx555', 'encrypt', 'ACTIVE');
+INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Tom', 'MP1110011', 'phone111', 'email111', 'SUPERADMINISTRATOR', 'xx111', 'encrypt1', 'ACTIVE');
+INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Nick', 'MP2220022', 'phone222', 'email222', 'ADMINISTRATOR', 'xx222', 'encrypt2', 'ACTIVE');
+INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Molly', 'MP3330033', 'phone333', 'email333', 'ADMINISTRATOR', 'xx333', 'encrypt3', 'ACTIVE');
+INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Kate', 'MP4440044', 'phone444', 'email444', 'USER', 'xx444', 'encrypt4', 'ACTIVE');
+INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Paul', 'MP5550055', 'phone555', 'email555', 'USER', 'xx555', 'encrypt5', 'ACTIVE');
+INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Jane', 'MP6660066', 'phone666', 'email666', 'USER', 'xx666', 'encrypt6', 'INACTIVE');
+INSERT INTO `users`(name, passport, phone, email, role, login, password, status) VALUES('Bob', 'MP7770077', 'phone777', 'email777', 'USER', 'xx777', 'encrypt7', 'INACTIVE');
 
 INSERT INTO `books`(title, author, description, status) VALUES('Cien años de soledad', 'Gabriel García Márquez', 'Spain', 'ON_HAND');
 INSERT INTO `books`(title, author, description, status) VALUES('Moby-Dick', 'Herman Melville', '1851_USA', 'ORDERED');
-INSERT INTO `books`(title, author, description, status) VALUES('The Great Gatsby', 'F.Scott Fitzgerald', '1925_USA', 'NONRECOVERABLE');
-INSERT INTO `books`(title, author, description) VALUES('Lolita', 'Vladimir Nabokov', 'Russia');
-INSERT INTO `books`(title, author, description) VALUES('Madame Bovary', 'Gustave Flaubert', '1856_France');
-INSERT INTO `books`(title, author, description) VALUES('Great Expectation', 'Charles Dickens', 'England');
-INSERT INTO `books`(title, author, description) VALUES('Brave New Worldn', 'Aldous Huxley', 'England');
+INSERT INTO `books`(title, author, description, status) VALUES('The Great Gatsby', 'F.Scott Fitzgerald', '1925_USA', 'WRITTEN_OFF');
+INSERT INTO `books`(title, author, description, status) VALUES('Lolita', 'Vladimir Nabokov', 'Russia', 'AVAILABLE');
+INSERT INTO `books`(title, author, description, status) VALUES('Madame Bovary', 'Gustave Flaubert', '1856_France', 'AVAILABLE');
+INSERT INTO `books`(title, author, description, status) VALUES('Great Expectation', 'Charles Dickens', 'England', 'AVAILABLE');
+INSERT INTO `books`(title, author, description, status) VALUES('Brave New Worldn', 'Aldous Huxley', 'England', 'AVAILABLE');
+INSERT INTO `books`(title, author, description, status) VALUES('Norwegian Wood', 'Haruki Murakami', '1987_Japan', 'AVAILABLE');
+INSERT INTO `books`(title, author, description, status) VALUES('The Hobbit, or There and Back Again', 'J.R.R.Tolkien', '1937 UK', 'AVAILABLE');
+INSERT INTO `books`(title, author, description, status) VALUES('Arch of Triumph', 'Erich Maria Remarque', '1945_German', 'AVAILABLE');

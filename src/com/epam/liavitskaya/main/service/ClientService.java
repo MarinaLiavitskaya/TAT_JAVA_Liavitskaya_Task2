@@ -27,6 +27,6 @@ public interface ClientService {
 
 	List<String> fetchAllPasswords() throws ServiceException;
 
-	void deleteUser(int userId) throws ServiceException;
+	void deleteUser(String request) throws ServiceException;
 
 }

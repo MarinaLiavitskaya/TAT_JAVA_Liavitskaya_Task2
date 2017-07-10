@@ -1,4 +1,4 @@
-package com.epam.liavitskaya.main.utils;
+package com.epam.liavitskaya.main.util;
 
 import java.io.IOException;
 import java.io.InputStream;

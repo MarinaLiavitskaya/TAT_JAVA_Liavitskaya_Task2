@@ -1,9 +1,13 @@
 package com.epam.liavitskaya.main.bean;
 
+import java.io.Serializable;
+
 import com.epam.liavitskaya.main.enums.UserRoles;
 import com.epam.liavitskaya.main.enums.UserStatus;
 
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int userId;
 	private String userName;
@@ -16,6 +20,7 @@ public class User {
 	private UserStatus userStatus;
 
 	public User() {
+		super();
 	}
 
 	public User(String userName, String login, String password) {
@@ -43,10 +48,8 @@ public class User {
 		this.password = password;
 		this.userStatus = userStatus;
 	}
-	
-	
 
-	public User(String userName, String passportNo, String phone, String email, String login, String password) {		
+	public User(String userName, String passportNo, String phone, String email, String login, String password) {
 		this.userName = userName;
 		this.passportNo = passportNo;
 		this.phone = phone;
@@ -138,6 +141,70 @@ public class User {
 
 	public void setUserStatus(String userStatus) {
 		this.userStatus = UserStatus.valueOf(userStatus);
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((passportNo == null) ? 0 : passportNo.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + userId;
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
+		result = prime * result + ((userStatus == null) ? 0 : userStatus.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (passportNo == null) {
+			if (other.passportNo != null)
+				return false;
+		} else if (!passportNo.equals(other.passportNo))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		if (userId != other.userId)
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		if (userRole != other.userRole)
+			return false;
+		if (userStatus != other.userStatus)
+			return false;
+		return true;
 	}
 
 	@Override

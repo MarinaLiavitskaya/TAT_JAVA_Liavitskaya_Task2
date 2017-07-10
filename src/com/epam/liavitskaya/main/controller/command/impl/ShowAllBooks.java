@@ -13,18 +13,22 @@ import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 public class ShowAllBooks implements Command {
 
 	final Logger logger = Logger.getLogger(ShowAllBooks.class);
-	
+
 	@Override
 	public String execute(String request) {
+		
 		String response = null;
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
+
 		try {
+			
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
+			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			List<Book> bookFondReview = libraryService.bookFondReviewService();
 			response = "Check here books of fund : " + bookFondReview;
+			
 		} catch (ServiceException e) {
-			logger.error("Error during show all books procedure", e);
-			response = "Error during show all books procedure";
+			logger.error("Error during procedure to show all books", e);
+			response = "Error during procedure to show all books";
 		}
 		return response;
 	}

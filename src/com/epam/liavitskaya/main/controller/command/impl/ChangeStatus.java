@@ -7,24 +7,26 @@ import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
-public class MakeAdminUser implements Command {
+public class ChangeStatus implements Command {
 
-	final Logger logger = Logger.getLogger(MakeAdminUser.class);
+	final Logger logger = Logger.getLogger(ChangeStatus.class);
 
 	@Override
 	public String execute(String request) {
 
 		String response = null;
+		
 		try {			
 			ServiceProvider provider = ServiceProvider.getInstance();
 			ClientService clientServiceImpl = provider.getClientServiceImpl();
 			clientServiceImpl.editStatus(request);
-			response = "Admin became a user";
+			response = "the status of the user is changed";
+			
 		} catch (ServiceException e) {
-			logger.error("Error during make admin user procedure", e);
-			response = "Error during make admin user procedure";
+			logger.error("Error during procedure of change of the status of the user", e);
+			response = "Error during procedure of change of the status of the user";
 		}
 		return response;
-	}
+	}	
 
 }

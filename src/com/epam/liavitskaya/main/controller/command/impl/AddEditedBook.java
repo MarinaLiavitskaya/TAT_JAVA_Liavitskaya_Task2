@@ -18,9 +18,11 @@ public class AddEditedBook implements Command {
 
 		ServiceProvider serviceProvider = ServiceProvider.getInstance();
 		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
+		
 		try {
 			libraryService.addEditedBookService(request);
 			response = "Edited book is added";
+			
 		} catch (ServiceException e) {
 			logger.error("Error during add edited book procedure", e);
 			response = "Error during add edited book procedure";

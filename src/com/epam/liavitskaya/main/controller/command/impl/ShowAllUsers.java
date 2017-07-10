@@ -17,13 +17,14 @@ public class ShowAllUsers implements Command {
 	@Override
 	public String execute(String request) {
 
-		String response = null;
-
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		ClientService clientService = serviceProvider.getClientServiceImpl();
-		try {
+		String response = null;		
+		
+		try {			
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
+			ClientService clientService = serviceProvider.getClientServiceImpl();
 			List<User> showAllUsers = clientService.showAllUsers();
 			response = "All users : " + showAllUsers;
+			
 		} catch (ServiceException e) {
 			logger.error("Error during show all users procedure", e);
 			response = "Error during show all users procedure";

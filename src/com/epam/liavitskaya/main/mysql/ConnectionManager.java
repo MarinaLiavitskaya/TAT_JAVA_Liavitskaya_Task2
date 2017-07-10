@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import com.epam.liavitskaya.main.utils.ConfigUtil;
+import com.epam.liavitskaya.main.util.ConfigUtil;
 
 public class ConnectionManager {
 
@@ -38,7 +38,7 @@ public class ConnectionManager {
 
 	public static ConnectionManager getManager() {
 		return HolderManager.connectionManager;
-	}	
+	}
 
 	public Connection getConnection() {
 		if (instance == null) {
@@ -49,6 +49,14 @@ public class ConnectionManager {
 			}
 		}
 		return instance;
+	}
+
+	public void closeDbResources(PreparedStatement preparedStatement) {
+		closeDbResources(null, preparedStatement, null);
+	}
+
+	public void closeDbResources(PreparedStatement preparedStatement, ResultSet resultSet) {
+		closeDbResources(null, preparedStatement, resultSet);
 	}
 
 	public void closeDbResources(Connection connection, PreparedStatement preparedStatement) {
@@ -64,7 +72,7 @@ public class ConnectionManager {
 	public void closeConnection(Connection connection) {
 		if (connection != null) {
 			try {
-				connection.close();				
+				connection.close();
 			} catch (SQLException e) {
 				System.out.println("Can not close Connection");
 			}

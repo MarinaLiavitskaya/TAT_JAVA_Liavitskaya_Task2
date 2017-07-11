@@ -40,11 +40,11 @@ public class ClientServiceImpl implements ClientService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
-			if (UserStatus.INACTIVE.equals(userDAO.checkUserStatus(login))) {				
+			if (UserStatus.INACTIVE.equals(userDAO.checkUserStatus(login))) {
 				throw new ServiceException("you are blocked contact your administrator");
 			}
-			userDAO.singIn(login, password);	
-			
+			userDAO.singIn(login, password);
+
 		} catch (DAOException e) {
 			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE, e);
 		}
@@ -106,13 +106,30 @@ public class ClientServiceImpl implements ClientService {
 
 		try {
 			String login = splitRequest[1];
-
-//			int userCount = userDAO.rowCount();
-//			if (id < 1 || userCount < id) {
-//				throw new ServiceException(INCORRECT_ID_MESSAGE);
-//			}
-
 			userProfile = userDAO.getProfile(login);
+
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}
+		return userProfile;
+	}
+
+	@Override
+	public User reviewProfileById(String request) throws ServiceException {
+
+		UserDAO userDAO = new SQLUserDao();
+		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
+		User userProfile = new User();
+
+		try {
+			int id = Integer.parseInt(splitRequest[1]);
+
+			int userCount = userDAO.rowCount();
+			if (id < 1 || userCount < id) {
+				throw new ServiceException(INCORRECT_ID_MESSAGE);
+			}
+
+			userProfile = userDAO.getProfileById(id);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
@@ -164,8 +181,8 @@ public class ClientServiceImpl implements ClientService {
 			if (id < 1 || userCount < id) {
 				throw new ServiceException(INCORRECT_ID_MESSAGE);
 			}
-
 			userDAO.changeUserRole(userRole, id);
+
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
@@ -176,6 +193,7 @@ public class ClientServiceImpl implements ClientService {
 
 		UserDAO userDAO = new SQLUserDao();
 		List<User> allUsers;
+
 		try {
 			allUsers = userDAO.showAllUsers();
 		} catch (DAOException e) {
@@ -189,6 +207,7 @@ public class ClientServiceImpl implements ClientService {
 
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
+
 		try {
 			int id = Integer.parseInt(splitRequest[1]);
 			int userCount = userDAO.rowCount();
@@ -249,9 +268,6 @@ public class ClientServiceImpl implements ClientService {
 
 		String encryptPassword = PasswordEncryptorUtil.encryptPassword(splitRequest[7]);
 
-		if (isPasswordExist(encryptPassword) || isLoginExist(login)) {
-			throw new ServiceException("registration data already exists");
-		}
 		User user = new User(id, splitRequest[2], splitRequest[3], splitRequest[4], splitRequest[5], login,
 				encryptPassword);
 		return user;

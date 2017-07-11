@@ -13,7 +13,7 @@ public final class DAOFactory {
 	private final UserDAO sqlUserImpl = new SQLUserDao();
 
 	private DAOFactory() {
-
+		super();
 	}
 
 	public static DAOFactory getInstance() {

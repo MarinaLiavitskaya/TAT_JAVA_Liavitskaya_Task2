@@ -21,6 +21,7 @@ public class CancelOrder implements Command {
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			libraryService.cancelOrderService(request);
 			response = "Order is cancelled";
+			
 		} catch (ServiceException e) {
 			logger.error("Error during order book procedure", e);
 			response = "Error during order book procedure";

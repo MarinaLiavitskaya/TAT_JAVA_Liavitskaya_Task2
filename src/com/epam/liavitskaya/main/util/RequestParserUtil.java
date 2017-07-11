@@ -10,6 +10,7 @@ public class RequestParserUtil {
 			throw new ServiceException("incorrect request");
 		}
 		String[] requestParts = request.split(" ");
+		
 		if (requestParts.length != necessarydParts) {
 			throw new ServiceException("incorrect request");
 		}

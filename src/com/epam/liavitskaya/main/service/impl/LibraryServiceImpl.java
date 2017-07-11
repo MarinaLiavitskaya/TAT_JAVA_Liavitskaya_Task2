@@ -118,8 +118,7 @@ public class LibraryServiceImpl implements LibraryService {
 			}
 			bookDAO.changeBookStatus(BookStatus.AVAILABLE, bookId);
 			bookDAO.removeAppoint(bookId);
-		} catch (DAOException e) {
-			e.printStackTrace();
+		} catch (DAOException e) {			
 			throw new ServiceException();
 		}
 
@@ -138,8 +137,7 @@ public class LibraryServiceImpl implements LibraryService {
 				throw new ServiceException("incorrect id");
 			}
 			bookDAO.changeBookStatus(BookStatus.WRITTEN_OFF, id);
-		} catch (DAOException e) {
-			e.printStackTrace();
+		} catch (DAOException e) {			
 			throw new ServiceException();
 		}
 	}

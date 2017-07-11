@@ -17,6 +17,7 @@ import com.epam.liavitskaya.main.controller.command.impl.MakeAdminUser;
 import com.epam.liavitskaya.main.controller.command.impl.OrderBook;
 import com.epam.liavitskaya.main.controller.command.impl.Registration;
 import com.epam.liavitskaya.main.controller.command.impl.ReviewProfile;
+import com.epam.liavitskaya.main.controller.command.impl.ReviewProfileById;
 import com.epam.liavitskaya.main.controller.command.impl.ShowAllBooks;
 import com.epam.liavitskaya.main.controller.command.impl.ShowAllUsers;
 import com.epam.liavitskaya.main.controller.command.impl.SignIn;
@@ -35,11 +36,12 @@ public class CommandProvider {
 		repository.put(CommandName.SIGN_IN, new SignIn());
 		repository.put(CommandName.SIGN_OUT, new SignOut());
 		repository.put(CommandName.REVIEW_PROFILE, new ReviewProfile());
+		repository.put(CommandName.REVIEW_PROFILE_ID, new ReviewProfileById());
 		repository.put(CommandName.EDIT_PROFILE, new EditProfile());
 		repository.put(CommandName.CHANGE_STATUS, new ChangeStatus());
 		repository.put(CommandName.CHANGE_ROLE, new ChangeRole());
 		repository.put(CommandName.MAKE_ADMIN_USER, new MakeAdminUser());
-		repository.put(CommandName.ADD_NEW_BOOK, new AddNewBook());
+		repository.put(CommandName.ADD_BOOK, new AddNewBook());
 		repository.put(CommandName.EDIT_BOOK, new EditBook());
 		repository.put(CommandName.EDIT_BOOK_DESCRIPTION, new EditBookDescription());
 		repository.put(CommandName.WRITE_OFF_BOOK, new WriteOffBook());
@@ -53,6 +55,7 @@ public class CommandProvider {
 	}
 
 	Command getCommand(String commandName) {
+		
 		Command command = null;
 		try {
 			command = repository.get(CommandName.valueOf(commandName));

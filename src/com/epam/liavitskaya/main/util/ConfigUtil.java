@@ -13,11 +13,10 @@ public class ConfigUtil {
 	final Logger logger = Logger.getLogger(ConfigUtil.class);
 
 	private ConfigUtil() throws IOException {
-		properties = new Properties();
-		System.out.println("**** 1");
+		
+		properties = new Properties();		
 		InputStream input = getClass().getClassLoader()
-				.getResourceAsStream("library_db.properties");
-		System.out.println("**** 2");
+				.getResourceAsStream("library_db.properties");		
 		try {
 			properties.load(input);
 		} catch (IOException e) {

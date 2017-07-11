@@ -65,5 +65,4 @@ public class SignIn implements Command {
 		}
 		return fetchAllLogins.contains(login);
 	}
-
 }

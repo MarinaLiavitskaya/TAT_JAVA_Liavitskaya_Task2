@@ -16,6 +16,8 @@ public interface UserDAO {
 	void register(User user) throws DAOException;
 
 	User getProfile(String login) throws DAOException;
+	
+	User getProfileById(int id) throws DAOException;
 
 	void updateProfile(User user, int id) throws DAOException;
 

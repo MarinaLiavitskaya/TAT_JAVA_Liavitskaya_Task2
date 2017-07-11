@@ -20,6 +20,7 @@ public class SQLUserDao implements UserDAO {
 	static final String ADD_USER = "INSERT INTO USERS(name, passport, phone, email, role, login, password, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";	
 	static final String SHOW_ALL_USERS = "SELECT * FROM USERS";
 	static final String SHOW_USER = "SELECT * FROM USERS WHERE login = ?";
+	static final String SHOW_USER_ID = "SELECT * FROM USERS WHERE user_id = ?";
 	static final String UPDATE_USER_PROFILE = "UPDATE USERS SET name = ?, passport = ?, phone = ?, email = ?, login = ?, password = ? WHERE user_ID = ?";
 	static final String CHECK_USER_STATUS = "SELECT STATUS FROM USERS WHERE login = ?";
 	static final String CHANGE_USER_ROLE = "UPDATE USERS SET role = ? WHERE user_ID = ?";
@@ -137,6 +138,46 @@ public class SQLUserDao implements UserDAO {
 				user.setEmail(email);
 				String role = rs.getString("role");
 				user.setUserRole(role);				
+				user.setLogin(login);
+				String password = rs.getString("password");
+				user.setPassword(password);
+				String status = rs.getString("status");
+				user.setUserStatus(status);
+			}
+
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionManager.getManager().closeDbResources(prStmt, rs);
+		}
+		return user;
+	}
+	
+	@Override
+	public User getProfileById(int id) throws DAOException {
+
+		PreparedStatement prStmt = null;
+		ResultSet rs = null;
+		User user = new User();
+
+		try {
+			prStmt = connection.prepareStatement(SHOW_USER_ID);
+			prStmt.setInt(1, id);
+			rs = prStmt.executeQuery();
+
+			while (rs.next()) {				
+				user.setUserId(id);
+				String name = rs.getString("name");
+				user.setUserName(name);
+				String passport = rs.getString("passport");
+				user.setPassword(passport);
+				String phone = rs.getString("phone");
+				user.setPhone(phone);
+				String email = rs.getString("email");
+				user.setEmail(email);
+				String role = rs.getString("role");
+				user.setUserRole(role);	
+				String login = rs.getString("login");
 				user.setLogin(login);
 				String password = rs.getString("password");
 				user.setPassword(password);

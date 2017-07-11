@@ -14,6 +14,8 @@ public interface ClientService {
 	void registration(String request) throws ServiceException;
 
 	User reviewProfile(String requestd) throws ServiceException;
+	
+	User reviewProfileById(String request) throws ServiceException;
 
 	void editProfile(String request) throws ServiceException;
 	

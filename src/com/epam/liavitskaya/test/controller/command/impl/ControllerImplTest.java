@@ -8,10 +8,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.epam.liavitskaya.main.controller.Controller;
+import com.epam.liavitskaya.main.controller.CurrentUser;
 
 public class ControllerImplTest {
 
-	Controller controller;	
+	Controller controller;
 
 	@Test(enabled = true)
 	public void test_AddBook() {
@@ -23,7 +24,14 @@ public class ControllerImplTest {
 	@Test(enabled = true)
 	public void test_CancelOrder() {
 		String expected = "Order is cancelled";
-		String actual = controller.executeTask("CANCEL_ORDER 2");
+		String actual = controller.executeTask("CANCEL_ORDER 3");
+		Assert.assertEquals(actual, expected);
+	}
+
+	@Test(enabled = true)
+	public void test_CancelOrder_negative() {
+		String expected = "Error during order book procedure";
+		String actual = controller.executeTask("CANCEL_ORDER 1");
 		Assert.assertEquals(actual, expected);
 	}
 
@@ -93,20 +101,20 @@ public class ControllerImplTest {
 		controller.executeTask("ORDER_BOOK A");
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void test_Registration() {
 		String expected = "Welcome";
 		Assert.assertEquals(
-				controller.executeTask("REGISTRATION DANY MP9990099 PHONE999 EMAIL999 USER xx999 enPcrypt9@ ACTIVE"),
+				controller.executeTask("REGISTRATION DANY MP9990099 PHONE999 EMAIL999 USER xx999 encryptT9@ ACTIVE"),
 				expected);
 	}
 
 	@Test(enabled = true)
 	public void test_Registration_negative() {
-		String expectedResponse = "Welcome";
+		String expectedResponse = "Error during registration";
 		String actualResponse = controller
 				.executeTask("REGISTRATION Tim MP1232323 12345 mail.ru USER yi7 mP1Pe6vkir11 ACTIVE");
-		Assert.assertNotEquals(actualResponse, expectedResponse);
+		Assert.assertEquals(actualResponse, expectedResponse);
 	}
 
 	@Test(enabled = true)
@@ -114,8 +122,8 @@ public class ControllerImplTest {
 		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = USER, login = xx222, userStatus = ACTIVE]";
 		String actual = controller.executeTask("REVIEW_PROFILE xx222");
 		Assert.assertEquals(actual, expected);
-	}	
-	
+	}
+
 	@Test(enabled = true)
 	public void test_ReviewProfileById() {
 		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = USER, login = xx222, userStatus = ACTIVE]";
@@ -124,24 +132,19 @@ public class ControllerImplTest {
 	}
 
 	@Test(enabled = true)
-	public void test_ReviewProfile_notNull() {
-		String actual = controller.executeTask("REVIEW_PROFILE 2");
-		Assert.assertNotNull(actual);
+	public void test_ReviewProfile_negative() {
+		String expected = "Error during user profile review procedure";
+		Assert.assertEquals(controller.executeTask("REVIEW_PROFILE 2"), expected);
 	}
 
 	@Test(enabled = true)
-	public void test_BookFondReviewService() {
+	public void test_ShowAllBooks() {
 		Assert.assertNotNull(controller.executeTask("SHOW_ALL_BOOKS"));
 	}
 
 	@Test(enabled = true)
 	public void test_ShowAllUsers() {
 		Assert.assertNotNull(controller.executeTask("SHOW_ALL_USERS"));
-	}
-
-	@Test(enabled = true)
-	public void test_ShowAllUsers_negative() {
-		Assert.assertNotNull(controller.executeTask("SHOW_ALL_SERS"));
 	}
 
 	@Test(enabled = true)
@@ -156,32 +159,32 @@ public class ControllerImplTest {
 		Assert.assertNotEquals(controller.executeTask("WRITE_OFF_BOOK 66"), expected);
 	}
 
-	@Test(enabled = true, expectedExceptions = NumberFormatException.class)
-	public void test_Writeoff_numberFormat_negative() {		
+	@Test(enabled = true, expectedExceptions = NumberFormatException.class, priority = 0)
+	public void test_Writeoff_numberFormat_negative() {
 		controller.executeTask("WRITE_OFF_BOOK B");
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 0)
 	public void test_WrongRequest_showAll() {
 		String expected = "Wrong Request Format";
 		String actual = controller.executeTask("SHOW_OL_USERS");
 		Assert.assertEquals(actual, expected);
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 0)
 	public void test_WrongRequest_writeOff() {
 		String expected = "Wrong Request Format";
 		Assert.assertEquals(controller.executeTask("WRITE_OFF 5"), expected);
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void test_SignIn() {
 		String expected = "Hi";
 		String actual = controller.executeTask("SIGN_IN xx111 encryptT@1");
 		Assert.assertEquals(actual, expected);
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false, priority = 9)
 	public void test_SignOut() {
 		String expected = "Goodbye";
 		String actual = controller.executeTask("SIGN_OUT xx111");
@@ -190,6 +193,7 @@ public class ControllerImplTest {
 
 	@BeforeMethod
 	public void beforeMethod() {
+
 	}
 
 	@AfterMethod
@@ -204,7 +208,7 @@ public class ControllerImplTest {
 
 	@AfterClass
 	public void afterClass() {
-		
+
 	}
 
 }

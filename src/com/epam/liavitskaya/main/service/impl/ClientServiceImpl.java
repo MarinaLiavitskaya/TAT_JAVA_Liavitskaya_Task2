@@ -106,8 +106,11 @@ public class ClientServiceImpl implements ClientService {
 
 		try {
 			String login = splitRequest[1];
+			boolean loginExist = isLoginExist(login);
+			if (!loginExist) {
+				throw new ServiceException("invalid login");
+			}
 			userProfile = userDAO.getProfile(login);
-
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}

@@ -19,7 +19,7 @@ public class ShowAllBooks implements Command {
 		
 		String response = null;
 
-		try {			
+		try {		
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			List<Book> bookFondReview = libraryService.bookFondReviewService();

@@ -10,6 +10,8 @@ public class Controller {
 	public String executeTask(String request) {
 
 		String commandName = "";
+		//CurrentUser.initUser();
+		
 
 		if (request.isEmpty() || request != null) {
 			if (request.contains(" ")) {

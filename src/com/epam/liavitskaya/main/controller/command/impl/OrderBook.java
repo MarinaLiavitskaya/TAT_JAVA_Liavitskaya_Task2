@@ -18,9 +18,13 @@ public class OrderBook implements Command {
 		String response = null;
 
 		try {
-			if (CurrentUser.getCurrentUser().getLogin() == null || CurrentUser.getCurrentUser().getLogin().equals("")) {
+			if (CurrentUser.getCurrentUser().getLogin() == null) {
 				throw new ServiceException("please, sign in");
 			}
+			// if (CurrentUser.getCurrentUser().getLogin() == null ||
+			// CurrentUser.getCurrentUser().getLogin().equals("")) {
+			// throw new ServiceException("please, sign in");
+			// }
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			libraryService.orderBookService(request);

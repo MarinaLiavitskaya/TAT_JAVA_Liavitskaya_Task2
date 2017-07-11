@@ -1,7 +1,6 @@
 package com.epam.liavitskaya.main.controller;
 
 import com.epam.liavitskaya.main.controller.command.Command;
-import com.epam.liavitskaya.main.enums.CommandName;
 
 public class Controller {
 
@@ -20,10 +19,9 @@ public class Controller {
 			}
 		}
 
-		Command executionCommand;
-
-		CommandName command = CommandName.valueOf(commandName);
-		executionCommand = provider.getCommand(command);
+		Command executionCommand;	
+		
+		executionCommand = provider.getCommand(commandName);
 
 		String response = "";
 		response = executionCommand.execute(request);

@@ -19,14 +19,14 @@ public class AddNewBook implements Command {
 		String response = null;
 
 		try {
-			if (CurrentUser.getCurrentUser().getUserRole() != UserRoles.SUPERADMINISTRATOR.name()
-					|| CurrentUser.getCurrentUser().getUserRole() != UserRoles.ADMINISTRATOR.name()) {
+			if (CurrentUser.getCurrentUser().getUserRole() == UserRoles.USER.name()) {
 				throw new ServiceException("you have no permission for this operation");
 			}
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			libraryService.addNewBookService(request);
 			response = "New book is added";
+
 		} catch (ServiceException e) {
 			logger.error("Error during add new book procedure", e);
 			response = "Error during add new book procedure";

@@ -15,13 +15,13 @@ public class DeleteUser implements Command {
 	public String execute(String request) {
 
 		String response = null;
-		try {
-						
+		
+		try {						
 			ServiceProvider provider = ServiceProvider.getInstance();
 			ClientService clientServiceImpl = provider.getClientServiceImpl();
-
 			clientServiceImpl.deleteUser(request);
 			response = "User is deleted";
+			
 		} catch (ServiceException e) {
 			logger.error("Error during procedure of delete of the user", e);
 			response = "Error during procedure of delete of the user";

@@ -15,17 +15,23 @@ public class Runner {
 		System.out.println(CurrentUser.getCurrentUser());
 		controller.executeTask("SIGN_IN marina1991 encryptT@1991");		
 		controller.executeTask("MAKE_ADMIN_USER USER 1");
-		*/		
-		//controller.executeTask("SIGN_IN marina1991 encryptT@1991");
-		//controller.executeTask("ORDER_BOOK 7");		
-		//controller.executeTask("CANCEL_ORDER 7");		++
-		
-		controller.executeTask("SIGN_IN kot0001 encryptT@0001");		
+		*/	
+		/*
+		controller.executeTask("SIGN_IN marina1991 encryptT@1991");		
+		controller.executeTask("ORDER_BOOK 7");		
+		controller.executeTask("SIGN_OUT marina1991");
+		System.out.println(controller.executeTask("ORDER_BOOK 5"));
+		 */		
+		//controller.executeTask("CANCEL_ORDER 7");		++	
+		/*
+		controller.executeTask("SIGN_IN kot0000 encryptT@0000");		
+		System.out.println(controller.executeTask("ORDER_BOOK 5"));
+		*/
 
 		// controller.executeTask("ADD_NEW_BOOK Harry_Potter J.K.Rowling England");``++
 		// controller.executeTask("REGISTRATION Dany MP9990099 phone999 email999 USER xx909 enPcrypt9@ ACTIVE"); ++
 		// controller.executeTask("WRITE_OFF_BOOK 7"); ++
-		// controller.executeTask("ORDER_BOOK 5");			++
+	
 		// String executeTask2 = controller.executeTask("SHOW_ALL_BOOKS"); 			 
 		// String executeTask = controller.executeTask("SHOW_ALL_USERS");		++
 		// System.out.println(executeTask);

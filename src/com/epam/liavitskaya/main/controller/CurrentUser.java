@@ -6,6 +6,10 @@ public class CurrentUser {
 
 	private static User currentUser;
 
+	static {
+		CurrentUser.currentUser = new User();
+	}
+
 	public static User getCurrentUser() {
 		return currentUser;
 	}

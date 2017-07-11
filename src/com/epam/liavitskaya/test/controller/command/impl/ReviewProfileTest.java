@@ -1,32 +1,31 @@
 package com.epam.liavitskaya.test.controller.command.impl;
 
-import org.testng.annotations.Test;
-
-import com.epam.liavitskaya.main.controller.command.impl.ReviewProfile;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.epam.liavitskaya.main.controller.Controller;
 
 public class ReviewProfileTest {
 
-	ReviewProfile profile;
+	Controller controller;
 
 	@Test
 	public void test_reviewProfile() {
-		String expected = "User [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = USER, login = xx222, userStatus = ACTIVE]";
-		String actual = profile.execute("REVIEW_PROFILE 2");
+		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = xx222, userStatus = ACTIVE]";
+		String actual = controller.executeTask("REVIEW_PROFILE xx222");
 		Assert.assertEquals(actual, expected);
 	}
-	
+
 	@Test
-	public void test_reviewProfile_not_null() {		
-		String actual = profile.execute("REVIEW_PROFILE 2");
+	public void test_reviewProfile_not_null() {
+		String actual = controller.executeTask("REVIEW_PROFILE 2");
 		Assert.assertNotNull(actual);
 	}
 
 	@BeforeMethod
 	public void beforeMethod() {
-		profile = new ReviewProfile();
+		controller = new Controller();
 	}
 
 }

@@ -18,13 +18,14 @@ public class OrderBook implements Command {
 		String response = null;
 
 		try {
-			if (CurrentUser.getCurrentUser() == null) {
+			if (CurrentUser.getCurrentUser().getLogin() == null || CurrentUser.getCurrentUser().getLogin().equals("")) {
 				throw new ServiceException("please, sign in");
-			}
+			}			
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			libraryService.orderBookService(request);
 			response = "Book is ordered";
+			
 		} catch (ServiceException e) {
 			logger.error("Error during order book procedure", e);
 			response = "Error during order book procedure";

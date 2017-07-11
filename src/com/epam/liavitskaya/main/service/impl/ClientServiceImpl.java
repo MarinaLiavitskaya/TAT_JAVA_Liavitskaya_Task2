@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.epam.liavitskaya.main.bean.User;
-import com.epam.liavitskaya.main.controller.CurrentUser;
 import com.epam.liavitskaya.main.dao.UserDAO;
 import com.epam.liavitskaya.main.dao.exception.DAOException;
 import com.epam.liavitskaya.main.dao.factory.DAOFactory;
@@ -41,10 +40,11 @@ public class ClientServiceImpl implements ClientService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
-			userDAO.singIn(login, password);
-			if (UserStatus.INACTIVE.name().equals(CurrentUser.getCurrentUser().getUserStatus())) {
-				throw new ServiceException("you are banned");
+			if (UserStatus.INACTIVE.equals(userDAO.checkUserStatus(login))) {				
+				throw new ServiceException("you are blocked contact your administrator");
 			}
+			userDAO.singIn(login, password);	
+			
 		} catch (DAOException e) {
 			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE, e);
 		}
@@ -105,14 +105,14 @@ public class ClientServiceImpl implements ClientService {
 		User userProfile = new User();
 
 		try {
-			int id = Integer.parseInt(splitRequest[1]);
+			String login = splitRequest[1];
 
-			int userCount = userDAO.rowCount();
-			if (id < 1 || userCount < id) {
-				throw new ServiceException(INCORRECT_ID_MESSAGE);
-			}
+//			int userCount = userDAO.rowCount();
+//			if (id < 1 || userCount < id) {
+//				throw new ServiceException(INCORRECT_ID_MESSAGE);
+//			}
 
-			userProfile = userDAO.getProfile(id);
+			userProfile = userDAO.getProfile(login);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}

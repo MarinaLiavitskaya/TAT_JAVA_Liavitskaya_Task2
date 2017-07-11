@@ -8,7 +8,6 @@ public class WrongRequest implements Command {
 	public String execute(String request) {
 
 		String response = "Wrong Request Format";
-		System.out.println("   ++++++++    ++++++++    +++++++++    ++++++++    ++++++++     +++++++    ++++++++   ");
 		return response;
 
 	}

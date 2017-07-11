@@ -15,7 +15,7 @@ public interface UserDAO {
 
 	void register(User user) throws DAOException;
 
-	User getProfile(int id) throws DAOException;
+	User getProfile(String login) throws DAOException;
 
 	void updateProfile(User user, int id) throws DAOException;
 
@@ -24,6 +24,8 @@ public interface UserDAO {
 	List<String> showAllLogins() throws DAOException;
 
 	List<String> showAllPasswords() throws DAOException;
+	
+	UserStatus checkUserStatus(String login) throws DAOException;
 
 	void changeUserStatus(UserStatus userStatus, int id) throws DAOException;
 

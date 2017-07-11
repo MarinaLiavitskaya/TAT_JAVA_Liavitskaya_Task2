@@ -15,12 +15,13 @@ public class Registration implements Command {
 	public String execute(String request) {
 
 		String response = null;
-
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		ClientService clientService = serviceProvider.getClientServiceImpl();
+		
 		try {
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
+			ClientService clientService = serviceProvider.getClientServiceImpl();
 			clientService.registration(request);
 			response = "Welcome";
+			
 		} catch (ServiceException e) {
 			logger.debug("Error during registration", e);
 			response = "Error during registration";

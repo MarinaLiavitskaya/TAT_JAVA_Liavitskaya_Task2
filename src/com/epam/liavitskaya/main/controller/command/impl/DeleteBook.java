@@ -15,12 +15,13 @@ public class DeleteBook implements Command {
 	public String execute(String request) {
 
 		String response = null;
-
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
+		
 		try {
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
+			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			libraryService.deleteBookService(request);
 			response = "Book is deleted";
+			
 		} catch (ServiceException e) {
 			logger.error("Error during delete book procedure", e);
 			response = "Error during delete book procedure";

@@ -17,12 +17,11 @@ import com.epam.liavitskaya.main.mysql.ConnectionManager;
 
 public class SQLUserDao implements UserDAO {
 
-	static final String ADD_USER = "INSERT INTO USERS(name, passport, phone, email, role, login, password, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-	// static final String ADD_USER_2 = "INSERT INTO USERS(name, role,
-	// login, password, status) VALUES(?, ?, ?, ?, ?)";
+	static final String ADD_USER = "INSERT INTO USERS(name, passport, phone, email, role, login, password, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";	
 	static final String SHOW_ALL_USERS = "SELECT * FROM USERS";
 	static final String SHOW_USER = "SELECT * FROM USERS WHERE login = ?";
 	static final String UPDATE_USER_PROFILE = "UPDATE USERS SET name = ?, passport = ?, phone = ?, email = ?, login = ?, password = ? WHERE user_ID = ?";
+	static final String CHECK_USER_STATUS = "SELECT STATUS FROM USERS WHERE login = ?";
 	static final String CHANGE_USER_ROLE = "UPDATE USERS SET role = ? WHERE user_ID = ?";
 	static final String CHANGE_USER_STATUS = "UPDATE USERS SET status = ? WHERE user_ID = ?";
 	static final String ROW_COUNT = "SELECT COUNT(*) FROM USERS";
@@ -47,6 +46,7 @@ public class SQLUserDao implements UserDAO {
 			rs = prStmt.executeQuery();
 
 			while (rs.next()) {
+				
 				int id = rs.getInt("user_id");
 				currentUser.setUserId(id);
 				String name = rs.getString("name");
@@ -75,6 +75,7 @@ public class SQLUserDao implements UserDAO {
 
 	@Override
 	public void singOut(String login) {
+		
 		CurrentUser.getCurrentUser().setUserId(0);
 		CurrentUser.getCurrentUser().setUserName("");
 		CurrentUser.getCurrentUser().setPassportNo("");
@@ -84,6 +85,7 @@ public class SQLUserDao implements UserDAO {
 		CurrentUser.getCurrentUser().setLogin("");
 		CurrentUser.getCurrentUser().setPassword("");
 		CurrentUser.getCurrentUser().setUserStatus("INACTIVE");
+		
 	}
 
 	@Override
@@ -108,31 +110,10 @@ public class SQLUserDao implements UserDAO {
 		} finally {
 			ConnectionManager.getManager().closeDbResources(prStmt);
 		}
-	}
-
-	// public void registrationQuick(User user) throws DAOException {
-	//
-	// PreparedStatement prStmt = null;
-	//
-	// try {
-	// connection = ConnectionManager.getManager().getConnection();
-	// prStmt = connection.prepareStatement(ADD_USER_QUICK);
-	// prStmt.setString(1, user.getUserName());
-	// prStmt.setString(3, user.getUserRole());
-	// prStmt.setString(4, user.getLogin());
-	// prStmt.setString(5, user.getPassword());
-	// prStmt.setString(6, user.getUserStatus());
-	// prStmt.executeUpdate();
-	//
-	// } catch (SQLException e) {
-	// throw new DAOException(e.getMessage());
-	// } finally {
-	// ConnectionManager.getManager().closeDbResources(prStmt);
-	// }
-	// }
+	}	
 
 	@Override
-	public User getProfile(int id) throws DAOException {
+	public User getProfile(String login) throws DAOException {
 
 		PreparedStatement prStmt = null;
 		ResultSet rs = null;
@@ -140,10 +121,11 @@ public class SQLUserDao implements UserDAO {
 
 		try {
 			prStmt = connection.prepareStatement(SHOW_USER);
-			prStmt.setInt(1, id);
+			prStmt.setString(1, login);
 			rs = prStmt.executeQuery();
 
 			while (rs.next()) {
+				int id = rs.getInt("user_id");
 				user.setUserId(id);
 				String name = rs.getString("name");
 				user.setUserName(name);
@@ -154,8 +136,7 @@ public class SQLUserDao implements UserDAO {
 				String email = rs.getString("email");
 				user.setEmail(email);
 				String role = rs.getString("role");
-				user.setUserRole(role);
-				String login = rs.getString("login");
+				user.setUserRole(role);				
 				user.setLogin(login);
 				String password = rs.getString("password");
 				user.setPassword(password);
@@ -236,6 +217,27 @@ public class SQLUserDao implements UserDAO {
 			ConnectionManager.getManager().closeDbResources(prStmt, rs);
 		}
 		return userList;
+	}
+	
+	@Override
+	public UserStatus checkUserStatus(String login) throws DAOException {
+		
+		PreparedStatement prStmt = null;
+		ResultSet rs = null;
+		UserStatus userStatus;
+
+		try {
+			prStmt = connection.prepareStatement(CHECK_USER_STATUS);
+			prStmt.setString(1, login);
+			rs = prStmt.executeQuery();
+			rs.next();
+			userStatus = UserStatus.valueOf(rs.getString(1));
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionManager.getManager().closeDbResources(prStmt, rs);
+		}
+		return userStatus;
 	}
 
 	@Override
@@ -358,5 +360,5 @@ public class SQLUserDao implements UserDAO {
 		}
 		return count;
 	}
-
+	
 }

@@ -22,6 +22,7 @@ import com.epam.liavitskaya.main.controller.command.impl.ShowAllUsers;
 import com.epam.liavitskaya.main.controller.command.impl.SignIn;
 import com.epam.liavitskaya.main.controller.command.impl.SignOut;
 import com.epam.liavitskaya.main.controller.command.impl.WriteOffBook;
+import com.epam.liavitskaya.main.controller.command.impl.WrongRequest;
 import com.epam.liavitskaya.main.enums.CommandName;
 
 public class CommandProvider {
@@ -48,12 +49,13 @@ public class CommandProvider {
 		repository.put(CommandName.CANCEL_ORDER, new CancelOrder());
 		repository.put(CommandName.DELETE_USER, new DeleteUser());
 		repository.put(CommandName.DELETE_BOOK, new DeleteBook());
+		repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
 	}
 
-	Command getCommand(CommandName commandName) {
+	Command getCommand(String commandName) {
 		Command command = null;
 		try {
-			command = repository.get(commandName);
+			command = repository.get(CommandName.valueOf(commandName));
 		} catch (IllegalArgumentException | NullPointerException e) {
 			command = repository.get(CommandName.WRONG_REQUEST);
 		}

@@ -15,15 +15,15 @@ import com.epam.liavitskaya.main.mysql.ConnectionManager;
 
 public class SQLBookDao implements BookDAO {
 
-	static final String ADD_BOOK = "INSERT INTO BOOKS(title, author, description, status) VALUES(?, ?, ?, ?)";
-	static final String SHOW_ALL_BOOKS = "SELECT * FROM BOOKS";
-	static final String EDIT_BOOK = "UPDATE BOOKS SET title = ?, author = ?, description = ? WHERE BOOK_ID = ?";
-	static final String EDIT_BOOK_DESCRIPTION = "UPDATE BOOKS SET description = ? WHERE BOOK_ID = ?";
-	static final String CHANGE_BOOK_STATUS = "UPDATE BOOKS SET status = ? WHERE BOOK_ID = ?";
-	static final String CHANGE_BOOK_APPOINTMENT = "UPDATE BOOKS SET user_id = ? WHERE BOOK_ID = ?";
-	static final String SHOW_BOOK_STATUS = "SELECT STATUS, USER_ID FROM BOOKS WHERE BOOK_ID = ?";	
-	static final String ROW_COUNT = "SELECT COUNT(*) FROM BOOKS";
-	static final String DELETE_BOOK = "DELETE FROM BOOKS WHERE BOOK_ID = ?";
+	static final String ADD_BOOK = "INSERT INTO books(title, author, description, status) VALUES(?, ?, ?, ?)";
+	static final String SHOW_ALL_BOOKS = "SELECT book_id, title, author, description, status, user_id FROM books";
+	static final String EDIT_BOOK = "UPDATE books SET title = ?, author = ?, description = ? WHERE book_id = ?";
+	static final String EDIT_BOOK_DESCRIPTION = "UPDATE books SET description = ? WHERE book_id = ?";
+	static final String CHANGE_BOOK_STATUS = "UPDATE books SET status = ? WHERE book_id = ?";
+	static final String CHANGE_BOOK_APPOINTMENT = "UPDATE books SET user_id = ? WHERE book_id = ?";
+	static final String SHOW_BOOK_STATUS = "SELECT status, user_id FROM books WHERE book_id = ?";	
+	static final String ROW_COUNT = "SELECT COUNT(*) FROM books";
+	static final String DELETE_BOOK = "DELETE FROM books WHERE book_id = ?";
 
 	Connection connection = null;
 

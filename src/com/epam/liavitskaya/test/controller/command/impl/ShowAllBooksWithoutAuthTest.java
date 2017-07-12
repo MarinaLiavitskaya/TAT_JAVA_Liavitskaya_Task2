@@ -14,9 +14,7 @@ public class ShowAllBooksWithoutAuthTest {
 	@Test(enabled = true)
 	public void test_ShowAllBooks() {
 		Assert.assertNotNull(controller.executeTask("SHOW_ALL_BOOKS"));
-	}
-	
-		
+	}		
 	
 
 	@BeforeClass

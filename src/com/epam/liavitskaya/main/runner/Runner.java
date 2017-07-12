@@ -37,9 +37,9 @@ public class Runner {
 		// controller.executeTask("REGISTRATION Dany MP9990099 phone999 email999 USER xx909 enPcrypt9@ ACTIVE"); ++
 		// controller.executeTask("WRITE_OFF_BOOK 7"); ++
 	
-		// String executeTask2 = controller.executeTask("SHOW_ALL_BOOKS"); 			 
-		// String executeTask = controller.executeTask("SHOW_ALL_USERS");		++
-		// System.out.println(executeTask);
+		//String executeTask = controller.executeTask("SHOW_ALL_BOOKS"); 			 
+		String executeTask = controller.executeTask("SHOW_ALL_USERS");		
+		System.out.println(executeTask);
 		// controller.executeTask("DELETE_USER 3"); ++
 		// System.out.println(controller.executeTask("DELETE_BOOK 77")); ++
 		// System.out.println(controller.executeTask("REVIEW_PROFILE xx333"));

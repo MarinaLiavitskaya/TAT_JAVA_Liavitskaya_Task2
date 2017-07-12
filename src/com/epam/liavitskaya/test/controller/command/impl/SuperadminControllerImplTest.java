@@ -8,9 +8,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.epam.liavitskaya.main.controller.Controller;
-import com.epam.liavitskaya.main.controller.CurrentUser;
 
-public class ControllerImplTest {
+public class SuperadminControllerImplTest {
 
 	Controller controller;
 
@@ -45,7 +44,7 @@ public class ControllerImplTest {
 	@Test(enabled = true)
 	public void test_ChangeStatus() {
 		String expected = "The status of the user is changed";
-		String actual = controller.executeTask("CHANGE_STATUS INACTIVE 4");
+		String actual = controller.executeTask("CHANGE_STATUS INACTIVE 6");
 		Assert.assertEquals(actual, expected);
 	}
 
@@ -80,7 +79,7 @@ public class ControllerImplTest {
 	@Test(enabled = true)
 	public void test_MakeAdminUser() {
 		String expected = "the status of the admin is changed";
-		String actual = controller.executeTask("MAKE_ADMIN_USER USER 2");
+		String actual = controller.executeTask("MAKE_ADMIN_USER USER 3");
 		Assert.assertEquals(actual, expected);
 	}
 
@@ -101,11 +100,11 @@ public class ControllerImplTest {
 		controller.executeTask("ORDER_BOOK A");
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true, priority = 7)
 	public void test_Registration() {
 		String expected = "Welcome";
 		Assert.assertEquals(
-				controller.executeTask("REGISTRATION DANY MP9990099 PHONE999 EMAIL999 USER xx999 encryptT9@ ACTIVE"),
+				controller.executeTask("REGISTRATION DANY MP9990099 PHONE999 EMAIL999 USER xxx999 encryptT9@ ACTIVE"),
 				expected);
 	}
 
@@ -119,14 +118,14 @@ public class ControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_RreviewProfile() {
-		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = USER, login = xx222, userStatus = ACTIVE]";
-		String actual = controller.executeTask("REVIEW_PROFILE xx222");
+		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = xxx222, userStatus = ACTIVE]";
+		String actual = controller.executeTask("REVIEW_PROFILE xxx222");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true)
 	public void test_ReviewProfileById() {
-		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = USER, login = xx222, userStatus = ACTIVE]";
+		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = xxx222, userStatus = ACTIVE]";
 		String actual = controller.executeTask("REVIEW_PROFILE_ID 2");
 		Assert.assertEquals(actual, expected);
 	}
@@ -177,23 +176,22 @@ public class ControllerImplTest {
 		Assert.assertEquals(controller.executeTask("WRITE_OFF 5"), expected);
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true, priority = 2)
 	public void test_SignIn() {
 		String expected = "Hi";
-		String actual = controller.executeTask("SIGN_IN xx111 encryptT@1");
+		String actual = controller.executeTask("SIGN_IN xxx444 encryptT@4");
 		Assert.assertEquals(actual, expected);
 	}
 
-	@Test(enabled = false, priority = 9)
+	@Test(enabled = true, priority = 5)
 	public void test_SignOut() {
 		String expected = "Goodbye";
-		String actual = controller.executeTask("SIGN_OUT xx111");
+		String actual = controller.executeTask("SIGN_OUT xxx111");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@BeforeMethod
-	public void beforeMethod() {
-
+	public void beforeMethod() {		
 	}
 
 	@AfterMethod

@@ -17,16 +17,16 @@ import com.epam.liavitskaya.main.mysql.ConnectionManager;
 
 public class SQLUserDao implements UserDAO {
 
-	static final String ADD_USER = "INSERT INTO USERS(name, passport, phone, email, role, login, password, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";	
-	static final String SHOW_ALL_USERS = "SELECT * FROM USERS";
-	static final String SHOW_USER = "SELECT * FROM USERS WHERE login = ?";
-	static final String SHOW_USER_ID = "SELECT * FROM USERS WHERE user_id = ?";
-	static final String UPDATE_USER_PROFILE = "UPDATE USERS SET name = ?, passport = ?, phone = ?, email = ?, login = ?, password = ? WHERE user_ID = ?";
-	static final String CHECK_USER_STATUS = "SELECT STATUS FROM USERS WHERE login = ?";
-	static final String CHANGE_USER_ROLE = "UPDATE USERS SET role = ? WHERE user_ID = ?";
-	static final String CHANGE_USER_STATUS = "UPDATE USERS SET status = ? WHERE user_ID = ?";
-	static final String ROW_COUNT = "SELECT COUNT(*) FROM USERS";
-	static final String DELETE_USER = "DELETE FROM USERS WHERE user_ID = ?";
+	static final String ADD_USER = "INSERT INTO users(name, passport, phone, email, role, login, password, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";	
+	static final String SHOW_ALL_USERS = "SELECT user_id, name, passport, phone, email, role, login, password, status FROM users";
+	static final String SHOW_USER = "SELECT user_id, name, passport, phone, email, role, login, password, status FROM users WHERE login = ?";
+	static final String SHOW_USER_ID = "SELECT user_id, name, passport, phone, email, role, login, password, status FROM users WHERE user_id = ?";
+	static final String UPDATE_USER_PROFILE = "UPDATE users SET name = ?, passport = ?, phone = ?, email = ?, login = ?, password = ? WHERE user_id = ?";
+	static final String CHECK_USER_STATUS = "SELECT status FROM users WHERE login = ?";
+	static final String CHANGE_USER_ROLE = "UPDATE users SET role = ? WHERE user_id = ?";
+	static final String CHANGE_USER_STATUS = "UPDATE users SET status = ? WHERE user_id = ?";
+	static final String ROW_COUNT = "SELECT COUNT(*) FROM users";
+	static final String DELETE_USER = "DELETE FROM users WHERE user_id = ?";
 
 	Connection connection = null;
 

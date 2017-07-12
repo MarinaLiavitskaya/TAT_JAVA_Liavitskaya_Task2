@@ -104,7 +104,7 @@ public class SuperadminControllerImplTest {
 	public void test_Registration() {
 		String expected = "Welcome";
 		Assert.assertEquals(
-				controller.executeTask("REGISTRATION DANY MP9990099 PHONE999 EMAIL999 USER xxx999 encryptT9@ ACTIVE"),
+				controller.executeTask("REGISTRATION PIT MP1202020 PHONE220 EMAIL220 USER xxx220 encryptT20@ ACTIVE"),
 				expected);
 	}
 

@@ -16,7 +16,7 @@ public class UserControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_AddBook() {
-		String expected = "New book is added";
+		String expected = "Error during add new book procedure";
 		String actual = controller.executeTask("ADD_BOOK Harry_Potter J.K.Rowling England");
 		Assert.assertEquals(actual, expected);
 	}
@@ -31,20 +31,20 @@ public class UserControllerImplTest {
 	@Test(enabled = true)
 	public void test_CancelOrder_negative() {
 		String expected = "Error during order book procedure";
-		String actual = controller.executeTask("CANCEL_ORDER 1");
+		String actual = controller.executeTask("CANCEL_ORDER 11");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true)
 	public void test_ChangeRole() {
-		String expected = "The role of the account is changed";
+		String expected = "Error during procedure of change of the account role";
 		String actual = controller.executeTask("CHANGE_ROLE ADMINISTRATOR 5");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true)
 	public void test_ChangeStatus() {
-		String expected = "The status of the user is changed";
+		String expected = "Error during procedure of change of the status of the user";
 		String actual = controller.executeTask("CHANGE_STATUS INACTIVE 6");
 		Assert.assertEquals(actual, expected);
 	}
@@ -57,14 +57,14 @@ public class UserControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_EditBookDescription() {
-		String expected = "Book description is edited";
+		String expected = "Error during edit book description procedure";
 		String actual = controller.executeTask("EDIT_BOOK_DESCRIPTION 1955_Russia, 4");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true)
 	public void test_EditBook() {
-		String expected = "book is edited";
+		String expected = "Error during edit book procedure";
 		String actual = controller.executeTask("EDIT_BOOK THE_NORWEGIAN_WOOD HARUKI_MURAKAMI JAPAN_1987 8");
 		Assert.assertEquals(actual, expected);
 	}
@@ -79,7 +79,7 @@ public class UserControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_MakeAdminUser() {
-		String expected = "the status of the admin is changed";
+		String expected = "Error during procedure of change of the status of the admin";
 		String actual = controller.executeTask("MAKE_ADMIN_USER USER 3");
 		Assert.assertEquals(actual, expected);
 	}
@@ -149,7 +149,7 @@ public class UserControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_WriteOff() {
-		String expected = "book is written off";
+		String expected = "Error during the procedure of write-off of the book";
 		Assert.assertEquals(controller.executeTask("WRITE_OFF_BOOK 5"), expected);
 	}
 
@@ -159,9 +159,10 @@ public class UserControllerImplTest {
 		Assert.assertNotEquals(controller.executeTask("WRITE_OFF_BOOK 66"), expected);
 	}
 
-	@Test(enabled = true, expectedExceptions = NumberFormatException.class, priority = 0)
+	@Test(enabled = true, priority = 0)
 	public void test_Writeoff_numberFormat_negative() {
-		controller.executeTask("WRITE_OFF_BOOK B");
+		String expected = "Error during the procedure of write-off of the book";
+		Assert.assertEquals(controller.executeTask("WRITE_OFF_BOOK B"), expected);
 	}
 
 	@Test(enabled = true, priority = 0)

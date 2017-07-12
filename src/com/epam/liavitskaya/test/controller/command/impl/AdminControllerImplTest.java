@@ -17,7 +17,7 @@ public class AdminControllerImplTest {
 	@Test(enabled = true)
 	public void test_AddBook() {
 		String expected = "New book is added";
-		String actual = controller.executeTask("ADD_BOOK Harry_Potter J.K.Rowling England");
+		String actual = controller.executeTask("ADD_BOOK Glue Irvine_Welsh 2001_Scottish");
 		Assert.assertEquals(actual, expected);
 	}
 
@@ -105,7 +105,7 @@ public class AdminControllerImplTest {
 	public void test_Registration() {
 		String expected = "Welcome";
 		Assert.assertEquals(
-				controller.executeTask("REGISTRATION DANY MP9990099 PHONE999 EMAIL999 USER xxx999 encryptT9@ ACTIVE"),
+				controller.executeTask("REGISTRATION KIMBERIY MP1100010 PHONE110 EMAIL110 USER xxx110 encryptT10@ ACTIVE"),
 				expected);
 	}
 

@@ -29,7 +29,7 @@ public class Runner {
 		*/
 		
 		controller.executeTask("SIGN_IN marina1991 encryptT@1991");
-		
+		controller.executeTask("CANCEL_ORDER 10");
 		//System.out.println(controller.executeTask("WRITE_OFF 5"));
 		//System.out.println(controller.executeTask("WRITE_OFF_BOOK 5"));
 		
@@ -38,8 +38,8 @@ public class Runner {
 		// controller.executeTask("WRITE_OFF_BOOK 7"); ++
 	
 		//String executeTask = controller.executeTask("SHOW_ALL_BOOKS"); 			 
-		String executeTask = controller.executeTask("SHOW_ALL_USERS");		
-		System.out.println(executeTask);
+		//String executeTask = controller.executeTask("SHOW_ALL_USERS");		
+		//System.out.println(executeTask);
 		// controller.executeTask("DELETE_USER 3"); ++
 		// System.out.println(controller.executeTask("DELETE_BOOK 77")); ++
 		// System.out.println(controller.executeTask("REVIEW_PROFILE xx333"));

@@ -119,7 +119,7 @@ public class LibraryServiceImpl implements LibraryService {
 			bookDAO.changeBookStatus(BookStatus.AVAILABLE, bookId);
 			bookDAO.removeAppoint(bookId);
 		} catch (DAOException e) {			
-			throw new ServiceException();
+			throw new ServiceException("cancel fail");
 		}
 
 	}

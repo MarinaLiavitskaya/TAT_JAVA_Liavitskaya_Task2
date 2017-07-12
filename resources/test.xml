@@ -4,11 +4,13 @@
 	<test name="SuiteTestOne">
 		<classes>
 			<class
+				name="com.epam.liavitskaya.test.controller.command.impl.ShowAllBooksWithoutAuthTest" />
+			<class
 				name="com.epam.liavitskaya.test.controller.command.impl.UserControllerImplTest" />
 			<class
 				name="com.epam.liavitskaya.test.controller.command.impl.AdminControllerImplTest" />
 			<class
-				name="com.epam.liavitskaya.test.controller.command.impl.SuperadminControllerImplTest" />
+				name="com.epam.liavitskaya.test.controller.command.impl.SuperAdminControllerImplTest" />
 		</classes>
 	</test>
 	<!-- <test name="SuiteTestTwo"> <classes> <class name="environment.tstAllNGFixturesExampleTwo"> 

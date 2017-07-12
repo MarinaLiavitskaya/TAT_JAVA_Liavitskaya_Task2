@@ -12,10 +12,9 @@ public class ShowAllBooksWithoutAuthTest {
 	Controller controller;
 
 	@Test(enabled = true)
-	public void test_ShowAllBooks() {
+	public void test_ShowAllBooks_withoutAuth() {
 		Assert.assertNotNull(controller.executeTask("SHOW_ALL_BOOKS"));
-	}		
-	
+	}
 
 	@BeforeClass
 	public void beforeClass() {

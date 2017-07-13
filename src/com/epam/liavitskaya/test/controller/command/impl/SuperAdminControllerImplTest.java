@@ -200,7 +200,7 @@ public class SuperAdminControllerImplTest {
 
 	@BeforeClass
 	public void beforeClass() {
-		controller = Controller.getInstance();
+		controller = Controller.getInstance(null);
 		controller.executeTask("SIGN_IN superadmin1991 encryptT@1991");
 	}
 

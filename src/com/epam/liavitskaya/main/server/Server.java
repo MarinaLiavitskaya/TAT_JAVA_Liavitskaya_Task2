@@ -9,23 +9,42 @@ import com.epam.liavitskaya.main.controller.Controller;
 
 public class Server {
 
-	Queue<String> requests = new ConcurrentLinkedQueue<String>();
+	Queue<String> requestsServer = new ConcurrentLinkedQueue<String>();
 
-	public void startServer(String request) {
-		
-		String[] split = request.split(",");
+	public void initServer(String request) {
 
-		for (int i = 0; i < split.length; i++) {
-			requests.add(split[i]);
+		for (int i = 0; i < 8; i++) {
+			requestsServer.add(request);
 		}
+		startServer(requestsServer);
+	}
 
-		ExecutorService pool = Executors.newFixedThreadPool(4);
+	public void startServer(Queue<String> requests) {
+
+		ExecutorService pool = Executors.newFixedThreadPool(6);
 		for (int id = 0; id <= requests.size(); id++) {
-			Runnable worker = new Controller(requests);
+			Runnable worker = Controller.getInstance(requests);
 			pool.execute(worker);
 		}
 		pool.shutdown();
 
 	}
+
+	// public void startServer(String request) {
+	//
+	// String[] split = request.split(",");
+	//
+	// for (int i = 0; i < split.length; i++) {
+	// requests.add(split[i]);
+	// }
+	//
+	// ExecutorService pool = Executors.newFixedThreadPool(4);
+	// for (int id = 0; id <= requests.size(); id++) {
+	// Runnable worker = Controller.getInstance(requests);
+	// pool.execute(worker);
+	// }
+	// pool.shutdown();
+	//
+	// }
 
 }

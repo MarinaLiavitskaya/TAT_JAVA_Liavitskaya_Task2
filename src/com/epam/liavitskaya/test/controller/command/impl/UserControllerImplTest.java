@@ -202,7 +202,7 @@ public class UserControllerImplTest {
 
 	@BeforeClass
 	public void beforeClass() {
-		controller = Controller.getInstance();
+		controller = Controller.getInstance(null);
 		controller.executeTask("SIGN_IN user_login777 encryptT@7");
 	}
 

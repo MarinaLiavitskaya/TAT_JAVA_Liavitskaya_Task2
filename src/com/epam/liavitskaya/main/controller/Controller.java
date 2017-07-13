@@ -14,15 +14,15 @@ public class Controller implements Runnable {
 	private static Controller instance;
 
 	private Controller() {
+		super();
 	}
 
-	public Controller(Queue<String> requests) {
-		this.requests = requests;
-	}
-
-	public static Controller getInstance() {
+	public static Controller getInstance(Queue<String> requestServer) {
 		if (null == instance) {
 			instance = new Controller();
+			if (requestServer != null) {
+				instance.requests = requestServer;
+			}
 		}
 		return instance;
 	}

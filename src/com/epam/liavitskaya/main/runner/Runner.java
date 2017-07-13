@@ -1,6 +1,5 @@
 package com.epam.liavitskaya.main.runner;
 
-import com.epam.liavitskaya.main.enumeration.UserStatus;
 import com.epam.liavitskaya.main.server.Server;
 
 public class Runner {
@@ -13,8 +12,9 @@ public class Runner {
 		//System.out.println(executeTask);
 		
 		Server server = new Server();
-		server.startServer("REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1");
-		
+		//server.initServer("REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1");
+		server.initServer("REVIEW_PROFILE_ID 1");
+		server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
 		
 		/*
 		controller.executeTask("SIGN_IN marina1991 encryptT@1991");			++

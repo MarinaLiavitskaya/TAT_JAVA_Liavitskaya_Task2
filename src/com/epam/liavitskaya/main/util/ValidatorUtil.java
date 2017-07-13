@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 
 public class ValidatorUtil {
 	
-	private static final String LOGIN_PATTERN = "^(?=\\S+$)([a-z0-9_-]){5,15}$";
+	private static final String LOGIN_PATTERN = "^(?=\\S+$)([a-z0-9_-]){5,17}$";
 //	^                    # Start of the line
 //	  (?=\S+$) 		     # No whitespace allowed in the entire string
 //	     [a-z0-9_-]	     # Match characters and symbols in the list, a-z, 0-9, underscore, hyphen
-//	             {5,15}  # Length at least 5 characters and maximum length of 15
+//	             {5,17}  # Length at least 5 characters and maximum length of 17
 //	$                    # End of the line
 	private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 	// ^ # start-of-string

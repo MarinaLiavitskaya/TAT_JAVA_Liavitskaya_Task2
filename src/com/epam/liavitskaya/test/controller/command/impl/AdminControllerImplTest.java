@@ -73,7 +73,7 @@ public class AdminControllerImplTest {
 	public void test_admin_EditProfile() {
 		String expected = "profile is edited";
 		String actual = controller
-				.executeTask("EDIT_PROFILE 3 Molly MP2302323 25+!!59 email333 logixqrrn63 paes&wtswW43");
+				.executeTask("EDIT_PROFILE 3 Molly MP2302323 +2353359 email333 loginxqq63 paes&wtswW43");
 		Assert.assertEquals(actual, expected);
 	}
 
@@ -119,14 +119,14 @@ public class AdminControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_admin_RreviewProfile() {
-		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = xxx222, userStatus = ACTIVE]";
-		String actual = controller.executeTask("REVIEW_PROFILE xxx222");
+		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = admin_login222, userStatus = ACTIVE]";
+		String actual = controller.executeTask("REVIEW_PROFILE admin_login222");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true)
 	public void test_admin_ReviewProfileById() {
-		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = xxx222, userStatus = ACTIVE]";
+		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = admin_login222, userStatus = ACTIVE]";
 		String actual = controller.executeTask("REVIEW_PROFILE_ID 2");
 		Assert.assertEquals(actual, expected);
 	}
@@ -202,7 +202,7 @@ public class AdminControllerImplTest {
 	@BeforeClass
 	public void beforeClass() {
 		controller = new Controller();
-		controller.executeTask("SIGN_IN xxx222 encryptT@2");
+		controller.executeTask("SIGN_IN admin_login222 encryptT@2");
 	}
 
 	@AfterClass

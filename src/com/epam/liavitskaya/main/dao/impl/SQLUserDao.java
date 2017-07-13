@@ -11,8 +11,8 @@ import com.epam.liavitskaya.main.bean.User;
 import com.epam.liavitskaya.main.controller.CurrentUser;
 import com.epam.liavitskaya.main.dao.UserDAO;
 import com.epam.liavitskaya.main.dao.exception.DAOException;
-import com.epam.liavitskaya.main.enums.UserRoles;
-import com.epam.liavitskaya.main.enums.UserStatus;
+import com.epam.liavitskaya.main.enumeration.UserRoles;
+import com.epam.liavitskaya.main.enumeration.UserStatus;
 import com.epam.liavitskaya.main.mysql.ConnectionManager;
 
 public class SQLUserDao implements UserDAO {

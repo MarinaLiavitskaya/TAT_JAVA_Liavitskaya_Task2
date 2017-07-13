@@ -2,8 +2,8 @@ package com.epam.liavitskaya.main.bean;
 
 import java.io.Serializable;
 
-import com.epam.liavitskaya.main.enums.UserRoles;
-import com.epam.liavitskaya.main.enums.UserStatus;
+import com.epam.liavitskaya.main.enumeration.UserRoles;
+import com.epam.liavitskaya.main.enumeration.UserStatus;
 
 public class User implements Serializable {
 

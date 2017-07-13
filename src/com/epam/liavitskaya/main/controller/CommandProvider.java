@@ -24,7 +24,7 @@ import com.epam.liavitskaya.main.controller.command.impl.SignIn;
 import com.epam.liavitskaya.main.controller.command.impl.SignOut;
 import com.epam.liavitskaya.main.controller.command.impl.WriteOffBook;
 import com.epam.liavitskaya.main.controller.command.impl.WrongRequest;
-import com.epam.liavitskaya.main.enums.CommandName;
+import com.epam.liavitskaya.main.enumeration.CommandName;
 
 public class CommandProvider {
 

@@ -1,4 +1,4 @@
-package com.epam.liavitskaya.main.enums;
+package com.epam.liavitskaya.main.enumeration;
 
 public enum UserStatus {
 	

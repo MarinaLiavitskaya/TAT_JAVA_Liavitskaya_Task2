@@ -2,7 +2,7 @@ package com.epam.liavitskaya.main.bean;
 
 import java.io.Serializable;
 
-import com.epam.liavitskaya.main.enums.BookStatus;
+import com.epam.liavitskaya.main.enumeration.BookStatus;
 
 public class Book implements Serializable {
 

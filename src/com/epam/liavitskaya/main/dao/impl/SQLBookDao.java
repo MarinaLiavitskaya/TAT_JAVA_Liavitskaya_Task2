@@ -10,7 +10,7 @@ import java.util.List;
 import com.epam.liavitskaya.main.bean.Book;
 import com.epam.liavitskaya.main.dao.BookDAO;
 import com.epam.liavitskaya.main.dao.exception.DAOException;
-import com.epam.liavitskaya.main.enums.BookStatus;
+import com.epam.liavitskaya.main.enumeration.BookStatus;
 import com.epam.liavitskaya.main.mysql.ConnectionManager;
 
 public class SQLBookDao implements BookDAO {

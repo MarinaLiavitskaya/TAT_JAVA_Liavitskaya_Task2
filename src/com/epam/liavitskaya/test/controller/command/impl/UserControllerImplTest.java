@@ -119,14 +119,14 @@ public class UserControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_user_RreviewProfile() {
-		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = xxx222, userStatus = ACTIVE]";
-		String actual = controller.executeTask("REVIEW_PROFILE xxx222");
+		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = admin_login222, userStatus = ACTIVE]";
+		String actual = controller.executeTask("REVIEW_PROFILE admin_login222");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true)
 	public void test_user_ReviewProfileById() {
-		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = xxx222, userStatus = ACTIVE]";
+		String expected = "\nUser [userName = Nick, userPassportNo = null, phone = phone222, email = email222, userRole = ADMINISTRATOR, login = admin_login222, userStatus = ACTIVE]";
 		String actual = controller.executeTask("REVIEW_PROFILE_ID 2");
 		Assert.assertEquals(actual, expected);
 	}
@@ -203,7 +203,7 @@ public class UserControllerImplTest {
 	@BeforeClass
 	public void beforeClass() {
 		controller = new Controller();
-		controller.executeTask("SIGN_IN xxx777 encryptT@7");
+		controller.executeTask("SIGN_IN user_login777 encryptT@7");
 	}
 
 	@AfterClass

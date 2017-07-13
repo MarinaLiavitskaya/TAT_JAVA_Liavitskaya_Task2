@@ -80,6 +80,20 @@ public class LibraryServiceImpl implements LibraryService {
 		}
 		return bookFondReview;
 	}
+	
+	@Override
+	public List<Book> availableBookReviewService() throws ServiceException {
+
+		BookDAO bookDAO = new SQLBookDao();
+		List<Book> bookFondReview = new ArrayList<>();
+
+		try {
+			bookFondReview = bookDAO.availableBookReview();
+		} catch (DAOException e) {
+			throw new ServiceException();
+		}
+		return bookFondReview;
+	}
 
 	@Override
 	public void orderBookService(String request) throws ServiceException {

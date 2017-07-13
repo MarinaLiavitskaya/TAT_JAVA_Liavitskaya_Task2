@@ -19,7 +19,7 @@ public class EditBookDescription implements Command {
 		String response = null;
 		
 		try {
-			if (CurrentUser.getCurrentUser().getUserRole() == UserRoles.USER.name()) {
+			if (UserRoles.USER.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
 				throw new ServiceException("you have no permission for this operation");
 			}
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();

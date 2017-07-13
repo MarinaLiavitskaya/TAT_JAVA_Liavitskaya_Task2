@@ -19,7 +19,7 @@ public class MakeAdminUser implements Command {
 		String response = null;
 
 		try {
-			if (CurrentUser.getCurrentUser().getUserRole() != UserRoles.SUPERADMINISTRATOR.name()) {
+			if (!UserRoles.SUPERADMINISTRATOR.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
 				throw new ServiceException("you have no permission for this operation");
 			}
 			ServiceProvider provider = ServiceProvider.getInstance();

@@ -15,6 +15,8 @@ public interface BookDAO {
 	void editBookDescription(String description, int id) throws DAOException;
 
 	List<Book> bookFondReview() throws DAOException;
+	
+	List<Book> availableBookReview() throws DAOException;
 
 	void changeBookStatus(BookStatus bookStatus, int bookId) throws DAOException;
 

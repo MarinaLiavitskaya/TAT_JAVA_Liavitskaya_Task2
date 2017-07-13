@@ -1,17 +1,18 @@
 package com.epam.liavitskaya.main.controller.command.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
-import com.epam.liavitskaya.main.controller.CurrentUser;
+import com.epam.liavitskaya.main.bean.Book;
 import com.epam.liavitskaya.main.controller.command.Command;
-import com.epam.liavitskaya.main.enumeration.UserRoles;
 import com.epam.liavitskaya.main.service.LibraryService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
-public class DeleteBook implements Command {
+public class ShowAllAvailableBooks implements Command {
 
-	final Logger logger = Logger.getLogger(DeleteBook.class);
+	final Logger logger = Logger.getLogger(ShowAllAvailableBooks.class);
 
 	@Override
 	public String execute(String request) {
@@ -19,18 +20,16 @@ public class DeleteBook implements Command {
 		String response = null;
 
 		try {
-			if (CurrentUser.getCurrentUser().getUserRole() == UserRoles.USER.name()) {
-				throw new ServiceException("you have no permission for this operation");
-			}
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
-			libraryService.deleteBookService(request);
-			response = "Book is deleted";
+			List<Book> availableBookReview = libraryService.availableBookReviewService();
+			response = "Check available books : " + availableBookReview;
 
 		} catch (ServiceException e) {
-			logger.error("Error during delete book procedure", e);
-			response = "Error during delete book procedure";
+			logger.error("Error during procedure to show all books", e);
+			response = "Error during procedure to show all books";
 		}
 		return response;
 	}
+
 }

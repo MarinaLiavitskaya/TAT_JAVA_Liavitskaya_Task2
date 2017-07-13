@@ -8,8 +8,6 @@ import com.epam.liavitskaya.main.controller.command.impl.AddNewBook;
 import com.epam.liavitskaya.main.controller.command.impl.CancelOrder;
 import com.epam.liavitskaya.main.controller.command.impl.ChangeRole;
 import com.epam.liavitskaya.main.controller.command.impl.ChangeStatus;
-import com.epam.liavitskaya.main.controller.command.impl.DeleteBook;
-import com.epam.liavitskaya.main.controller.command.impl.DeleteUser;
 import com.epam.liavitskaya.main.controller.command.impl.EditBook;
 import com.epam.liavitskaya.main.controller.command.impl.EditBookDescription;
 import com.epam.liavitskaya.main.controller.command.impl.EditProfile;
@@ -18,6 +16,7 @@ import com.epam.liavitskaya.main.controller.command.impl.OrderBook;
 import com.epam.liavitskaya.main.controller.command.impl.Registration;
 import com.epam.liavitskaya.main.controller.command.impl.ReviewProfile;
 import com.epam.liavitskaya.main.controller.command.impl.ReviewProfileById;
+import com.epam.liavitskaya.main.controller.command.impl.ShowAllAvailableBooks;
 import com.epam.liavitskaya.main.controller.command.impl.ShowAllBooks;
 import com.epam.liavitskaya.main.controller.command.impl.ShowAllUsers;
 import com.epam.liavitskaya.main.controller.command.impl.SignIn;
@@ -46,11 +45,10 @@ public class CommandProvider {
 		repository.put(CommandName.EDIT_BOOK_DESCRIPTION, new EditBookDescription());
 		repository.put(CommandName.WRITE_OFF_BOOK, new WriteOffBook());
 		repository.put(CommandName.SHOW_ALL_BOOKS, new ShowAllBooks());
+		repository.put(CommandName.SHOW_ALL_AVAILABLE_BOOKS, new ShowAllAvailableBooks());
 		repository.put(CommandName.SHOW_ALL_USERS, new ShowAllUsers());
 		repository.put(CommandName.ORDER_BOOK, new OrderBook());
-		repository.put(CommandName.CANCEL_ORDER, new CancelOrder());
-		repository.put(CommandName.DELETE_USER, new DeleteUser());
-		repository.put(CommandName.DELETE_BOOK, new DeleteBook());
+		repository.put(CommandName.CANCEL_ORDER, new CancelOrder());		
 		repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
 	}
 

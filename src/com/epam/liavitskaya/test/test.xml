@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Suite" parallel="false">
+<suite name="Suite" parallel="true">
 
 	<test name="SuiteTestOne">
-	
+
 		<classes>
 			<class
 				name="com.epam.liavitskaya.test.controller.command.impl.ShowAllBooksWithoutAuthTest" />
@@ -15,11 +15,7 @@
 			<class
 				name="com.epam.liavitskaya.test.controller.command.impl.SuperAdminControllerImplTest" />
 		</classes>
-		
+
 	</test>
-	<!-- <test name="SuiteTestTwo"> <classes> <class name="environment.tstAllNGFixturesExampleTwo"> 
-		<methods> <exclude name="tstTest1" /> </methods> </class> </classes> </test> 
-		<test name="SuiteTestThree"> <groups> <run> <include name="windows.*" /> 
-		</run> </groups> <classes> <class name="environment.tstAllNGFixturesExampleTwo" 
-		/> </classes> </test> -->
+
 </suite>

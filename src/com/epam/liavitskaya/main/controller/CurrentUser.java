@@ -7,6 +7,7 @@ public class CurrentUser {
 	private static User currentUser;
 
 	static {
+		System.out.println("static block");
 		CurrentUser.currentUser = new User();
 		CurrentUser.getCurrentUser().setLogin("");
 	}

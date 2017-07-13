@@ -11,6 +11,8 @@ public interface LibraryService {
 
 	List<Book> bookFondReviewService() throws ServiceException;
 	
+	List<Book> availableBookReviewService() throws ServiceException;
+	
 	void editBookService(String request) throws ServiceException;
 	
 	void editBookDescriptionService(String request) throws ServiceException;	

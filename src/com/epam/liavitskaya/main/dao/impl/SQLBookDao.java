@@ -17,6 +17,7 @@ public class SQLBookDao implements BookDAO {
 
 	static final String ADD_BOOK = "INSERT INTO books(title, author, description, status) VALUES(?, ?, ?, ?)";
 	static final String SHOW_ALL_BOOKS = "SELECT book_id, title, author, description, status, user_id FROM books";
+	static final String SHOW_ALL_AVAILABLE_BOOKS = "SELECT book_id, title, author, description, status, user_id FROM books WHERE status = 'available'";
 	static final String EDIT_BOOK = "UPDATE books SET title = ?, author = ?, description = ? WHERE book_id = ?";
 	static final String EDIT_BOOK_DESCRIPTION = "UPDATE books SET description = ? WHERE book_id = ?";
 	static final String CHANGE_BOOK_STATUS = "UPDATE books SET status = ? WHERE book_id = ?";
@@ -120,6 +121,37 @@ public class SQLBookDao implements BookDAO {
 			ConnectionManager.getManager().closeDbResources(prStmt, rs);
 		}
 		return bookList;
+	}
+	
+	@Override
+	public List<Book> availableBookReview() throws DAOException {
+		
+		PreparedStatement prStmt = null;
+		ResultSet rs = null;
+		Book book = null;
+
+		List<Book> availableBookList = new ArrayList<>();
+
+		try {
+			prStmt = connection.prepareStatement(SHOW_ALL_AVAILABLE_BOOKS);
+			rs = prStmt.executeQuery();
+
+			while (rs.next()) {
+				book = new Book();
+				book.setBookId(rs.getInt("book_id"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setDescription(rs.getString("description"));
+				book.setBookStatus(rs.getString("status"));
+				availableBookList.add(book);
+			}
+
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionManager.getManager().closeDbResources(prStmt, rs);
+		}
+		return availableBookList;
 	}
 
 	@Override
@@ -228,8 +260,7 @@ public class SQLBookDao implements BookDAO {
 			rs = prStmt.executeQuery();
 			rs.next();
 			status = BookStatus.valueOf(rs.getString("status"));
-			userId = rs.getInt("user_id");
-			System.out.println("______________________  " + status.name() + "  user		" + userId);
+			userId = rs.getInt("user_id");			
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {

@@ -201,7 +201,7 @@ public class AdminControllerImplTest {
 
 	@BeforeClass
 	public void beforeClass() {
-		controller = new Controller();
+		controller = Controller.getInstance();
 		controller.executeTask("SIGN_IN admin_login222 encryptT@2");
 	}
 

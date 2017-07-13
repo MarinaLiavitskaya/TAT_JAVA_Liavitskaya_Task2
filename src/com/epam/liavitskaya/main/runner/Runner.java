@@ -1,12 +1,21 @@
 package com.epam.liavitskaya.main.runner;
 
-import com.epam.liavitskaya.main.controller.Controller;
+import com.epam.liavitskaya.main.enumeration.UserStatus;
+import com.epam.liavitskaya.main.server.Server;
 
 public class Runner {
 
 	public static void main(String[] args) {
 
-		Controller controller = new Controller();
+		//Controller controller = new Controller();
+		//controller.executeTask("SIGN_IN marina1991 encryptT@1991");		
+		//String executeTask = controller.executeTask("SHOW_ALL_AVAILABLE_BOOKS");
+		//System.out.println(executeTask);
+		
+		Server server = new Server();
+		server.startServer("REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1");
+		
+		
 		/*
 		controller.executeTask("SIGN_IN marina1991 encryptT@1991");			++
 		System.out.println(CurrentUser.getCurrentUser());		
@@ -27,9 +36,8 @@ public class Runner {
 		controller.executeTask("SIGN_IN kot0000 encryptT@0000");		
 		System.out.println(controller.executeTask("ORDER_BOOK 5"));
 		*/
+		//controller.executeTask("CANCEL_ORDER 10");
 		
-		controller.executeTask("SIGN_IN marina1991 encryptT@1991");
-		controller.executeTask("CANCEL_ORDER 10");
 		//System.out.println(controller.executeTask("WRITE_OFF 5"));
 		//System.out.println(controller.executeTask("WRITE_OFF_BOOK 5"));
 		

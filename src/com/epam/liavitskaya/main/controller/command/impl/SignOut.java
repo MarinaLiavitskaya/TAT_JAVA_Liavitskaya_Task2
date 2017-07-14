@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.liavitskaya.main.controller.CurrentUser;
 import com.epam.liavitskaya.main.controller.command.Command;
+import com.epam.liavitskaya.main.enumeration.UserRoles;
 import com.epam.liavitskaya.main.service.ClientService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
@@ -19,13 +20,12 @@ public class SignOut implements Command {
 		String login = null;
 		String response = null;
 
-		ServiceProvider serviceProvider = ServiceProvider.getInstance();
-		ClientService clientService = serviceProvider.getClientServiceImpl();
-
 		try {
-			if (CurrentUser.getCurrentUser().getLogin() == null) {
-				throw new ServiceException("please, sign in");
+			if (UserRoles.UNAUTHORIZED.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
+				throw new ServiceException("please login");
 			}
+			ServiceProvider serviceProvider = ServiceProvider.getInstance();
+			ClientService clientService = serviceProvider.getClientServiceImpl();
 			String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
 			login = splitRequest[1];
 			clientService.singOut(login);

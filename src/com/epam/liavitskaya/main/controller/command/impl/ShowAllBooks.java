@@ -16,15 +16,15 @@ public class ShowAllBooks implements Command {
 
 	@Override
 	public String execute(String request) {
-		
+
 		String response = null;
 
-		try {		
+		try {
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			List<Book> bookFondReview = libraryService.bookFondReviewService();
 			response = "Check here books of fund : " + bookFondReview;
-			
+
 		} catch (ServiceException e) {
 			logger.error("Error during procedure to show all books", e);
 			response = "Error during procedure to show all books";

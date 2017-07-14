@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.epam.liavitskaya.main.controller.command.Command;
-import com.epam.liavitskaya.main.controller.command.impl.AddNewBook;
+import com.epam.liavitskaya.main.controller.command.impl.AddBook;
 import com.epam.liavitskaya.main.controller.command.impl.CancelOrder;
 import com.epam.liavitskaya.main.controller.command.impl.ChangeRole;
 import com.epam.liavitskaya.main.controller.command.impl.ChangeStatus;
@@ -40,7 +40,7 @@ public class CommandProvider {
 		repository.put(CommandName.CHANGE_STATUS, new ChangeStatus());
 		repository.put(CommandName.CHANGE_ROLE, new ChangeRole());
 		repository.put(CommandName.MAKE_ADMIN_USER, new MakeAdminUser());
-		repository.put(CommandName.ADD_BOOK, new AddNewBook());
+		repository.put(CommandName.ADD_BOOK, new AddBook());
 		repository.put(CommandName.EDIT_BOOK, new EditBook());
 		repository.put(CommandName.EDIT_BOOK_DESCRIPTION, new EditBookDescription());
 		repository.put(CommandName.WRITE_OFF_BOOK, new WriteOffBook());

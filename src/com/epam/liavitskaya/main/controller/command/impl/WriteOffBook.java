@@ -19,6 +19,9 @@ public class WriteOffBook implements Command {
 		String response = null;
 
 		try {
+			if (UserRoles.UNAUTHORIZED.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
+				throw new ServiceException("please login");
+			}
 			if (UserRoles.USER.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
 				throw new ServiceException("you have no permission for this operation");
 			}

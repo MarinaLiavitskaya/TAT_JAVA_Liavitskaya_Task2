@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.liavitskaya.main.controller.CurrentUser;
 import com.epam.liavitskaya.main.controller.command.Command;
+import com.epam.liavitskaya.main.enumeration.UserRoles;
 import com.epam.liavitskaya.main.service.LibraryService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
@@ -18,8 +19,8 @@ public class CancelOrder implements Command {
 		String response = null;
 
 		try {
-			if (CurrentUser.getCurrentUser().getLogin() == null) {
-				throw new ServiceException("please, sign in");
+			if (UserRoles.UNAUTHORIZED.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
+				throw new ServiceException("please login");
 			}
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();

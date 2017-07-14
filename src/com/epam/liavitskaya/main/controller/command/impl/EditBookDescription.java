@@ -15,10 +15,13 @@ public class EditBookDescription implements Command {
 
 	@Override
 	public String execute(String request) {
-		
+
 		String response = null;
-		
+
 		try {
+			if (UserRoles.UNAUTHORIZED.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
+				throw new ServiceException("please login");
+			}
 			if (UserRoles.USER.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
 				throw new ServiceException("you have no permission for this operation");
 			}
@@ -26,7 +29,7 @@ public class EditBookDescription implements Command {
 			LibraryService libraryService = serviceProvider.getLibraryServiceImpl();
 			libraryService.editBookDescriptionService(request);
 			response = "Book description is edited";
-			
+
 		} catch (ServiceException e) {
 			logger.error("Error during edit book description procedure", e);
 			response = "Error during edit book description procedure";

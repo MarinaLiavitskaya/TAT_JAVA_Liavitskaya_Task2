@@ -13,7 +13,7 @@ public class ShowAllBooksWithoutAuthTest {
 	Controller controller;
 	Server server;
 
-	@Test(enabled = true, threadPoolSize = 5, invocationCount = 5, timeOut = 1000)
+	@Test(enabled = true, threadPoolSize = 3, invocationCount = 3, timeOut = 1000)
 	public void test_ShowAllBooks_withoutAuth() {		
 		Assert.assertNotNull(controller.executeTask("SHOW_ALL_BOOKS"));
 	}
@@ -25,7 +25,7 @@ public class ShowAllBooksWithoutAuthTest {
 
 	@BeforeClass
 	public void beforeClass() {
-		controller = Controller.getInstance(null);
+		controller = Controller.getInstance();
 		server = new Server();
 	}
 

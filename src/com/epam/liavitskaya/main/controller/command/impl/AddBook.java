@@ -9,9 +9,9 @@ import com.epam.liavitskaya.main.service.LibraryService;
 import com.epam.liavitskaya.main.service.exception.ServiceException;
 import com.epam.liavitskaya.main.service.provider.ServiceProvider;
 
-public class AddNewBook implements Command {
+public class AddBook implements Command {
 
-	final Logger logger = Logger.getLogger(AddNewBook.class);
+	final Logger logger = Logger.getLogger(AddBook.class);
 
 	@Override
 	public String execute(String request) {
@@ -19,6 +19,9 @@ public class AddNewBook implements Command {
 		String response = null;
 
 		try {
+			if (UserRoles.UNAUTHORIZED.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
+				throw new ServiceException("please login");
+			}
 			if (UserRoles.USER.name().equals(CurrentUser.getCurrentUser().getUserRole())) {
 				throw new ServiceException("you have no permission for this operation");
 			}

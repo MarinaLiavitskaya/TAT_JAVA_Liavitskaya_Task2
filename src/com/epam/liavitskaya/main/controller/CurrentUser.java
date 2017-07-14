@@ -1,15 +1,16 @@
 package com.epam.liavitskaya.main.controller;
 
 import com.epam.liavitskaya.main.bean.User;
+import com.epam.liavitskaya.main.enumeration.UserRoles;
 
 public class CurrentUser {
 
 	private static User currentUser;
 
 	static {
-		System.out.println("static block");
 		CurrentUser.currentUser = new User();
 		CurrentUser.getCurrentUser().setLogin("");
+		CurrentUser.getCurrentUser().setUserRole(UserRoles.UNAUTHORIZED.name());
 	}
 
 	public static User getCurrentUser() {

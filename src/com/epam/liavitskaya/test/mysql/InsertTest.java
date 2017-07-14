@@ -89,7 +89,7 @@ public class InsertTest {
 		
 		users = new ShowAllUsers();
 		books = new ShowAllBooks();
-		controller = Controller.getInstance(null);
+		controller = Controller.getInstance();
 		controller.executeTask("SIGN_IN marina1991 encryptT@1991");
 		clientImpl = new ClientServiceImpl();
 		libImpl = new LibraryServiceImpl();		

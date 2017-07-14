@@ -5,46 +5,39 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.epam.liavitskaya.main.controller.Controller;
-
 public class Server {
 
-	Queue<String> requestsServer = new ConcurrentLinkedQueue<String>();
+	private Queue<String> requestsServer = new ConcurrentLinkedQueue<String>();
 
-	public void initServer(String request) {
+	public void syntheticinitServer(String request) {
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 10; i++) {
 			requestsServer.add(request);
 		}
 		startServer(requestsServer);
 	}
 
-	public void startServer(Queue<String> requests) {
+	public void initServer(String request) {
 
-		ExecutorService pool = Executors.newFixedThreadPool(6);
+		requestsServer.add(request);
+		startServer(requestsServer);
+
+	}
+
+	public void startServer(Queue<String> requests) {
+		System.out.println(requests);
+		ExecutorService pool = Executors.newFixedThreadPool(5);
 		for (int id = 0; id <= requests.size(); id++) {
-			Runnable worker = Controller.getInstance(requests);
+			Runnable worker = new RequestProvider(requests);
+			try {
+				Thread.currentThread().sleep(2000); // main thread stops
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			pool.execute(worker);
 		}
 		pool.shutdown();
 
 	}
-
-	// public void startServer(String request) {
-	//
-	// String[] split = request.split(",");
-	//
-	// for (int i = 0; i < split.length; i++) {
-	// requests.add(split[i]);
-	// }
-	//
-	// ExecutorService pool = Executors.newFixedThreadPool(4);
-	// for (int id = 0; id <= requests.size(); id++) {
-	// Runnable worker = Controller.getInstance(requests);
-	// pool.execute(worker);
-	// }
-	// pool.shutdown();
-	//
-	// }
 
 }

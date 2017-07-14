@@ -1,13 +1,8 @@
 package com.epam.liavitskaya.main.controller;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import com.epam.liavitskaya.main.controller.command.Command;
 
-public class Controller implements Runnable {
-
-	private Queue<String> requests = new ConcurrentLinkedQueue<String>();
+public class Controller {
 
 	private final CommandProvider provider = new CommandProvider();
 	private final char paramDelimeter = ' ';
@@ -17,12 +12,10 @@ public class Controller implements Runnable {
 		super();
 	}
 
-	public static Controller getInstance(Queue<String> requestServer) {
+	public static Controller getInstance() {
+
 		if (null == instance) {
 			instance = new Controller();
-			if (requestServer != null) {
-				instance.requests = requestServer;
-			}
 		}
 		return instance;
 	}
@@ -48,14 +41,4 @@ public class Controller implements Runnable {
 		return response;
 	}
 
-	@Override
-	public void run() {
-		String request;
-		while ((request = requests.poll()) != null) {
-			String response = executeTask(request);
-			System.out.println(response);
-			System.out.println(Thread.currentThread().getName() + "  : " + Thread.currentThread().getId());
-		}
-
-	}
 }

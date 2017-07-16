@@ -101,7 +101,7 @@ public class AdminControllerImplTest {
 		controller.executeTask("ORDER_BOOK A");
 	}
 
-	@Test(enabled = true, priority = 7)
+	@Test(enabled = true, priority = 2)
 	public void test_admin_Registration() {
 		String expected = "Welcome";
 		Assert.assertEquals(

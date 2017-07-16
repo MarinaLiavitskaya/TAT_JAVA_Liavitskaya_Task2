@@ -1,5 +1,7 @@
 package com.epam.liavitskaya.main.runner;
 
+import java.util.List;
+
 import com.epam.liavitskaya.main.controller.Controller;
 import com.epam.liavitskaya.main.server.Server;
 
@@ -12,27 +14,30 @@ public class Runner {
 		// server.initServer("REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID
 		// 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID
 		// 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1");
-		// server.syntheticinitServer("REVIEW_PROFILE_ID 1");
-		Server server = new Server();
-		server.initServer("ORDER_BOOK 8");
-		server.initServer("REVIEW_PROFILE_ID 8");
-		server.initServer("REVIEW_PROFILE jake0000");
-		server.initServer("EDIT_PROFILE 3 Molly MP2302323 25+###59 email333 logixqrrn63 paes&wtswW43");
-		server.initServer("EDIT_BOOK The_Norwegian_Wood Haruki_Murakami Japan_1987 9");
-		server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		server.initServer("ADD_BOOK Harry_Potter J.K.Rowling England");
-		server.initServer("WRITE_OFF_BOOK 9");
-		server.initServer("MAKE_ADMIN_USER USER 1");
-		// server.initServer("WRITE_OFF_BOOK 8");
+		// server.syntheticinitServer("REVIEW_PROFILE_ID 1");	
+		Server.startServer("ORDER_BOOK 8");
+		
+		//Server.startServer("REVIEW_PROFILE_ID 8");
+		//Server.startServer("REVIEW_PROFILE jake0000");
+		Server.startServer("EDIT_PROFILE 3 Molly MP2302323 25+###59 email333 logixqrrn63 paes&wtswW43");
+		//Server.startServer("EDIT_BOOK The_Norwegian_Wood Haruki_Murakami Japan_1987 9");
+		//Server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
+		Server.startServer("ADD_BOOK Harry_Potter J.K.Rowling England");
+		
+		Server.startServer("WRITE_OFF_BOOK 9");
+		Server.startServer("MAKE_ADMIN_USER USER 1");
+		String startServer = Server.startServer("WRITE_OFF_BOOK 8");
+		System.out.println(startServer);
 		// server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		server.initServer("ADD_BOOK Harry_Potter_2 J.K.Rowling England");
+		//Server.startServer("ADD_BOOK Harry_Potter_2 J.K.Rowling England");
 		// server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		// server.initServer("ADD_BOOK Harry_Potter_3 J.K.Rowling England");
-		 server.initServer("REVIEW_PROFILE_ID 1");
+		Server.startServer("ADD_BOOK Harry_Potter_3 J.K.Rowling England");
+		//Server.startServer("REVIEW_PROFILE_ID 1");
 		// server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		 server.initServer("ADD_BOOK Harry_Potter_4 J.K.Rowling England");
-		// server.initServer("ADD_BOOK Harry_Potter_5 J.K.Rowling England");
-		 server.initServer("ADD_BOOK Harry_Potter_6 J.K.Rowling England");
+		Server.startServer("ADD_BOOK Harry_Potter_4 J.K.Rowling England");
+		Server.startServer("ADD_BOOK Harry_Potter_5 J.K.Rowling England");
+		
+		Server.startServer("ADD_BOOK Harry_Potter_6 J.K.Rowling England");
 
 		/*
 		 * controller.executeTask("SIGN_IN marina1991 encryptT@1991"); ++

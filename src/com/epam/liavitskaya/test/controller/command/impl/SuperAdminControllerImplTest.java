@@ -100,7 +100,7 @@ public class SuperAdminControllerImplTest {
 		controller.executeTask("ORDER_BOOK A");
 	}
 
-	@Test(enabled = true, priority = 7)
+	@Test(enabled = true)
 	public void test_superadmin_Registration() {
 		String expected = "Welcome";
 		Assert.assertEquals(
@@ -110,10 +110,10 @@ public class SuperAdminControllerImplTest {
 
 	@Test(enabled = true)
 	public void test_superadmin_Registration_negative() {
-		String expectedResponse = "Error during registration";
-		String actualResponse = controller
+		String expected = "Error during registration";
+		String actual = controller
 				.executeTask("REGISTRATION Tim MP1232323 12345 mail.ru USER yi7 mP1Pe6vkir11 ACTIVE");
-		Assert.assertEquals(actualResponse, expectedResponse);
+		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true)

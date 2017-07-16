@@ -7,10 +7,12 @@ public class Controller {
 	private final CommandProvider provider = new CommandProvider();
 	private final char paramDelimeter = ' ';
 	private static Controller instance;
+	
 
 	private Controller() {
 		super();
 	}
+	
 
 	public static Controller getInstance() {
 
@@ -19,6 +21,7 @@ public class Controller {
 		}
 		return instance;
 	}
+	
 
 	public String executeTask(String request) {
 
@@ -33,7 +36,6 @@ public class Controller {
 		}
 
 		Command executionCommand;
-
 		executionCommand = provider.getCommand(commandName);
 
 		String response = "";

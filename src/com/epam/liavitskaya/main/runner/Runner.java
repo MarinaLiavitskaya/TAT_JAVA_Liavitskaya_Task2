@@ -1,43 +1,23 @@
 package com.epam.liavitskaya.main.runner;
 
-import java.util.List;
-
 import com.epam.liavitskaya.main.controller.Controller;
-import com.epam.liavitskaya.main.server.Server;
 
 public class Runner {
 
 	public static void main(String[] args) {
 
-		Controller controller = Controller.getInstance();				// один контроллер - один юзер
+		Controller controller = Controller.getInstance();
+
 		controller.executeTask("SIGN_IN superadmin1991 encryptT@1991");
-		// server.initServer("REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID
-		// 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID
-		// 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1,REVIEW_PROFILE_ID 1");
-		// server.syntheticinitServer("REVIEW_PROFILE_ID 1");	
-		Server.startServer("ORDER_BOOK 8");
-		
-		//Server.startServer("REVIEW_PROFILE_ID 8");
-		//Server.startServer("REVIEW_PROFILE jake0000");
-		Server.startServer("EDIT_PROFILE 3 Molly MP2302323 25+###59 email333 logixqrrn63 paes&wtswW43");
-		//Server.startServer("EDIT_BOOK The_Norwegian_Wood Haruki_Murakami Japan_1987 9");
-		//Server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		Server.startServer("ADD_BOOK Harry_Potter J.K.Rowling England");
-		
-		Server.startServer("WRITE_OFF_BOOK 9");
-		Server.startServer("MAKE_ADMIN_USER USER 1");
-		String startServer = Server.startServer("WRITE_OFF_BOOK 8");
-		System.out.println(startServer);
-		// server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		//Server.startServer("ADD_BOOK Harry_Potter_2 J.K.Rowling England");
-		// server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		Server.startServer("ADD_BOOK Harry_Potter_3 J.K.Rowling England");
-		//Server.startServer("REVIEW_PROFILE_ID 1");
-		// server.initServer("SHOW_ALL_AVAILABLE_BOOKS");
-		Server.startServer("ADD_BOOK Harry_Potter_4 J.K.Rowling England");
-		Server.startServer("ADD_BOOK Harry_Potter_5 J.K.Rowling England");
-		
-		Server.startServer("ADD_BOOK Harry_Potter_6 J.K.Rowling England");
+		controller.executeTask("ORDER_BOOK 8");
+		controller.executeTask("EDIT_PROFILE 3 Molly MP2302323 +2599959 email333 logixqrrn63 paes&wtswW43");
+		controller.executeTask("ADD_BOOK Harry_Potter J.K.Rowling England");
+
+		controller.executeTask("WRITE_OFF_BOOK 9");
+		controller.executeTask("MAKE_ADMIN_USER USER 1");
+		controller.executeTask("WRITE_OFF_BOOK 8");
+		controller.executeTask("ADD_BOOK Harry_Potter_3 J.K.Rowling England");
+		controller.executeTask("ADD_BOOK Harry_Potter_5 J.K.Rowling England");
 
 		/*
 		 * controller.executeTask("SIGN_IN marina1991 encryptT@1991"); ++

@@ -8,6 +8,8 @@ import com.epam.liavitskaya.test.controller.command.impl.SuperAdminControllerImp
 import com.epam.liavitskaya.test.controller.command.impl.UserControllerImplTest;
 
 public class FactoryTest {
+	
+	// Another way to run tests in addition to xml
 	@Factory
 	public Object[] factoryMethod() {
 		

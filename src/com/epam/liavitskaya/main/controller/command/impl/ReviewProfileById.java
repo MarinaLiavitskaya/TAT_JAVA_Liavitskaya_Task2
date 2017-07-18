@@ -25,7 +25,7 @@ public class ReviewProfileById implements Command {
 			}
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			ClientService clientService = serviceProvider.getClientServiceImpl();
-			User user = clientService.reviewProfileById(request);
+			User user = clientService.reviewProfileByIdService(request);
 			response = user.toString();
 
 		} catch (ServiceException e) {

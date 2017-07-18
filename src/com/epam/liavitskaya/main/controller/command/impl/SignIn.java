@@ -30,7 +30,7 @@ public class SignIn implements Command {
 			password = splitRequest[2];
 
 			if (isLoginExist(login, clientService) && isPasswordExist(password, clientService)) {
-				clientService.singIn(login, password);
+				clientService.singInService(login, password);
 				response = "Hi";
 			} else {
 				response = "Login failed, please register";
@@ -47,7 +47,7 @@ public class SignIn implements Command {
 		List<String> fetchAllPasswords = null;
 		
 		try {
-			fetchAllPasswords = clientService.fetchAllPasswords();
+			fetchAllPasswords = clientService.fetchAllPasswordsService();
 		} catch (ServiceException e) {
 			logger.error("Error during is Password Exist procedure", e);
 		}
@@ -59,7 +59,7 @@ public class SignIn implements Command {
 		List<String> fetchAllLogins = null;
 		
 		try {
-			fetchAllLogins = clientService.fetchAllLogins();
+			fetchAllLogins = clientService.fetchAllLoginsService();
 		} catch (ServiceException e) {
 			logger.error("Error during is Login exist procedure", e);
 		}

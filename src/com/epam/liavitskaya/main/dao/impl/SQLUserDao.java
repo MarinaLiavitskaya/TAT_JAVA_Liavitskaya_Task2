@@ -81,7 +81,7 @@ public class SQLUserDao implements UserDAO {
 		CurrentUser.getCurrentUser().setUserName("");
 		CurrentUser.getCurrentUser().setPassportNo("");
 		CurrentUser.getCurrentUser().setPhone("");
-		CurrentUser.getCurrentUser().setUserRole("USER");
+		CurrentUser.getCurrentUser().setUserRole("UNAUTHORIZED");
 		CurrentUser.getCurrentUser().setEmail("");
 		CurrentUser.getCurrentUser().setLogin("");
 		CurrentUser.getCurrentUser().setPassword("");

@@ -24,7 +24,7 @@ public class EditProfile implements Command {
 			}
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			ClientService clientServiceImpl = serviceProvider.getClientServiceImpl();
-			clientServiceImpl.editProfile(request);
+			clientServiceImpl.editProfileService(request);
 			response = "profile is edited";
 
 		} catch (ServiceException e) {

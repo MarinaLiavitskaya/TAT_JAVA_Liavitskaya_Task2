@@ -11,7 +11,7 @@ import com.epam.liavitskaya.main.controller.Controller;
 
 public class UserControllerImplTest {
 
-	Controller controller;
+	Controller controller;		
 
 	@Test(enabled = true)
 	public void test_user_AddBook() {
@@ -181,14 +181,14 @@ public class UserControllerImplTest {
 	@Test(enabled = true, priority = 2)
 	public void test_user_SignIn() {
 		String expected = "Hi";
-		String actual = controller.executeTask("SIGN_IN xxx444 encryptT@4");
+		String actual = controller.executeTask("SIGN_IN user_login777 encryptT@7");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true, priority = 5)
 	public void test_user_SignOut() {
-		String expected = "Goodbye";
-		String actual = controller.executeTask("SIGN_OUT xxx111");
+		String expected = "Goodbye";		
+		String actual = controller.executeTask("SIGN_OUT user_login777");
 		Assert.assertEquals(actual, expected);
 	}
 
@@ -207,8 +207,7 @@ public class UserControllerImplTest {
 	}
 
 	@AfterClass
-	public void afterClass() {
-
+	public void afterClass() {		
 	}
 
 }

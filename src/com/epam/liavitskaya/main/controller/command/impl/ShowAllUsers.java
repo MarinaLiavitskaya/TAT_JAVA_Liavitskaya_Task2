@@ -30,7 +30,7 @@ public class ShowAllUsers implements Command {
 			}
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			ClientService clientService = serviceProvider.getClientServiceImpl();
-			List<User> showAllUsers = clientService.showAllUsers();
+			List<User> showAllUsers = clientService.showAllUsersService();
 			response = "All users : " + showAllUsers;
 
 		} catch (ServiceException e) {

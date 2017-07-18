@@ -19,7 +19,7 @@ public class Registration implements Command {
 		try {
 			ServiceProvider serviceProvider = ServiceProvider.getInstance();
 			ClientService clientService = serviceProvider.getClientServiceImpl();
-			clientService.registration(request);
+			clientService.registrationService(request);
 			response = "Welcome";
 			
 		} catch (ServiceException e) {

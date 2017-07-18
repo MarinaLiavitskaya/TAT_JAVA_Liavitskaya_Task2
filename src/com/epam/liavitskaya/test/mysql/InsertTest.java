@@ -68,14 +68,14 @@ public class InsertTest {
 	@Test(priority = 3)
 	public void test_insertDB_notNull() throws ServiceException {
 
-		Assert.assertNotNull(clientImpl.showAllUsers());
+		Assert.assertNotNull(clientImpl.showAllUsersService());
 		Assert.assertNotNull(libImpl.bookFondReviewService());
 	}
 
 	@Test(priority = 5, enabled = true)
 	public void test_insertDB_size() throws ServiceException {
 
-		Assert.assertEquals(clientImpl.showAllUsers().size(), 10);
+		Assert.assertEquals(clientImpl.showAllUsersService().size(), 10);
 		Assert.assertEquals(libImpl.bookFondReviewService().size(), 11);
 	}
 

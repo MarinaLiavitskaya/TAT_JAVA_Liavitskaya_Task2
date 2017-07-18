@@ -27,7 +27,7 @@ public class ChangeStatus implements Command {
 			}
 			ServiceProvider provider = ServiceProvider.getInstance();
 			ClientService clientServiceImpl = provider.getClientServiceImpl();
-			clientServiceImpl.editStatus(request);
+			clientServiceImpl.editStatusService(request);
 			response = "The status of the user is changed";
 
 		} catch (ServiceException e) {

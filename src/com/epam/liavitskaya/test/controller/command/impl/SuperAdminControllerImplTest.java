@@ -11,7 +11,7 @@ import com.epam.liavitskaya.main.controller.Controller;
 
 public class SuperAdminControllerImplTest {
 
-	Controller controller;
+	Controller controller;	
 
 	@Test(enabled = true)
 	public void test_superadmin_AddBook() {
@@ -175,23 +175,24 @@ public class SuperAdminControllerImplTest {
 		String expected = "Wrong Request Format";
 		Assert.assertEquals(controller.executeTask("WRITE_OFF 5"), expected);
 	}
-
+	
 	@Test(enabled = true, priority = 2)
 	public void test_superadmin_SignIn() {
 		String expected = "Hi";
-		String actual = controller.executeTask("SIGN_IN xxx444 encryptT@4");
+		String actual = controller.executeTask("SIGN_IN superadmin1991 encryptT@1991");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true, priority = 5)
 	public void test_superadmin_SignOut() {
-		String expected = "Goodbye";
-		String actual = controller.executeTask("SIGN_OUT xxx111");
+		String expected = "Goodbye";		
+		String actual = controller.executeTask("SIGN_OUT superadmin1991");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@BeforeMethod
 	public void beforeMethod() {		
+		controller.executeTask("SIGN_IN superadmin1991 encryptT@1991");
 	}
 
 	@AfterMethod
@@ -201,12 +202,11 @@ public class SuperAdminControllerImplTest {
 	@BeforeClass
 	public void beforeClass() {
 		controller = Controller.getInstance();
-		controller.executeTask("SIGN_IN superadmin1991 encryptT@1991");
+		
 	}
 
 	@AfterClass
-	public void afterClass() {
-
+	public void afterClass() {		
 	}
 
 }

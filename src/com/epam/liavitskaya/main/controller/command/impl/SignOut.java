@@ -28,7 +28,7 @@ public class SignOut implements Command {
 			ClientService clientService = serviceProvider.getClientServiceImpl();
 			String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
 			login = splitRequest[1];
-			clientService.singOut(login);
+			clientService.singOutService(login);
 			response = "Goodbye";
 
 		} catch (ServiceException e) {

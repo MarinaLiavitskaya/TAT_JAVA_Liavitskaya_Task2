@@ -1,18 +1,17 @@
 package com.epam.liavitskaya.test.controller.command.impl;
 
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.epam.liavitskaya.main.controller.Controller;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-
 public class AdminControllerImplTest {
 
-	Controller controller;
+	Controller controller;	
 
 	@Test(enabled = true)
 	public void test_admin_AddBook() {
@@ -171,7 +170,7 @@ public class AdminControllerImplTest {
 		Assert.assertEquals(actual, expected);
 	}
 
-	@Test(enabled = true, priority = 0)
+	@Test(enabled = true)
 	public void test_admin_WrongRequest_writeOff() {
 		String expected = "Wrong Request Format";
 		Assert.assertEquals(controller.executeTask("WRITE_OFF 5"), expected);
@@ -180,19 +179,20 @@ public class AdminControllerImplTest {
 	@Test(enabled = true, priority = 2)
 	public void test_admin_SignIn() {
 		String expected = "Hi";
-		String actual = controller.executeTask("SIGN_IN xxx444 encryptT@4");
+		String actual = controller.executeTask("SIGN_IN admin_login222 encryptT@2");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@Test(enabled = true, priority = 5)
 	public void test_admin_SignOut() {
-		String expected = "Goodbye";
-		String actual = controller.executeTask("SIGN_OUT xxx111");
+		String expected = "Goodbye";		
+		String actual = controller.executeTask("SIGN_OUT admin_login222");
 		Assert.assertEquals(actual, expected);
 	}
 
 	@BeforeMethod
-	public void beforeMethod() {		
+	public void beforeMethod() {
+		controller.executeTask("SIGN_IN admin_login222 encryptT@2");
 	}
 
 	@AfterMethod
@@ -201,13 +201,11 @@ public class AdminControllerImplTest {
 
 	@BeforeClass
 	public void beforeClass() {
-		controller = Controller.getInstance();
-		controller.executeTask("SIGN_IN admin_login222 encryptT@2");
+		controller = Controller.getInstance();		
 	}
 
 	@AfterClass
-	public void afterClass() {
-
+	public void afterClass() {		
 	}
 
 }

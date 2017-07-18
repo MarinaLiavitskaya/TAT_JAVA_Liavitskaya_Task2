@@ -27,7 +27,7 @@ public class ClientServiceImpl implements ClientService {
 	final static Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
 	@Override
-	public void singIn(String login, String password) throws ServiceException {
+	public void singInService(String login, String password) throws ServiceException {
 
 		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
 			throw new ServiceException(INCORRECT_SIGNIN_INPUT_MESSAGE);
@@ -51,7 +51,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void singOut(String login) throws ServiceException {
+	public void singOutService(String login) throws ServiceException {
 
 		if (login == null || login.isEmpty() || !ValidatorUtil.isLoginValid(login)) {
 			throw new ServiceException("incorrect input");
@@ -67,7 +67,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void registration(String request) throws ServiceException {
+	public void registrationService(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 9);
@@ -98,7 +98,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public User reviewProfile(String request) throws ServiceException {
+	public User reviewProfileService(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
@@ -118,7 +118,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public User reviewProfileById(String request) throws ServiceException {
+	public User reviewProfileByIdService(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
@@ -140,7 +140,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void editProfile(String request) throws ServiceException {
+	public void editProfileService(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		try {
@@ -152,7 +152,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void editStatus(String request) throws ServiceException {
+	public void editStatusService(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
@@ -171,7 +171,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void editRole(String request) throws ServiceException {
+	public void editRoleService(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 3);
@@ -192,7 +192,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public List<User> showAllUsers() throws ServiceException {
+	public List<User> showAllUsersService() throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		List<User> allUsers;
@@ -206,7 +206,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public void deleteUser(String request) throws ServiceException {
+	public void deleteUserService(String request) throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		String[] splitRequest = RequestParserUtil.parseRequest(request, 2);
@@ -223,7 +223,7 @@ public class ClientServiceImpl implements ClientService {
 		}
 	}
 
-	public List<String> fetchAllLogins() throws ServiceException {
+	public List<String> fetchAllLoginsService() throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		List<String> fetchAllLogins = new ArrayList<>();
@@ -236,7 +236,7 @@ public class ClientServiceImpl implements ClientService {
 		return fetchAllLogins;
 	}
 
-	public List<String> fetchAllPasswords() throws ServiceException {
+	public List<String> fetchAllPasswordsService() throws ServiceException {
 
 		UserDAO userDAO = new SQLUserDao();
 		List<String> fetchAllPasswords = new ArrayList<>();
@@ -283,7 +283,7 @@ public class ClientServiceImpl implements ClientService {
 		List<String> fetchAllPasswords = new ArrayList<>();
 
 		try {
-			fetchAllPasswords = clientService.fetchAllPasswords();
+			fetchAllPasswords = clientService.fetchAllPasswordsService();
 		} catch (ServiceException e) {
 			logger.debug("Error during is Password Original check", e);
 			e.printStackTrace();
@@ -298,7 +298,7 @@ public class ClientServiceImpl implements ClientService {
 		List<String> fetchAllLogins = new ArrayList<>();
 
 		try {
-			fetchAllLogins = clientService.fetchAllLogins();
+			fetchAllLogins = clientService.fetchAllLoginsService();
 		} catch (ServiceException e) {
 			logger.debug("Error during is Login Original check", e);
 			e.printStackTrace();

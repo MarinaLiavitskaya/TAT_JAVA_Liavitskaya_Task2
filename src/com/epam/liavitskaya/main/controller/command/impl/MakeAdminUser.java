@@ -27,7 +27,7 @@ public class MakeAdminUser implements Command {
 			}
 			ServiceProvider provider = ServiceProvider.getInstance();
 			ClientService clientServiceImpl = provider.getClientServiceImpl();
-			clientServiceImpl.editRole(request);
+			clientServiceImpl.editRoleService(request);
 			response = "the status of the admin is changed";
 
 		} catch (ServiceException e) {
